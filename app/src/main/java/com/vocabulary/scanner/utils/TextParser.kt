@@ -15,36 +15,56 @@ object TextParser {
             return emptyList()
         }
         
-        val sentences = mutableListOf<String>()
         val cleanedText = preprocessText(text)
         
-        // 使用多种分割规则
-        val patterns = listOf(
-            // 句号、问号、感叹号
-            Regex("[.!?]+"),
-            // 分号
-            Regex("[;]+"),
-            // 冒号（在某些情况下）
-            Regex("[:]+(?=\\s+[A-Z])"),
-            // 换行符
-            Regex("\\n+"),
-            // 段落分隔符
-            Regex("\\n\\s*\\n")
-        )
+        // 首先按段落分割（双换行符）
+        val paragraphs = cleanedText.split(Regex("\\n\\s*\\n"))
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
         
-        var currentText = cleanedText
+        val sentences = mutableListOf<String>()
         
-        for (pattern in patterns) {
-            val parts = currentText.split(pattern)
-            if (parts.size > 1) {
-                sentences.addAll(parts.map { it.trim() }.filter { it.isNotEmpty() })
-                return sentences
+        for (paragraph in paragraphs) {
+            // 对每个段落按句子分割
+            val paragraphSentences = splitParagraphIntoSentences(paragraph)
+            sentences.addAll(paragraphSentences)
+        }
+        
+        return sentences
+    }
+    
+    /**
+     * 将段落分割成句子
+     */
+    private fun splitParagraphIntoSentences(paragraph: String): List<String> {
+        if (paragraph.trim().isEmpty()) {
+            return emptyList()
+        }
+        
+        // 按句号、问号、感叹号分割，但排除<DOT>标记
+        val sentences = paragraph.split(Regex("[.!?]+(?![^<]*<DOT>)"))
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+        
+        // 如果只有一个句子，检查是否包含分号
+        if (sentences.size == 1) {
+            val semicolonSentences = sentences[0].split(Regex("[;]+"))
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
+            
+            if (semicolonSentences.size > 1) {
+                return semicolonSentences.map { restoreDots(it) }
             }
         }
         
-        // 如果没有找到分割点，返回整个文本
-        sentences.add(cleanedText)
-        return sentences
+        return sentences.map { restoreDots(it) }
+    }
+    
+    /**
+     * 恢复句号标记
+     */
+    private fun restoreDots(text: String): String {
+        return text.replace("<DOT>", ".")
     }
     
     /**
@@ -54,10 +74,10 @@ object TextParser {
         return text
             // 移除多余的空白字符
             .replace(Regex("\\s+"), " ")
-            // 处理常见的缩写
-            .replace(Regex("\\b(Mr|Mrs|Ms|Dr|Prof)\\.\\s+"), "$1 ")
+            // 处理常见的缩写（在句号前添加特殊标记，避免被分割）
+            .replace(Regex("\\b(Mr|Mrs|Ms|Dr|Prof)\\.\\s+"), "$1<DOT> ")
             // 处理数字后的句号（如 "1. 2. 3."）
-            .replace(Regex("(\\d+)\\.\\s+"), "$1 ")
+            .replace(Regex("(\\d+)\\.\\s+"), "$1<DOT> ")
             // 处理引号内的内容
             .replace(Regex("\"([^\"]+)\""), "\"$1\"")
             // 处理括号内的内容
