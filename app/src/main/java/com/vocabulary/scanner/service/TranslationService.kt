@@ -16,6 +16,16 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
 /**
+ * 翻译服务提供商枚举
+ */
+enum class TranslationProvider {
+    BAIDU,      // 百度翻译
+    GOOGLE,     // Google翻译
+    YOUDAO,     // 有道翻译
+    LOCAL       // 本地词典
+}
+
+/**
  * 翻译服务类
  * 支持多种翻译API：百度翻译、Google翻译、有道翻译等
  */
@@ -25,14 +35,6 @@ class TranslationService(private val context: Context) {
     
     companion object {
         private const val TAG = "TranslationService"
-        
-        // 翻译服务类型
-        enum class TranslationProvider {
-            BAIDU,      // 百度翻译
-            GOOGLE,     // Google翻译
-            YOUDAO,     // 有道翻译
-            LOCAL       // 本地词典
-        }
         
         // 百度翻译API配置
         private const val BAIDU_APP_ID = "your_baidu_app_id"

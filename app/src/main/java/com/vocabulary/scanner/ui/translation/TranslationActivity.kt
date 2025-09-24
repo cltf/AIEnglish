@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.vocabulary.scanner.R
 import com.vocabulary.scanner.databinding.ActivityTranslationBinding
 import com.vocabulary.scanner.service.TranslationService
+import com.vocabulary.scanner.service.TranslationProvider
 import com.vocabulary.scanner.ui.settings.TranslationSettingsActivity
 import com.vocabulary.scanner.utils.TextParser
 import kotlinx.coroutines.launch
@@ -207,14 +208,14 @@ class TranslationActivity : AppCompatActivity() {
     }
     
     
-    private fun getSelectedTranslationProvider(): TranslationService.TranslationProvider {
+    private fun getSelectedTranslationProvider(): TranslationProvider {
         val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         val provider = sharedPreferences.getString(KEY_TRANSLATION_PROVIDER, "LOCAL")
         return when (provider) {
-            "BAIDU" -> TranslationService.TranslationProvider.BAIDU
-            "GOOGLE" -> TranslationService.TranslationProvider.GOOGLE
-            "YOUDAO" -> TranslationService.TranslationProvider.YOUDAO
-            else -> TranslationService.TranslationProvider.LOCAL
+            "BAIDU" -> TranslationProvider.BAIDU
+            "GOOGLE" -> TranslationProvider.GOOGLE
+            "YOUDAO" -> TranslationProvider.YOUDAO
+            else -> TranslationProvider.LOCAL
         }
     }
     

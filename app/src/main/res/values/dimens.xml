@@ -48,5 +48,10 @@
     <!-- 扫描框 -->
     <dimen name="scan_frame_width">320dp</dimen>
     <dimen name="scan_frame_height">240dp</dimen>
+    
+    <!-- 内边距 -->
+    <dimen name="padding_8">8dp</dimen>
+    <dimen name="padding_12">12dp</dimen>
+    <dimen name="padding_16">16dp</dimen>
 </resources>
 

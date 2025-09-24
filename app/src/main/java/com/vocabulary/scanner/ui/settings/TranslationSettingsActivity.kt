@@ -5,9 +5,12 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.vocabulary.scanner.R
 import com.vocabulary.scanner.databinding.ActivityTranslationSettingsBinding
 import com.vocabulary.scanner.service.TranslationService
+import com.vocabulary.scanner.service.TranslationProvider
+import kotlinx.coroutines.launch
 
 /**
  * 翻译设置页面
@@ -57,19 +60,19 @@ class TranslationSettingsActivity : AppCompatActivity() {
         
         // 翻译服务选择
         binding.radioBaidu.setOnClickListener {
-            updateProviderSelection(TranslationService.TranslationProvider.BAIDU)
+            updateProviderSelection(TranslationProvider.BAIDU)
         }
         
         binding.radioGoogle.setOnClickListener {
-            updateProviderSelection(TranslationService.TranslationProvider.GOOGLE)
+            updateProviderSelection(TranslationProvider.GOOGLE)
         }
         
         binding.radioYoudao.setOnClickListener {
-            updateProviderSelection(TranslationService.TranslationProvider.YOUDAO)
+            updateProviderSelection(TranslationProvider.YOUDAO)
         }
         
         binding.radioLocal.setOnClickListener {
-            updateProviderSelection(TranslationService.TranslationProvider.LOCAL)
+            updateProviderSelection(TranslationProvider.LOCAL)
         }
     }
     
@@ -116,8 +119,8 @@ class TranslationSettingsActivity : AppCompatActivity() {
         val testText = "Hello, world!"
         val translationService = TranslationService(this)
         
-        // 在后台线程执行翻译测试
-        Thread {
+        // 使用协程执行翻译测试
+        lifecycleScope.launch {
             try {
                 val result = translationService.translate(
                     testText,
@@ -126,61 +129,57 @@ class TranslationSettingsActivity : AppCompatActivity() {
                     provider = getCurrentProvider()
                 )
                 
-                runOnUiThread {
-                    if (result.success) {
-                        Toast.makeText(
-                            this,
-                            "测试成功：$testText -> ${result.translatedText}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            this,
-                            "测试失败：${result.error}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-            } catch (e: Exception) {
-                runOnUiThread {
+                if (result.success) {
                     Toast.makeText(
-                        this,
-                        "测试出错：${e.message}",
+                        this@TranslationSettingsActivity,
+                        "测试成功：$testText -> ${result.translatedText}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@TranslationSettingsActivity,
+                        "测试失败：${result.error}",
                         Toast.LENGTH_LONG
                     ).show()
                 }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@TranslationSettingsActivity,
+                    "测试出错：${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-        }.start()
-    }
-    
-    private fun getCurrentProvider(): TranslationService.TranslationProvider {
-        return when {
-            binding.radioBaidu.isChecked -> TranslationService.TranslationProvider.BAIDU
-            binding.radioGoogle.isChecked -> TranslationService.TranslationProvider.GOOGLE
-            binding.radioYoudao.isChecked -> TranslationService.TranslationProvider.YOUDAO
-            else -> TranslationService.TranslationProvider.LOCAL
         }
     }
     
-    private fun updateProviderSelection(provider: TranslationService.TranslationProvider) {
+    private fun getCurrentProvider(): TranslationProvider {
+        return when {
+            binding.radioBaidu.isChecked -> TranslationProvider.BAIDU
+            binding.radioGoogle.isChecked -> TranslationProvider.GOOGLE
+            binding.radioYoudao.isChecked -> TranslationProvider.YOUDAO
+            else -> TranslationProvider.LOCAL
+        }
+    }
+    
+    private fun updateProviderSelection(provider: TranslationProvider) {
         // 显示/隐藏相应的API配置区域
         when (provider) {
-            TranslationService.TranslationProvider.BAIDU -> {
+            TranslationProvider.BAIDU -> {
                 binding.layoutBaiduConfig.visibility = android.view.View.VISIBLE
                 binding.layoutGoogleConfig.visibility = android.view.View.GONE
                 binding.layoutYoudaoConfig.visibility = android.view.View.GONE
             }
-            TranslationService.TranslationProvider.GOOGLE -> {
+            TranslationProvider.GOOGLE -> {
                 binding.layoutBaiduConfig.visibility = android.view.View.GONE
                 binding.layoutGoogleConfig.visibility = android.view.View.VISIBLE
                 binding.layoutYoudaoConfig.visibility = android.view.View.GONE
             }
-            TranslationService.TranslationProvider.YOUDAO -> {
+            TranslationProvider.YOUDAO -> {
                 binding.layoutBaiduConfig.visibility = android.view.View.GONE
                 binding.layoutGoogleConfig.visibility = android.view.View.GONE
                 binding.layoutYoudaoConfig.visibility = android.view.View.VISIBLE
             }
-            TranslationService.TranslationProvider.LOCAL -> {
+            TranslationProvider.LOCAL -> {
                 binding.layoutBaiduConfig.visibility = android.view.View.GONE
                 binding.layoutGoogleConfig.visibility = android.view.View.GONE
                 binding.layoutYoudaoConfig.visibility = android.view.View.GONE

@@ -1414,6 +1414,7 @@ color background_floating_material_light
 color background_light
 color background_material_dark
 color background_material_light
+color background_primary
 color background_white
 color bottom_nav_item_color
 color bright_foreground_disabled_material_dark
@@ -1484,6 +1485,7 @@ color dim_foreground_disabled_material_light
 color dim_foreground_material_dark
 color dim_foreground_material_light
 color divider
+color error_color
 color error_color_material_dark
 color error_color_material_light
 color foreground_material_dark
@@ -2151,6 +2153,7 @@ color part_of_speech_verb
 color primary_blue
 color primary_blue_dark
 color primary_blue_light
+color primary_color
 color primary_dark_material_dark
 color primary_dark_material_light
 color primary_material_dark
@@ -2181,6 +2184,7 @@ color text_white
 color tooltip_background_dark
 color tooltip_background_light
 color unknown_word
+color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -2993,6 +2997,9 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+dimen padding_12
+dimen padding_16
+dimen padding_8
 dimen scan_frame_height
 dimen scan_frame_width
 dimen sliding_pane_detail_pane_width
@@ -3096,6 +3103,7 @@ drawable bg_badge
 drawable bg_card
 drawable bg_circle_avatar
 drawable bg_circle_primary_button
+drawable bg_edit_text
 drawable bg_part_of_speech
 drawable bg_primary_button
 drawable bg_scan_border
@@ -3370,10 +3378,12 @@ id btn_previous_word
 id btn_query_all
 id btn_rescan
 id btn_review
+id btn_save
 id btn_scan
 id btn_scan_reading
 id btn_settings
 id btn_switch_mode
+id btn_test_translation
 id btn_translation
 id btn_word_lookup
 id buttonPanel
@@ -3461,12 +3471,17 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id et_baidu_app_id
+id et_baidu_secret_key
 id et_example
+id et_google_api_key
 id et_meaning
 id et_part_of_speech
 id et_phonetic
 id et_search
 id et_word
+id et_youdao_app_key
+id et_youdao_app_secret
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3530,11 +3545,14 @@ id jumpToStart
 id labeled
 id layout
 id layout_about
+id layout_baidu_config
 id layout_definitions
 id layout_feedback
+id layout_google_config
 id layout_settings
 id layout_translation_content
 id layout_vocabulary
+id layout_youdao_config
 id left
 id leftToRight
 id legacy
@@ -3669,6 +3687,10 @@ id pressed
 id progress_circular
 id progress_horizontal
 id radio
+id radio_baidu
+id radio_google
+id radio_local
+id radio_youdao
 id ratio
 id rectangles
 id recycler_settings
@@ -3953,6 +3975,7 @@ layout activity_result
 layout activity_scan
 layout activity_settings
 layout activity_translation
+layout activity_translation_settings
 layout activity_vocabulary
 layout activity_word_detail
 layout custom_dialog

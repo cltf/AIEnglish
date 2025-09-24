@@ -35,7 +35,7 @@ class TranslationCacheManager(private val context: Context) {
         text: String,
         from: String,
         to: String,
-        provider: TranslationService.TranslationProvider
+        provider: TranslationProvider
     ): TranslationResult? {
         val cacheKey = generateCacheKey(text, from, to, provider)
         
@@ -65,7 +65,7 @@ class TranslationCacheManager(private val context: Context) {
         text: String,
         from: String,
         to: String,
-        provider: TranslationService.TranslationProvider,
+        provider: TranslationProvider,
         result: TranslationResult
     ) {
         val cacheKey = generateCacheKey(text, from, to, provider)
@@ -135,8 +135,8 @@ class TranslationCacheManager(private val context: Context) {
     fun getCacheStats(): CacheStats {
         synchronized(cacheLock) {
             val memorySize = memoryCache.size()
-            val memoryHitCount = memoryCache.hitCount()
-            val memoryMissCount = memoryCache.missCount()
+            val memoryHitCount = memoryCache.hitCount().toLong()
+            val memoryMissCount = memoryCache.missCount().toLong()
             
             val persistentSize = sharedPreferences.all.count { (key, _) ->
                 key.startsWith("cache_")
@@ -158,7 +158,7 @@ class TranslationCacheManager(private val context: Context) {
         text: String,
         from: String,
         to: String,
-        provider: TranslationService.TranslationProvider
+        provider: TranslationProvider
     ): String {
         return "${provider.name}_${from}_${to}_${text.hashCode()}"
     }

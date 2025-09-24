@@ -4,28 +4,36 @@
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_main.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/xml_backup_rules.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/xml/backup_rules.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_frame.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_scan_frame.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_search.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_search.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_settings.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_item_setting.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_setting.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_launcher_foreground.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_arrow_forward.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_arrow_forward.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_activity_import_vocabulary.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_import_vocabulary.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-xhdpi/ic_launcher_round.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_secondary_button.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_secondary_button.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_square_function_button.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_square_function_button.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/color_bottom_nav_item_color.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/color/bottom_nav_item_color.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_arrow_back.xml.flat",
@@ -36,24 +44,60 @@
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-hdpi/ic_launcher_round.xml"
     },
     {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_border.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_scan_border.xml"
+    },
+    {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_quote.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_quote.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-mdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_camera.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_camera.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_translate.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_translate.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_label.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_label.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_part_of_speech.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_part_of_speech.xml"
     },
     {
+        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_edit_text.xml.flat",
+        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_edit_text.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/xml_data_extraction_rules.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_primary_button.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_primary_button.xml"
+    },
+    {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_circle_primary_button.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_circle_primary_button.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_vocabulary.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_vocabulary.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_unknown_word.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_unknown_word.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_gallery.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_gallery.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
@@ -68,56 +112,40 @@
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_scan.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_activity_settings.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_settings.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_activity_vocabulary.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_vocabulary.xml"
-    },
-    {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_activity_settings.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-mdpi_ic_launcher_round.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-mdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-debug-60:/layout_activity_translation_settings.xml.flat",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_translation_settings.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_activity_result.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_result.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_star_filled.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_star_filled.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_fragment_test.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/fragment_test.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_dictionary.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_dictionary.xml"
-    },
-    {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-hdpi_ic_launcher.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-hdpi/ic_launcher.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_volume_up.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_volume_up.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_button.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_scan_button.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_part_of_speech.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_part_of_speech.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_card.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_card.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_circle_avatar.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_circle_avatar.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_edit.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_edit.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_unknown_word.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_unknown_word.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_camera.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_camera.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_square_function_button.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_square_function_button.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_circle_avatar.xml.flat",
@@ -128,12 +156,8 @@
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_translation.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_feedback.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_feedback.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_search_box.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_search_box.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_fragment_test.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_test.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
@@ -144,16 +168,32 @@
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_label.xml"
     },
     {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_feedback.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_feedback.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_item_vocabulary.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_vocabulary.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_flashlight.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_flashlight.xml"
+    },
+    {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_item_vocabulary_list.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_vocabulary_list.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_activity_translation.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_translation.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_dictionary.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_dictionary.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_edit.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_edit.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_activity_translation_settings.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_translation_settings.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_activity_vocabulary.xml.flat",
@@ -162,6 +202,10 @@
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_volume_up.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_volume_up.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-xxhdpi/ic_launcher.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_search_box.xml.flat",
@@ -180,228 +224,44 @@
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_vocabulary.xml"
     },
     {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xhdpi_ic_launcher.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-xhdpi/ic_launcher.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_arrow_forward.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_arrow_forward.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_item_setting.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/item_setting.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/xml_backup_rules.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/xml/backup_rules.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_quote.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_quote.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_star_border.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_star_border.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_star_border.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_star_border.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_fragment_scan.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_scan.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/xml_data_extraction_rules.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/xml/data_extraction_rules.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_frame.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_scan_frame.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_settings.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_settings.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_search.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_search.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_item_setting.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_setting.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_launcher_foreground.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xhdpi_ic_launcher_round.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-xhdpi/ic_launcher_round.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_border.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_scan_border.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-mdpi_ic_launcher.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-mdpi/ic_launcher.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_camera.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_camera.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_border.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_scan_border.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_gallery.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_gallery.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-anydpi-v26/ic_launcher_round.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_frame.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_scan_frame.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/xml_data_extraction_rules.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/xml/data_extraction_rules.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_primary_button.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_primary_button.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_vocabulary.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_vocabulary.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_unknown_word.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_unknown_word.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_gallery.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_gallery.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_search.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_search.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-mdpi_ic_launcher_round.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-mdpi/ic_launcher_round.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_activity_result.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_result.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_button.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_scan_button.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_vocabulary.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_vocabulary.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_scan_button.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_scan_button.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_card.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_card.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_star_filled.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_star_filled.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_square_function_button.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/bg_square_function_button.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_fragment_test.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_test.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_feedback.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_feedback.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_item_vocabulary.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_vocabulary.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_flashlight.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_flashlight.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_dictionary.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_dictionary.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_translate.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_translate.xml"
-    },
-    {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xxhdpi_ic_launcher.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-xxhdpi/ic_launcher.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_badge.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_badge.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_bg_card.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/bg_card.xml"
-    },
-    {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xxxhdpi_ic_launcher.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-xxxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/mipmap-xhdpi/ic_launcher.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_fragment_profile.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_profile.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/menu_bottom_navigation_menu.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/menu/bottom_navigation_menu.xml"
-    },
-    {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_activity_main.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_main.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/xml_backup_rules.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/xml/backup_rules.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_fragment_simple_test.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_simple_test.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/layout_fragment_simple_test.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/layout/fragment_simple_test.xml"
-    },
-    {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_activity_import_vocabulary.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_import_vocabulary.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_settings.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_settings.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_ic_star_border.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/drawable/ic_star_border.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/color_bottom_nav_item_color.xml.flat",
         "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/color/bottom_nav_item_color.xml"
     },
     {
-        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/menu_bottom_navigation_menu.xml.flat",
-        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/menu/bottom_navigation_menu.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/layout_fragment_scan.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_scan.xml"
     },
     {
-        "merged": "com.vocabulary.scanner.app-debug-60:/drawable_ic_flashlight.xml.flat",
-        "source": "com.vocabulary.scanner.app-main-62:/drawable/ic_flashlight.xml"
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/menu_bottom_navigation_menu.xml.flat",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/menu/bottom_navigation_menu.xml"
     },
     {
         "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-debug-60:/drawable_bg_badge.xml.flat",
