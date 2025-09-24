@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_white">
+
+    <!-- 顶部搜索栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_16"
+        android:background="@color/background_light">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="搜索中考词汇..."
+            android:background="@drawable/bg_search_box"
+            android:padding="@dimen/margin_12"
+            android:textSize="@dimen/text_size_14"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/margin_8" />
+
+        <TextView
+            android:id="@+id/btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="筛选"
+            android:textColor="@color/primary_blue"
+            android:textSize="@dimen/text_size_14"
+            android:padding="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_8"
+            android:background="?android:attr/selectableItemBackground" />
+
+    </LinearLayout>
+
+    <!-- 词汇统计信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_16"
+        android:background="@color/background_white">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="总词汇：1600个"
+            android:textSize="@dimen/text_size_12"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/divider" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="已掌握：0个"
+            android:textSize="@dimen/text_size_12"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/divider" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="待学习：1600个"
+            android:textSize="@dimen/text_size_12"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <!-- 词汇列表 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_vocabulary"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/margin_8"
+        android:paddingBottom="80dp" />
+
+</LinearLayout>

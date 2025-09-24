@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_16"
+    android:background="?android:attr/selectableItemBackground"
+    android:minHeight="@dimen/list_item_height">
+
+    <!-- 单词 -->
+    <TextView
+        android:id="@+id/tv_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="word"
+        android:textSize="@dimen/text_size_16"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold" />
+
+    <!-- 释义 -->
+    <TextView
+        android:id="@+id/tv_meaning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="单词，词语"
+        android:textSize="@dimen/text_size_14"
+        android:textColor="@color/text_primary"
+        android:layout_marginTop="@dimen/margin_4" />
+
+</LinearLayout>
+
+
+

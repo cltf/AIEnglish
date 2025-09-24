@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- 相机预览 -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_button_area" />
+
+    <!-- 顶部操作栏 -->
+    <LinearLayout
+        android:id="@+id/top_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_16"
+        android:background="#80000000">
+
+        <!-- 返回按钮 -->
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/icon_size_24"
+            android:layout_height="@dimen/icon_size_24"
+            android:src="@drawable/ic_arrow_back"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/back"
+            android:tint="@color/text_white" />
+
+        <!-- 右侧按钮组 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:layout_gravity="end">
+
+            <!-- 闪光灯按钮 -->
+            <ImageView
+                android:id="@+id/btn_flashlight"
+                android:layout_width="@dimen/icon_size_24"
+                android:layout_height="@dimen/icon_size_24"
+                android:src="@drawable/ic_flashlight"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/flashlight"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:tint="@color/text_white" />
+
+            <!-- 相册按钮 -->
+            <ImageView
+                android:id="@+id/btn_gallery"
+                android:layout_width="@dimen/icon_size_24"
+                android:layout_height="@dimen/icon_size_24"
+                android:src="@drawable/ic_gallery"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/gallery"
+                android:tint="@color/text_white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 扫描框 -->
+    <FrameLayout
+        android:layout_width="@dimen/scan_frame_width"
+        android:layout_height="@dimen/scan_frame_height"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_scan_frame">
+
+        <!-- 扫描框边框 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_scan_border" />
+
+    </FrameLayout>
+
+    <!-- 提示文字 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/camera_preview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_24"
+        android:text="@string/scan_tip"
+        style="@style/HintText"
+        android:textColor="@color/text_white"
+        android:background="#80000000"
+        android:padding="@dimen/margin_8" />
+
+    <!-- 底部按钮区域 -->
+    <LinearLayout
+        android:id="@+id/bottom_button_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_navigation"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="@dimen/margin_24"
+        android:background="#80000000">
+
+        <!-- 取消按钮 -->
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_48"
+            android:text="@string/cancel"
+            style="@style/TextButton"
+            android:textColor="@color/text_white"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:layout_marginEnd="@dimen/margin_32" />
+
+        <!-- 扫描按钮 -->
+        <Button
+            android:id="@+id/btn_scan"
+            android:layout_width="@dimen/button_circle_diameter_70"
+            android:layout_height="@dimen/button_circle_diameter_70"
+            android:background="@drawable/bg_scan_button"
+            android:drawableTop="@drawable/ic_camera"
+            android:text="@string/scan_button"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_size_12"
+            android:gravity="center"
+            android:elevation="8dp" />
+
+    </LinearLayout>
+
+    <!-- 底部导航栏 -->
+    <LinearLayout
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/background_white"
+        android:elevation="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <!-- 中考词汇 -->
+        <LinearLayout
+            android:id="@+id/nav_vocabulary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/icon_vocabulary"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_vocabulary"
+                android:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/text_vocabulary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中考词汇"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- 扫描 -->
+        <LinearLayout
+            android:id="@+id/nav_scan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/icon_scan"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_camera"
+                android:tint="@color/primary_blue" />
+
+            <TextView
+                android:id="@+id/text_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扫描"
+                android:textSize="12sp"
+                android:textColor="@color/primary_blue"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- 我的 -->
+        <LinearLayout
+            android:id="@+id/nav_profile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/icon_profile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_settings"
+                android:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/text_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 加载动画 -->
+    <LinearLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#CC000000"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/primary_blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:text="@string/recognizing"
+            style="@style/BodyText"
+            android:textColor="@color/text_white" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+
+

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 用户信息卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_24"
+            android:background="@color/primary_blue"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_vocabulary"
+                android:background="@drawable/bg_circle_avatar"
+                android:padding="@dimen/margin_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中考词汇学习者"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/margin_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已学习 0 个词汇"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/text_size_14"
+                android:alpha="0.8"
+                android:layout_marginTop="@dimen/margin_4" />
+
+        </LinearLayout>
+
+        <!-- 学习统计 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_16"
+            android:background="@color/background_white">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_24"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已掌握"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="@dimen/margin_4" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_24"
+                    android:textStyle="bold"
+                    android:textColor="@color/accent_orange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学习中"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="@dimen/margin_4" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1600"
+                    android:textSize="@dimen/text_size_24"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="待学习"
+                    android:textSize="@dimen/text_size_12"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="@dimen/margin_4" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 功能菜单 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin_16">
+
+            <!-- 生词本 -->
+            <LinearLayout
+                android:id="@+id/layout_vocabulary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_16"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_24"
+                    android:layout_height="@dimen/icon_size_24"
+                    android:src="@drawable/ic_vocabulary"
+                    android:tint="@color/primary_blue" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我的生词本"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginStart="@dimen/margin_16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_14"
+                    android:textColor="@color/text_secondary"
+                    android:background="@drawable/bg_badge"
+                    android:padding="@dimen/margin_4"
+                    android:minWidth="24dp"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_16"
+                    android:layout_height="@dimen/icon_size_16"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/text_secondary"
+                    android:layout_marginStart="@dimen/margin_8" />
+
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginStart="@dimen/margin_56" />
+
+            <!-- 设置 -->
+            <LinearLayout
+                android:id="@+id/layout_settings"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_16"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_24"
+                    android:layout_height="@dimen/icon_size_24"
+                    android:src="@drawable/ic_settings"
+                    android:tint="@color/primary_blue" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="设置"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginStart="@dimen/margin_16" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_16"
+                    android:layout_height="@dimen/icon_size_16"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/text_secondary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 其他功能 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin_24">
+
+            <!-- 反馈 -->
+            <LinearLayout
+                android:id="@+id/layout_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_16"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_24"
+                    android:layout_height="@dimen/icon_size_24"
+                    android:src="@drawable/ic_feedback"
+                    android:tint="@color/primary_blue" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="意见反馈"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginStart="@dimen/margin_16" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_16"
+                    android:layout_height="@dimen/icon_size_16"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/text_secondary" />
+
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginStart="@dimen/margin_56" />
+
+            <!-- 关于 -->
+            <LinearLayout
+                android:id="@+id/layout_about"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_16"
+                android:background="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_24"
+                    android:layout_height="@dimen/icon_size_24"
+                    android:src="@drawable/ic_vocabulary"
+                    android:tint="@color/primary_blue" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="关于应用"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginStart="@dimen/margin_16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="V1.0.0"
+                    android:textSize="@dimen/text_size_14"
+                    android:textColor="@color/text_secondary" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_16"
+                    android:layout_height="@dimen/icon_size_16"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/text_secondary"
+                    android:layout_marginStart="@dimen/margin_8" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

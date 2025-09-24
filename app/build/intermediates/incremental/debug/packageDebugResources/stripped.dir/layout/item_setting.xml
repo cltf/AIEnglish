@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_item_height"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="@dimen/margin_16"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- 图标 -->
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="@dimen/icon_size_24"
+        android:layout_height="@dimen/icon_size_24"
+        android:src="@drawable/ic_settings"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:contentDescription="设置图标" />
+
+    <!-- 设置项名称 -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="设置项"
+        android:textSize="@dimen/text_size_14"
+        android:textColor="@color/text_primary" />
+
+    <!-- 设置项状态/操作 -->
+    <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="当前值"
+        android:textSize="@dimen/text_size_14"
+        android:textColor="@color/text_secondary"
+        android:layout_marginEnd="@dimen/margin_8" />
+
+    <!-- 箭头图标 -->
+    <ImageView
+        android:layout_width="@dimen/icon_size_16"
+        android:layout_height="@dimen/icon_size_16"
+        android:src="@drawable/ic_arrow_forward"
+        android:contentDescription="前进"
+        android:alpha="0.5" />
+
+</LinearLayout>
+
+
+
+
+

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_white">
+
+    <!-- 顶部操作栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_16"
+        android:background="@color/background_light">
+
+        <!-- 返回按钮 -->
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="←"
+            android:textSize="24sp"
+            android:textColor="#FF333333"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/back"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:visibility="visible"
+            android:padding="8dp" />
+
+        <!-- 单词标题 -->
+        <TextView
+            android:id="@+id/tv_word"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="abandon"
+            style="@style/TitleText" />
+
+        <!-- 加入生词本按钮 -->
+        <ImageView
+            android:id="@+id/btn_add_to_vocabulary"
+            android:layout_width="@dimen/icon_size_24"
+            android:layout_height="@dimen/icon_size_24"
+            android:src="@drawable/ic_star_border"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/add_to_vocabulary" />
+
+    </LinearLayout>
+
+    <!-- 详情内容区域 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/margin_16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 音标 -->
+            <TextView
+                android:id="@+id/tv_phonetic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="/əˈbændən/"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="italic"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="@dimen/margin_16" />
+
+            <!-- 释义列表 -->
+            <LinearLayout
+                android:id="@+id/layout_definitions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/margin_24">
+
+                <!-- 动词释义 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/margin_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="▶"
+                        android:textColor="@color/part_of_speech_verb"
+                        android:textSize="@dimen/text_size_14"
+                        android:layout_marginEnd="@dimen/margin_4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="动词："
+                        android:textColor="@color/part_of_speech_verb"
+                        android:textSize="@dimen/text_size_14"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="@dimen/margin_4" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="放弃；遗弃"
+                        android:textSize="@dimen/text_size_14"
+                        android:textColor="@color/text_primary" />
+
+                </LinearLayout>
+
+                <!-- 名词释义 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/margin_16">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="▶"
+                        android:textColor="@color/part_of_speech_noun"
+                        android:textSize="@dimen/text_size_14"
+                        android:layout_marginEnd="@dimen/margin_4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="名词："
+                        android:textColor="@color/part_of_speech_noun"
+                        android:textSize="@dimen/text_size_14"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="@dimen/margin_4" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="放任；狂热"
+                        android:textSize="@dimen/text_size_14"
+                        android:textColor="@color/text_primary" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- 底部切换栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_16"
+        android:background="@color/background_light">
+
+        <!-- 上一个按钮 -->
+        <TextView
+            android:id="@+id/btn_previous_word"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/previous_word"
+            style="@style/TextButton"
+            android:gravity="start" />
+
+        <!-- 下一个按钮 -->
+        <TextView
+            android:id="@+id/btn_next_word"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/next_word"
+            style="@style/TextButton"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+

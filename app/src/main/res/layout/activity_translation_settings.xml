@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_primary">
+
+    <!-- 顶部操作栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_16"
+        android:background="@color/background_white"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← 返回"
+            android:textSize="16sp"
+            android:textColor="@color/primary_color"
+            android:padding="@dimen/padding_8"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="翻译设置"
+            android:textSize="18sp"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:textSize="16sp"
+            android:textColor="@color/primary_color"
+            android:padding="@dimen/padding_8"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </LinearLayout>
+
+    <!-- 滚动内容 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_16">
+
+            <!-- 翻译服务选择 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="翻译服务"
+                android:textSize="18sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/margin_16" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radio_local"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="本地词典（无需网络）"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:checked="true"
+                    android:layout_marginBottom="@dimen/margin_8" />
+
+                <RadioButton
+                    android:id="@+id/radio_baidu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="百度翻译"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="@dimen/margin_8" />
+
+                <RadioButton
+                    android:id="@+id/radio_google"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Google翻译"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="@dimen/margin_8" />
+
+                <RadioButton
+                    android:id="@+id/radio_youdao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="有道翻译"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="@dimen/margin_8" />
+
+            </RadioGroup>
+
+            <!-- 百度翻译配置 -->
+            <LinearLayout
+                android:id="@+id/layout_baidu_config"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/margin_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="百度翻译配置"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="App ID"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="@dimen/margin_4" />
+
+                <EditText
+                    android:id="@+id/et_baidu_app_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入百度翻译App ID"
+                    android:textSize="14sp"
+                    android:padding="@dimen/padding_12"
+                    android:background="@drawable/bg_edit_text"
+                    android:layout_marginBottom="@dimen/margin_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Secret Key"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="@dimen/margin_4" />
+
+                <EditText
+                    android:id="@+id/et_baidu_secret_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入百度翻译Secret Key"
+                    android:textSize="14sp"
+                    android:padding="@dimen/padding_12"
+                    android:background="@drawable/bg_edit_text"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+
+            <!-- Google翻译配置 -->
+            <LinearLayout
+                android:id="@+id/layout_google_config"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/margin_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Google翻译配置"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="API Key"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="@dimen/margin_4" />
+
+                <EditText
+                    android:id="@+id/et_google_api_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入Google翻译API Key"
+                    android:textSize="14sp"
+                    android:padding="@dimen/padding_12"
+                    android:background="@drawable/bg_edit_text"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+
+            <!-- 有道翻译配置 -->
+            <LinearLayout
+                android:id="@+id/layout_youdao_config"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/margin_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="有道翻译配置"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="App Key"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="@dimen/margin_4" />
+
+                <EditText
+                    android:id="@+id/et_youdao_app_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入有道翻译App Key"
+                    android:textSize="14sp"
+                    android:padding="@dimen/padding_12"
+                    android:background="@drawable/bg_edit_text"
+                    android:layout_marginBottom="@dimen/margin_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="App Secret"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="@dimen/margin_4" />
+
+                <EditText
+                    android:id="@+id/et_youdao_app_secret"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入有道翻译App Secret"
+                    android:textSize="14sp"
+                    android:padding="@dimen/padding_12"
+                    android:background="@drawable/bg_edit_text"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+
+            <!-- 测试翻译按钮 -->
+            <TextView
+                android:id="@+id/btn_test_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="测试翻译"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@color/primary_color"
+                android:padding="@dimen/padding_16"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/margin_24"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- 使用说明 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="使用说明：\n1. 本地词典：无需网络，词汇量有限\n2. 在线翻译：需要网络连接和API密钥\n3. 获取API密钥请访问相应服务商官网"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="@dimen/margin_16"
+                android:lineSpacingExtra="4dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

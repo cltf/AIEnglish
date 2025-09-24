@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 应用主题 -->
+    <style name="Theme.VocabularyScanner" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryVariant">@color/primary_blue_dark</item>
+        <item name="colorOnPrimary">@color/text_white</item>
+        <item name="colorSecondary">@color/secondary_gray</item>
+        <item name="colorOnSecondary">@color/text_white</item>
+        <item name="android:colorBackground">@color/background_white</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorSurface">@color/background_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+
+    <!-- 主按钮样式 -->
+    <style name="PrimaryButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/button_height_56</item>
+        <item name="android:background">@drawable/bg_primary_button</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">@dimen/margin_24</item>
+        <item name="android:paddingEnd">@dimen/margin_24</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <!-- 圆形主按钮样式 -->
+    <style name="CirclePrimaryButton">
+        <item name="android:layout_width">@dimen/button_circle_diameter_80</item>
+        <item name="android:layout_height">@dimen/button_circle_diameter_80</item>
+        <item name="android:background">@drawable/bg_circle_primary_button</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:elevation">8dp</item>
+    </style>
+
+    <!-- 次要按钮样式 -->
+    <style name="SecondaryButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/button_height_48</item>
+        <item name="android:background">@drawable/bg_secondary_button</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:paddingStart">@dimen/margin_16</item>
+        <item name="android:paddingEnd">@dimen/margin_16</item>
+    </style>
+
+    <!-- 方形功能按钮样式 -->
+    <style name="SquareFunctionButton">
+        <item name="android:layout_width">@dimen/button_square_50</item>
+        <item name="android:layout_height">@dimen/button_square_50</item>
+        <item name="android:background">@drawable/bg_square_function_button</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <!-- 文本按钮样式 -->
+    <style name="TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:textColor">@color/primary_blue</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:paddingStart">@dimen/margin_8</item>
+        <item name="android:paddingEnd">@dimen/margin_8</item>
+    </style>
+
+    <!-- 标题文本样式 -->
+    <style name="TitleText">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- 副标题文本样式 -->
+    <style name="SubtitleText">
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- 正文文本样式 -->
+    <style name="BodyText">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+
+    <!-- 提示文本样式 -->
+    <style name="HintText">
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textColor">@color/text_hint</item>
+    </style>
+
+    <!-- 生词标记样式 -->
+    <style name="UnknownWordText">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/unknown_word</item>
+        <item name="android:background">@drawable/bg_unknown_word</item>
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>
+
+    <!-- 列表项样式 -->
+    <style name="ListItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/list_item_height</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:paddingStart">@dimen/margin_16</item>
+        <item name="android:paddingEnd">@dimen/margin_16</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!-- 卡片样式 -->
+    <style name="CardStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:padding">@dimen/margin_16</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:layout_margin">@dimen/margin_8</item>
+    </style>
+</resources>
+

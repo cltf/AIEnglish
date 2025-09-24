@@ -1,0 +1,102 @@
+[
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/item_setting.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_setting.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/item_vocabulary.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_vocabulary.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/fragment_vocabulary.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_vocabulary.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_vocabulary.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_vocabulary.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/item_setting.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/item_setting.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_result.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_result.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_main.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_scan.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_scan.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/fragment_scan.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_scan.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_settings.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_main.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/fragment_simple_test.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_simple_test.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/fragment_test.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_test.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_import_vocabulary.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_import_vocabulary.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_word_detail.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_word_detail.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_import_vocabulary.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_import_vocabulary.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/fragment_simple_test.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/fragment_simple_test.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_translation.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_translation.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_main_tabs.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_main_tabs.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/fragment_profile.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/fragment_profile.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/item_vocabulary_list.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/item_vocabulary_list.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_vocabulary.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_vocabulary.xml"
+    },
+    {
+        "merged": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_translation.xml",
+        "source": "/Users/chenlei/.gradle/daemon/8.10.2/com.vocabulary.scanner.app-main-62:/layout/activity_translation.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/fragment_test.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/fragment_test.xml"
+    },
+    {
+        "merged": "com.vocabulary.scanner.app-mergeDebugResources-59:/layout/activity_settings.xml",
+        "source": "com.vocabulary.scanner.app-main-62:/layout/activity_settings.xml"
+    }
+]
