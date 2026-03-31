@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>中考词汇扫描助手 · Web</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="data/vocabulary-data.js"></script>
+</head>
+<body>
+  <div id="app" class="app font-standard">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="icon-btn hidden" id="btn-result-back" aria-label="返回">←</button>
+      </div>
+      <h1 class="app-title" id="app-title">中考词汇扫描助手</h1>
+      <div class="top-bar-right" aria-hidden="true"></div>
+    </header>
+
+    <main class="main">
+      <section id="panel-vocab" class="panel active">
+        <div class="search-row">
+          <input type="search" id="vocab-search" class="input-search" placeholder="搜索单词…" autocomplete="off" />
+          <button type="button" class="btn-secondary" id="btn-filter">筛选</button>
+        </div>
+        <p class="hint muted" id="vocab-count"></p>
+        <ul id="vocab-list" class="list-cards"></ul>
+        <nav class="pagination" id="vocab-pagination" aria-label="词库分页" hidden>
+          <button type="button" class="btn-secondary" id="vocab-page-prev">上一页</button>
+          <span class="page-info" id="vocab-page-info"></span>
+          <button type="button" class="btn-secondary" id="vocab-page-next">下一页</button>
+        </nav>
+      </section>
+
+      <section id="panel-scan" class="panel">
+        <p class="hint">粘贴英文文本、从相册选图或摄像头拍照：图片文字由「我的」中配置的大模型识图接口识别（需联网与有效密钥；摄像头需 HTTPS 或本机访问）。</p>
+        <textarea id="scan-text" class="textarea" rows="8" placeholder="在此粘贴英文段落…"></textarea>
+        <div class="row-actions wrap">
+          <label class="btn-primary file-label">
+            选择图片
+            <input type="file" id="scan-file" accept="image/*" hidden />
+          </label>
+          <button type="button" class="btn-secondary" id="btn-camera-open">摄像头拍照</button>
+          <button type="button" class="btn-primary" id="btn-analyze">识别并分析</button>
+        </div>
+        <div class="row-actions wrap">
+          <button type="button" class="btn-secondary" id="btn-reading-ai">AI 深度分析</button>
+          <span class="hint muted small reading-ai-hint">未点「AI 深度分析」时使用本地启发式；深度分析走内置希望学接口。</span>
+        </div>
+        <p id="ocr-status" class="hint muted" role="status"></p>
+        <p id="reading-analysis-status" class="hint muted" role="status" hidden></p>
+        <div id="reading-analysis-wrap" class="reading-analysis-wrap hidden" role="region" aria-label="阅读分析">
+          <h2 class="section-title reading-analysis-title">阅读分析</h2>
+          <p id="reading-analysis-mode" class="hint muted small"></p>
+          <div id="reading-analysis-body" class="reading-analysis-body"></div>
+        </div>
+      </section>
+
+      <section id="panel-profile" class="panel">
+        <div class="card settings-block">
+          <h2 class="section-title">我的生词本</h2>
+          <p class="muted small">本地保存，清除浏览器数据会丢失。</p>
+          <div class="row-actions">
+            <button type="button" class="btn-secondary" id="btn-notebook-review">随机复习</button>
+            <button type="button" class="btn-secondary" id="btn-notebook-clear">清空生词本</button>
+          </div>
+          <ul id="notebook-list" class="list-simple"></ul>
+        </div>
+        <div class="card settings-block">
+          <h2 class="section-title">词典与显示</h2>
+          <label class="field-label">字体大小</label>
+          <div class="segmented" id="font-size-seg">
+            <button type="button" data-size="small">小</button>
+            <button type="button" data-size="standard" class="active">标准</button>
+            <button type="button" data-size="large">大</button>
+            <button type="button" data-size="xlarge">超大</button>
+          </div>
+          <button type="button" class="btn-secondary full-width mt-8" id="btn-clear-cache">清理缓存</button>
+        </div>
+        <div class="card settings-block">
+          <h2 class="section-title">阅读 AI 与识图模型</h2>
+          <p class="muted small">请先启动仓库 <code>server/</code> 下 Go 代理（默认 <code>127.0.0.1:8787</code>），页面请求经代理转发希望学接口，无需在浏览器填写密钥。可在此修改模型名。</p>
+          <label class="field-label" for="ai-model">阅读分析模型</label>
+          <input type="text" id="ai-model" class="input-search full-width mt-8" placeholder="gemini-3-pro" autocomplete="off" />
+          <label class="field-label" for="ai-ocr-model">识图 / OCR 模型</label>
+          <input type="text" id="ai-ocr-model" class="input-search full-width mt-8" placeholder="gemini-2.5-flash-image" autocomplete="off" />
+          <button type="button" class="btn-primary full-width mt-8" id="btn-ai-save">保存模型设置</button>
+        </div>
+        <div class="card settings-block">
+          <h2 class="section-title">关于</h2>
+          <p class="muted small">词库与仓库中 <code>process_vocabulary.py</code> 的中考词表一致（约 1600+ 条，合并同形异义后 1686 条）。更新词表后请运行 <code>python3 web/scripts/build_vocab_from_process_vocabulary.py</code> 重新生成数据文件。弹窗中例句为英文（Free Dictionary API），译文由 MyMemory 机器翻译；离线可运行 <code>python3 web/scripts/fill_vocabulary_examples.py</code> 将例句与译文写入词库。扫描页在识别文本后会生成本地启发式阅读分析；「AI 深度分析」与图片识图使用内置希望学接口。</p>
+          <p class="muted small">版本：Web 1.3.0</p>
+        </div>
+      </section>
+
+      <section id="panel-result" class="panel">
+        <div class="stats-row">
+          <span id="stat-unknown"></span>
+          <span id="stat-accuracy"></span>
+        </div>
+        <article id="result-text" class="result-text" aria-live="polite"></article>
+        <div id="result-reading-wrap" class="reading-analysis-wrap hidden" role="region" aria-label="阅读分析">
+          <h2 class="section-title reading-analysis-title">阅读分析</h2>
+          <p id="result-reading-mode" class="hint muted small"></p>
+          <div id="result-reading-body" class="reading-analysis-body"></div>
+        </div>
+        <div class="row-actions wrap">
+          <button type="button" class="btn-secondary" id="btn-rescan">重新输入</button>
+          <button type="button" class="btn-primary" id="btn-query-all">全部查询</button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" id="bottom-nav" aria-label="主导航">
+      <button type="button" class="nav-item active" data-tab="vocab">
+        <span class="nav-icon" aria-hidden="true">📚</span>
+        <span>词库</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="scan">
+        <span class="nav-icon" aria-hidden="true">🔍</span>
+        <span>扫描</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="profile">
+        <span class="nav-icon" aria-hidden="true">👤</span>
+        <span>我的</span>
+      </button>
+    </nav>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-word-title">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-word-title" class="modal-word"></h2>
+        <button type="button" class="icon-btn" id="modal-close" aria-label="关闭">×</button>
+      </div>
+      <p id="modal-phonetic" class="phonetic"></p>
+      <div id="modal-definitions" class="definitions"></div>
+      <div id="modal-example-wrap" class="modal-example-wrap">
+        <div class="example-label">例句</div>
+        <blockquote class="example-text">
+          <p id="modal-example-en" class="example-en"></p>
+          <p id="modal-example-zh" class="example-zh"></p>
+        </blockquote>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="modal-prev">上一个</button>
+        <button type="button" class="btn-primary" id="modal-add-notebook">加入生词本</button>
+        <button type="button" class="btn-secondary" id="modal-next">下一个</button>
+      </div>
+      <p id="modal-note" class="hint muted"></p>
+    </div>
+  </div>
+
+  <div id="dialog-filter" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal modal-sm">
+      <h2 class="section-title">选择词汇类型</h2>
+      <div class="filter-options">
+        <label><input type="radio" name="filter-type" value="ALL" checked /> 所有词汇</label>
+        <label><input type="radio" name="filter-type" value="MIDDLE_SCHOOL" /> 中考词汇</label>
+        <label><input type="radio" name="filter-type" value="ADVANCED" /> 超纲词汇</label>
+      </div>
+      <button type="button" class="btn-primary full-width" id="btn-filter-ok">确定</button>
+    </div>
+  </div>
+
+  <div id="camera-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="camera-title">
+    <div class="modal modal-camera">
+      <div class="modal-header">
+        <h2 id="camera-title" class="section-title camera-modal-title">摄像头拍照</h2>
+        <button type="button" class="icon-btn" id="camera-close" aria-label="关闭">×</button>
+      </div>
+      <p class="hint muted small">对准纸上英文，稳定后点击拍照。若画面无法显示，请检查权限或使用「选择图片」。</p>
+      <div class="camera-preview-wrap">
+        <video id="camera-video" playsinline autoplay muted></video>
+      </div>
+      <canvas id="camera-canvas" class="hidden" aria-hidden="true"></canvas>
+      <div class="camera-actions">
+        <button type="button" class="btn-secondary" id="camera-cancel">取消</button>
+        <button type="button" class="btn-primary" id="camera-capture">拍照并识别</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
