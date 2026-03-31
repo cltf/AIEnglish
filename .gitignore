@@ -12,3 +12,7 @@ captures/
 
 # Local logs
 web/scripts/*.log
+
+# Xcode
+ios/**/xcuserdata/
+*.xcuserstate
