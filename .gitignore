@@ -1,6 +1,7 @@
 # Android / Gradle
 .gradle/
 local.properties
+android/local.properties
 build/
 **/build/
 captures/
