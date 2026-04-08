@@ -10,7 +10,78 @@ def copyVocabulary = tasks.register('copyVocabularyJson', Copy) {
     onlyIf { src.exists() }
 }
 
-tasks.named('preBuild').configure { dependsOn copyVocabulary }
+def copyEssays = tasks.register('copyEssaysJson', Copy) {
+    def src = rootProject.file('../web/data/essays.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyReading = tasks.register('copyReadingContentJson', Copy) {
+    def src = rootProject.file('../web/data/reading_content.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyEssayAudio = tasks.register('copyEssayAudio', Copy) {
+    def src = rootProject.file('../web/data/audio/essays')
+    from src
+    into layout.projectDirectory.dir('src/main/assets/audio/essays')
+    include '**/*.wav'
+    onlyIf { src.exists() }
+}
+
+def copyDaofaText = tasks.register('copyDaofaText', Copy) {
+    def src = rootProject.file('../web/data/daofa_reference.txt')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyDaofaStructure = tasks.register('copyDaofaStructure', Copy) {
+    def src = rootProject.file('../web/data/daofa_structure.txt')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyReadingHighFreq = tasks.register('copyReadingHighFreq', Copy) {
+    def src = rootProject.file('../web/data/reading_high_freq.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyMc688 = tasks.register('copyMc688', Copy) {
+    def src = rootProject.file('../web/data/mc688_21day.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyReadingSkills = tasks.register('copyReadingSkills', Copy) {
+    def src = rootProject.file('../web/data/reading_skills_zhongkao.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyDaofaPastExams = tasks.register('copyDaofaPastExams', Copy) {
+    def src = rootProject.file('../web/data/daofa_past_exams.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyChineseZhongkao = tasks.register('copyChineseZhongkao', Copy) {
+    def src = rootProject.file('../web/data/chinese_zhongkao.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+tasks.named('preBuild').configure { dependsOn copyVocabulary, copyEssays, copyReading, copyEssayAudio, copyDaofaText, copyDaofaStructure, copyReadingHighFreq, copyMc688, copyReadingSkills, copyDaofaPastExams, copyChineseZhongkao }
 
 android {
     namespace 'com.cltf.aienglish'

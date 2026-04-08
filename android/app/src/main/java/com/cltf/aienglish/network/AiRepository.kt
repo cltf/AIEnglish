@@ -24,6 +24,8 @@ class AiRepository {
 
     private val url: String
         get() = "http://${BuildConfig.AI_PROXY_HOST}:8787/openai-compatible/v1/chat/completions"
+    private val ttsUrl: String
+        get() = "http://${BuildConfig.AI_PROXY_HOST}:8787/openai-compatible/v1/essay-tts"
 
     private val jsonMedia = "application/json; charset=utf-8".toMediaType()
 
@@ -84,6 +86,26 @@ class AiRepository {
             .put("messages", messages)
             .put("temperature", 0.35)
         postJson(body).let { contentString(it) }.trim()
+    }
+
+    suspend fun synthesizeEssayTts(text: String): ByteArray = withContext(Dispatchers.IO) {
+        val body = JSONObject()
+            .put("model", "gemini-2.5-flash-tts")
+            .put("voiceName", "Kore")
+            .put("text", text)
+        val req = Request.Builder()
+            .url(ttsUrl)
+            .post(body.toString().toRequestBody(jsonMedia))
+            .build()
+        client.newCall(req).execute().use { resp ->
+            val bytes = resp.body?.bytes() ?: ByteArray(0)
+            if (!resp.isSuccessful) {
+                val t = bytes.toString(Charsets.UTF_8)
+                throw IllegalStateException("HTTP ${resp.code}: ${t.take(400)}")
+            }
+            if (bytes.isEmpty()) throw IllegalStateException("TTS 返回空音频")
+            bytes
+        }
     }
 
     private fun bitmapToJpeg(bitmap: Bitmap): ByteArray {

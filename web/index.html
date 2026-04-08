@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>中考词汇扫描助手 · Web</title>
+  <title>中考应试 · Web</title>
   <link rel="stylesheet" href="css/styles.css" />
   <script src="data/vocabulary-data.js"></script>
+  <script src="data/essays-data.js"></script>
+  <script src="data/reading-data.js"></script>
 </head>
 <body>
   <div id="app" class="app font-standard">
@@ -13,69 +15,139 @@
       <div class="top-bar-left">
         <button type="button" class="icon-btn hidden" id="btn-result-back" aria-label="返回">←</button>
       </div>
-      <h1 class="app-title" id="app-title">中考词汇扫描助手</h1>
+      <h1 class="app-title" id="app-title">中考应试</h1>
       <div class="top-bar-right" aria-hidden="true"></div>
     </header>
 
     <main class="main">
-      <section id="panel-vocab" class="panel active">
-        <div class="search-row">
-          <input type="search" id="vocab-search" class="input-search" placeholder="搜索单词…" autocomplete="off" />
-          <button type="button" class="btn-secondary" id="btn-filter">筛选</button>
+      <section id="panel-chinese" class="panel active">
+        <div class="english-subnav chinese-subnav" role="tablist" aria-label="语文分区">
+          <button type="button" class="english-sub-btn active" data-chinese-sub="essay" role="tab">作文</button>
+          <button type="button" class="english-sub-btn" data-chinese-sub="zhongkao" role="tab">中考真题</button>
         </div>
-        <p class="hint muted" id="vocab-count"></p>
-        <ul id="vocab-list" class="list-cards"></ul>
-        <nav class="pagination" id="vocab-pagination" aria-label="词库分页" hidden>
-          <button type="button" class="btn-secondary" id="vocab-page-prev">上一页</button>
-          <span class="page-info" id="vocab-page-info"></span>
-          <button type="button" class="btn-secondary" id="vocab-page-next">下一页</button>
-        </nav>
+        <div id="chinese-pane-essay" class="english-pane active" data-chinese-pane="essay">
+          <p class="hint muted">中考语文范文与题目</p>
+          <div id="essay-stack-list-cn" class="essay-stack"></div>
+          <div id="essay-stack-detail-cn" class="essay-stack hidden"></div>
+        </div>
+        <div id="chinese-pane-zhongkao" class="english-pane" data-chinese-pane="zhongkao">
+          <div id="chinese-zk-stack-list" class="essay-stack"></div>
+          <div id="chinese-zk-stack-detail" class="essay-stack hidden"></div>
+        </div>
       </section>
 
-      <section id="panel-scan" class="panel">
-        <p class="hint">粘贴英文文本、从相册选图或摄像头拍照：图片文字由「我的」中配置的大模型识图接口识别（需联网与有效密钥；摄像头需 HTTPS 或本机访问）。</p>
-        <textarea id="scan-text" class="textarea" rows="8" placeholder="在此粘贴英文段落…"></textarea>
-        <div class="row-actions wrap">
-          <label class="btn-primary file-label">
-            选择图片
-            <input type="file" id="scan-file" accept="image/*" hidden />
-          </label>
-          <button type="button" class="btn-secondary" id="btn-camera-open">摄像头拍照</button>
-          <button type="button" class="btn-primary" id="btn-analyze">识别并分析</button>
+      <section id="panel-english" class="panel">
+        <div class="english-subnav" role="tablist" aria-label="英语分区">
+          <button type="button" class="english-sub-btn active" data-english-sub="vocab" role="tab">词库</button>
+          <button type="button" class="english-sub-btn" data-english-sub="scan" role="tab">英语阅读</button>
+          <button type="button" class="english-sub-btn" data-english-sub="readinghf" role="tab">阅读高频</button>
+          <button type="button" class="english-sub-btn" data-english-sub="readingskills" role="tab">阅读技巧</button>
+          <button type="button" class="english-sub-btn" data-english-sub="mc688" role="tab">21天688</button>
+          <button type="button" class="english-sub-btn" data-english-sub="essay" role="tab">英语作文</button>
         </div>
-        <div class="row-actions wrap">
-          <button type="button" class="btn-secondary" id="btn-reading-ai">AI 深度分析</button>
-          <span class="hint muted small reading-ai-hint">未点「AI 深度分析」时使用本地启发式；深度分析走内置希望学接口。</span>
+        <div id="english-pane-vocab" class="english-pane active" data-english-pane="vocab">
+          <div class="search-row">
+            <input type="search" id="vocab-search" class="input-search" placeholder="搜索单词…" autocomplete="off" />
+            <button type="button" class="btn-secondary" id="btn-filter">筛选</button>
+          </div>
+          <p class="hint muted" id="vocab-count"></p>
+          <ul id="vocab-list" class="list-cards"></ul>
+          <nav class="pagination" id="vocab-pagination" aria-label="词库分页" hidden>
+            <button type="button" class="btn-secondary" id="vocab-page-prev">上一页</button>
+            <span class="page-info" id="vocab-page-info"></span>
+            <button type="button" class="btn-secondary" id="vocab-page-next">下一页</button>
+          </nav>
         </div>
-        <p id="ocr-status" class="hint muted" role="status"></p>
-        <p id="reading-analysis-status" class="hint muted" role="status" hidden></p>
-        <div id="reading-analysis-wrap" class="reading-analysis-wrap hidden" role="region" aria-label="阅读分析">
-          <h2 class="section-title reading-analysis-title">阅读分析</h2>
-          <p id="reading-analysis-mode" class="hint muted small"></p>
-          <div id="reading-analysis-body" class="reading-analysis-body"></div>
+        <div id="english-pane-scan" class="english-pane" data-english-pane="scan">
+          <div id="reading-materials-root" class="reading-materials card settings-block" aria-live="polite"></div>
+          <div class="card settings-block scan-card">
+            <h2 class="section-title scan-section-title">文本</h2>
+            <p class="muted small">可粘贴英文段落；识图需配置代理与模型（见「我的」）。摄像头需 HTTPS 或本机访问。</p>
+            <textarea id="scan-text" class="textarea" rows="8" placeholder="在此粘贴英文段落…"></textarea>
+          </div>
+          <div class="card settings-block scan-card">
+            <h2 class="section-title scan-section-title">图片</h2>
+            <p class="muted small">选择教材、试卷等含英文的照片</p>
+            <div class="row-actions wrap">
+              <label class="btn-primary file-label">
+                相册
+                <input type="file" id="scan-file" accept="image/*" hidden />
+              </label>
+              <button type="button" class="btn-secondary" id="btn-camera-open">拍照</button>
+              <button type="button" class="btn-primary" id="btn-analyze">识别并分析</button>
+            </div>
+          </div>
+          <div class="card settings-block scan-card">
+            <h2 class="section-title scan-section-title">操作</h2>
+            <div class="row-actions wrap">
+              <button type="button" class="btn-secondary" id="btn-reading-ai">AI 深度分析</button>
+              <span class="hint muted small reading-ai-hint">未使用 AI 时为本地启发式阅读分析。</span>
+            </div>
+          </div>
+          <p id="ocr-status" class="hint muted" role="status"></p>
+          <p id="reading-analysis-status" class="hint muted" role="status" hidden></p>
+          <div id="reading-analysis-wrap" class="reading-analysis-wrap hidden" role="region" aria-label="阅读分析">
+            <h2 class="section-title reading-analysis-title">阅读分析</h2>
+            <p id="reading-analysis-mode" class="hint muted small"></p>
+            <div id="reading-analysis-body" class="reading-analysis-body"></div>
+          </div>
+        </div>
+        <div id="english-pane-readinghf" class="english-pane" data-english-pane="readinghf">
+          <p class="hint muted">中考阅读高频词（序号 196–217、373–404 暂无图源，未收录）。点击单词或 🔊 朗读。</p>
+          <p id="reading-hf-note" class="muted small hidden" hidden></p>
+          <div id="reading-hf-wrap" class="reading-hf-wrap card settings-block"></div>
+        </div>
+        <div id="english-pane-readingskills" class="english-pane" data-english-pane="readingskills">
+          <p class="hint muted">中考英语阅读解题技巧（题型要点与示例）。</p>
+          <div id="reading-skills-root" class="card settings-block reading-skills-root"></div>
+        </div>
+        <div id="english-pane-mc688" class="english-pane" data-english-pane="mc688">
+          <p class="hint muted">中考英语【单项选择】核心高频688词 · 21天背诵与听写（系统朗读）。</p>
+          <div id="mc688-root" class="card settings-block mc688-root"></div>
+        </div>
+        <div id="english-pane-essay" class="english-pane" data-english-pane="essay">
+          <p class="hint muted">中考英语范文与题目</p>
+          <div id="essay-stack-list-en" class="essay-stack"></div>
+          <div id="essay-stack-detail-en" class="essay-stack hidden"></div>
+        </div>
+      </section>
+
+      <section id="panel-daofa" class="panel">
+        <div class="english-subnav daofa-subnav" role="tablist" aria-label="道法分区">
+          <button type="button" class="english-sub-btn active" data-daofa-sub="structure" role="tab">试卷结构</button>
+          <button type="button" class="english-sub-btn" data-daofa-sub="subjective" role="tab">主观题</button>
+          <button type="button" class="english-sub-btn" data-daofa-sub="past" role="tab">历年中考题</button>
+        </div>
+        <div id="daofa-pane-structure" class="english-pane active" data-daofa-pane="structure">
+          <div class="card settings-block daofa-card">
+            <p id="daofa-structure-status" class="muted small">加载中…</p>
+            <pre id="daofa-structure-content" class="daofa-pre" hidden></pre>
+          </div>
+        </div>
+        <div id="daofa-pane-subjective" class="english-pane" data-daofa-pane="subjective">
+          <p class="hint muted">按板块浏览，点击条目查看全文（与英语作文相同版式）。</p>
+          <div id="daofa-stack-list" class="essay-stack"></div>
+          <div id="daofa-stack-detail" class="essay-stack hidden"></div>
+        </div>
+        <div id="daofa-pane-past" class="english-pane" data-daofa-pane="past">
+          <div id="daofa-past-stack-list" class="essay-stack"></div>
+          <div id="daofa-past-stack-detail" class="essay-stack hidden"></div>
         </div>
       </section>
 
       <section id="panel-profile" class="panel">
         <div class="card settings-block">
-          <h2 class="section-title">我的生词本</h2>
-          <p class="muted small">本地保存，清除浏览器数据会丢失。</p>
+          <h2 class="section-title">缓存</h2>
+          <button type="button" class="btn-secondary full-width" id="btn-clear-cache">清理缓存</button>
+        </div>
+        <div class="card settings-block">
+          <h2 class="section-title" id="notebook-heading">生词本（0）</h2>
+          <p class="muted small notebook-footer">在词库详情或阅读结果中可加入生词本，数据保存在本机（清除站点数据会丢失）。</p>
           <div class="row-actions">
             <button type="button" class="btn-secondary" id="btn-notebook-review">随机复习</button>
             <button type="button" class="btn-secondary" id="btn-notebook-clear">清空生词本</button>
           </div>
           <ul id="notebook-list" class="list-simple"></ul>
-        </div>
-        <div class="card settings-block">
-          <h2 class="section-title">词典与显示</h2>
-          <label class="field-label">字体大小</label>
-          <div class="segmented" id="font-size-seg">
-            <button type="button" data-size="small">小</button>
-            <button type="button" data-size="standard" class="active">标准</button>
-            <button type="button" data-size="large">大</button>
-            <button type="button" data-size="xlarge">超大</button>
-          </div>
-          <button type="button" class="btn-secondary full-width mt-8" id="btn-clear-cache">清理缓存</button>
         </div>
         <div class="card settings-block">
           <h2 class="section-title">阅读 AI 与识图模型</h2>
@@ -88,8 +160,8 @@
         </div>
         <div class="card settings-block">
           <h2 class="section-title">关于</h2>
-          <p class="muted small">词库与仓库中 <code>process_vocabulary.py</code> 的中考词表一致（约 1600+ 条，合并同形异义后 1686 条）。更新词表后请运行 <code>python3 web/scripts/build_vocab_from_process_vocabulary.py</code> 重新生成数据文件。弹窗中例句为英文（Free Dictionary API），译文由 MyMemory 机器翻译；离线可运行 <code>python3 web/scripts/fill_vocabulary_examples.py</code> 将例句与译文写入词库。扫描页在识别文本后会生成本地启发式阅读分析；「AI 深度分析」与图片识图使用内置希望学接口。</p>
-          <p class="muted small">版本：Web 1.3.0</p>
+          <p class="muted small">词库与仓库中 <code>process_vocabulary.py</code> 的中考词表一致（约 1600+ 条，合并同形异义后 1686 条）。更新词表后请运行 <code>python3 web/scripts/build_vocab_from_process_vocabulary.py</code> 重新生成数据文件。弹窗中例句为英文（Free Dictionary API），译文由 MyMemory 机器翻译；离线可运行 <code>python3 web/scripts/fill_vocabulary_examples.py</code> 将例句与译文写入词库。阅读页在识别文本后会生成本地启发式阅读分析；「AI 深度分析」与图片识图使用内置希望学接口。</p>
+          <p class="muted small">版本：Web 1.4.0</p>
         </div>
       </section>
 
@@ -112,13 +184,17 @@
     </main>
 
     <nav class="bottom-nav" id="bottom-nav" aria-label="主导航">
-      <button type="button" class="nav-item active" data-tab="vocab">
-        <span class="nav-icon" aria-hidden="true">📚</span>
-        <span>词库</span>
+      <button type="button" class="nav-item active" data-tab="chinese">
+        <span class="nav-icon" aria-hidden="true">📜</span>
+        <span>语文</span>
       </button>
-      <button type="button" class="nav-item" data-tab="scan">
-        <span class="nav-icon" aria-hidden="true">🔍</span>
-        <span>扫描</span>
+      <button type="button" class="nav-item" data-tab="english">
+        <span class="nav-icon" aria-hidden="true">📚</span>
+        <span>英语</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="daofa">
+        <span class="nav-icon" aria-hidden="true">📋</span>
+        <span>道法</span>
       </button>
       <button type="button" class="nav-item" data-tab="profile">
         <span class="nav-icon" aria-hidden="true">👤</span>

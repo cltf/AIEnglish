@@ -17,6 +17,10 @@ struct ScanTabView: View {
     @State private var analysis: ReadingAnalysis?
     @State private var detailWord: String?
 
+    @State private var readingSubjects: [ReadingSubject] = []
+    @State private var readingLoadError: String?
+    @State private var readingSubjectKey = "english"
+
     private var unknownWords: [String] {
         let t = ocrText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !t.isEmpty else { return [] }
@@ -35,6 +39,7 @@ struct ScanTabView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
+                    readingMaterialsCard
                     imageCard
                     actionCard
                     if let err = errorMessage {
@@ -52,7 +57,18 @@ struct ScanTabView: View {
                 .padding(.vertical, 12)
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("扫描识图")
+            .navigationTitle("阅读识图")
+            .task {
+                do {
+                    readingSubjects = try ReadingDataLoader.load()
+                    if !readingSubjects.contains(where: { $0.id == readingSubjectKey }) {
+                        readingSubjectKey = readingSubjects.first?.id ?? "english"
+                    }
+                    readingLoadError = nil
+                } catch {
+                    readingLoadError = error.localizedDescription
+                }
+            }
             .onChange(of: photoItem) { new in
                 guard let new else { return }
                 Task {
@@ -81,6 +97,75 @@ struct ScanTabView: View {
                     .environment(\.fontScale, fontScale)
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
+            }
+        }
+    }
+
+    // MARK: - Reading materials
+
+    private var readingMaterialsCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            ScanSectionTitle(icon: "text.book.closed", title: "阅读材料", subtitle: "分学科收录真题与节选")
+            if readingSubjects.isEmpty, readingLoadError == nil {
+                ProgressView("加载中…")
+            } else if let err = readingLoadError {
+                Text(err)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            } else {
+                HStack {
+                    Text("学科")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Picker("学科", selection: $readingSubjectKey) {
+                        ForEach(readingSubjects) { s in
+                            Text(s.label).tag(s.id)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    Spacer()
+                }
+                if let sub = readingSubjects.first(where: { $0.id == readingSubjectKey }) {
+                    if sub.packs.isEmpty {
+                        Text("该学科阅读材料将陆续补充。")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(sub.packs) { pack in
+                            readingPackBlock(pack)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(scanCardBackground(elevated: true))
+    }
+
+    private func readingPackBlock(_ pack: ReadingPack) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("📚 \(pack.title)")
+                .font(.subheadline.weight(.semibold))
+            ForEach(pack.sections) { sec in
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(sec.headline)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.tint)
+                    Text(sec.body)
+                        .font(.system(size: fontScale.size))
+                        .lineSpacing(5)
+                }
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color(.secondarySystemGroupedBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            }
+            if let foot = pack.footer, !foot.isEmpty {
+                Text(foot)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineSpacing(3)
             }
         }
     }

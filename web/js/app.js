@@ -8,6 +8,11 @@ import {
 } from "./vocabulary.js";
 
 const STORAGE_NOTEBOOK = "aienglish_notebook";
+const STORAGE_ESSAY_SUBJECT = "aienglish_essay_subject";
+const STORAGE_ENGLISH_SUB = "aienglish_english_sub";
+const STORAGE_DAOF_SUB = "aienglish_daofa_sub";
+const STORAGE_CHINESE_SUB = "aienglish_chinese_sub";
+const STORAGE_READING_SUBJECT = "aienglish_reading_subject";
 const STORAGE_FONT = "aienglish_font";
 const STORAGE_AI_MODEL = "aienglish_ai_model";
 const STORAGE_AI_OCR_MODEL = "aienglish_ai_ocr_model";
@@ -17,6 +22,7 @@ const EMBEDDED_AI_BASE = "http://127.0.0.1:8787/openai-compatible/v1";
 
 const DEFAULT_AI_MODEL = "gemini-3-pro";
 const DEFAULT_AI_OCR_MODEL = "gemini-2.5-flash-image";
+const DEFAULT_ESSAY_TTS_VOICE = "Kore";
 
 const VOCAB_PAGE_SIZE = 20;
 
@@ -30,6 +36,8 @@ let recognizedText = "";
 let unknownWordsList = [];
 /** @type {MediaStream | null} */
 let cameraStream = null;
+/** @type {Map<string, {audio?: HTMLAudioElement, url?: string, loading?: boolean, duration?: number, current?: number, playing?: boolean}>} */
+const essayTtsState = new Map();
 
 /**
  * @typedef {{
@@ -437,33 +445,93 @@ function $(id) {
   return el;
 }
 
-function loadNotebook() {
+function migrateNotebookIfNeeded() {
   try {
     const raw = localStorage.getItem(STORAGE_NOTEBOOK);
-    if (!raw) return [];
-    const arr = JSON.parse(raw);
-    return Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : [];
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return;
+    const m = {};
+    for (const x of parsed) {
+      if (typeof x === "string") m[x.toLowerCase()] = 1;
+    }
+    localStorage.setItem(STORAGE_NOTEBOOK, JSON.stringify(m));
   } catch {
-    return [];
+    /* ignore */
   }
 }
 
-function saveNotebook(words) {
-  localStorage.setItem(STORAGE_NOTEBOOK, JSON.stringify([...new Set(words.map((w) => w.toLowerCase()))]));
+/** @returns {Record<string, number>} */
+function loadNotebookMap() {
+  migrateNotebookIfNeeded();
+  try {
+    const raw = localStorage.getItem(STORAGE_NOTEBOOK);
+    if (!raw) return {};
+    const o = JSON.parse(raw);
+    if (!o || typeof o !== "object" || Array.isArray(o)) return {};
+    /** @type {Record<string, number>} */
+    const m = {};
+    for (const [k, v] of Object.entries(o)) {
+      if (typeof k === "string" && typeof v === "number" && v > 0) m[k.toLowerCase()] = v;
+    }
+    return m;
+  } catch {
+    return {};
+  }
+}
+
+/** @param {Record<string, number>} m */
+function saveNotebookMap(m) {
+  localStorage.setItem(STORAGE_NOTEBOOK, JSON.stringify(m));
+}
+
+/** @returns {Array<[string, number]>} sorted by word */
+function loadNotebookSortedEntries() {
+  const m = loadNotebookMap();
+  return Object.entries(m).sort((a, b) => a[0].localeCompare(b[0], "en"));
+}
+
+/** @param {string} word */
+function notebookCount(word) {
+  const w = word.toLowerCase();
+  return loadNotebookMap()[w] ?? 0;
+}
+
+/** @type {ReturnType<typeof setTimeout> | null} */
+let notebookToastTimer = null;
+
+function showNotebookToast(message = "加入生词本成功") {
+  let el = document.getElementById("notebook-toast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "notebook-toast";
+    el.className = "notebook-toast";
+    el.setAttribute("role", "status");
+    document.body.appendChild(el);
+  }
+  el.textContent = message;
+  el.classList.add("visible");
+  if (notebookToastTimer != null) clearTimeout(notebookToastTimer);
+  notebookToastTimer = setTimeout(() => {
+    el.classList.remove("visible");
+    notebookToastTimer = null;
+  }, 2000);
 }
 
 function addToNotebook(word) {
   const w = word.toLowerCase();
-  const list = loadNotebook();
-  if (!list.includes(w)) {
-    list.push(w);
-    saveNotebook(list);
-  }
+  if (!w) return;
+  const m = loadNotebookMap();
+  m[w] = (m[w] ?? 0) + 1;
+  saveNotebookMap(m);
+  showNotebookToast();
 }
 
 function removeFromNotebook(word) {
   const w = word.toLowerCase();
-  saveNotebook(loadNotebook().filter((x) => x !== w));
+  const m = loadNotebookMap();
+  delete m[w];
+  saveNotebookMap(m);
 }
 
 function applyFontClass() {
@@ -472,24 +540,779 @@ function applyFontClass() {
   app.classList.remove("font-small", "font-standard", "font-large", "font-xlarge");
   const map = { small: "font-small", standard: "font-standard", large: "font-large", xlarge: "font-xlarge" };
   app.classList.add(map[v] || "font-standard");
-  document.querySelectorAll("#font-size-seg button").forEach((b) => {
-    b.classList.toggle("active", b.dataset.size === v);
+}
+
+const TAB_HEADER_TITLES = {
+  chinese: "语文",
+  english: "英语",
+  daofa: "道法",
+  profile: "我的",
+};
+
+function getEnglishSub() {
+  try {
+    const v = localStorage.getItem(STORAGE_ENGLISH_SUB);
+    return v === "vocab" || v === "scan" || v === "essay" || v === "readinghf" || v === "readingskills" || v === "mc688"
+      ? v
+      : "vocab";
+  } catch (_) {
+    return "vocab";
+  }
+}
+
+function setEnglishSub(v) {
+  try {
+    localStorage.setItem(STORAGE_ENGLISH_SUB, v);
+  } catch (_) {}
+}
+
+let readingHfLoaded = false;
+/** @type {{ rank: number, word: string, phonetic: string, meaning: string, frequency: number }[]} */
+let readingHfEntries = [];
+
+function loadReadingHighFreq() {
+  const wrap = $("reading-hf-wrap");
+  const noteEl = $("reading-hf-note");
+  if (!wrap) return;
+  if (readingHfLoaded) {
+    renderReadingHighFreqTable();
+    return;
+  }
+  wrap.innerHTML = "<p class=\"muted\">加载中…</p>";
+  fetch("data/reading_high_freq.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      readingHfEntries = data.entries || [];
+      readingHfLoaded = true;
+      if (noteEl && data.note) {
+        noteEl.textContent = data.note;
+        noteEl.hidden = false;
+        noteEl.classList.remove("hidden");
+      }
+      renderReadingHighFreqTable();
+    })
+    .catch(() => {
+      wrap.innerHTML = "<p class=\"muted\">加载失败，请确认存在 <code>data/reading_high_freq.json</code>。</p>";
+    });
+}
+
+function renderReadingHighFreqTable() {
+  const wrap = $("reading-hf-wrap");
+  if (!wrap) return;
+  if (!readingHfEntries.length) {
+    wrap.innerHTML = "<p class=\"muted\">暂无数据。</p>";
+    return;
+  }
+  const rows = readingHfEntries
+    .map(
+      (e) =>
+        `<tr>` +
+        `<td>${e.rank}</td>` +
+        `<td><span class="reading-hf-word-cell"><button type="button" class="linklike reading-hf-word" data-word="${escapeAttr(e.word)}">${escapeHtml(e.word)}</button>` +
+        `<button type="button" class="btn-nb-plus reading-hf-add-nb" data-word="${escapeAttr(e.word)}" aria-label="加入生词本">+</button></span></td>` +
+        `<td class="reading-hf-ipa">${escapeHtml(e.phonetic)}</td>` +
+        `<td>${escapeHtml(e.meaning)}</td>` +
+        `<td class="reading-hf-freq">${e.frequency}</td>` +
+        `<td><button type="button" class="btn-secondary reading-hf-speak" data-word="${escapeAttr(e.word)}" aria-label="朗读">🔊</button></td>` +
+        `</tr>`
+    )
+    .join("");
+  wrap.innerHTML =
+    `<div class="reading-hf-scroll">` +
+    `<table class="reading-hf-table" aria-label="阅读高频词汇">` +
+    `<thead><tr><th>序号</th><th>单词</th><th>音标</th><th>含义</th><th>词频</th><th></th></tr></thead>` +
+    `<tbody>${rows}</tbody></table></div>`;
+  wrap.querySelectorAll(".reading-hf-speak, .reading-hf-word").forEach((btn) => {
+    btn.addEventListener("click", () => speakEnglishWord((btn.dataset.word || "").trim()));
+  });
+  wrap.querySelectorAll(".reading-hf-add-nb").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const w = (btn.dataset.word || "").trim();
+      if (w) {
+        addToNotebook(w);
+        renderNotebook();
+      }
+    });
   });
 }
 
+function speakEnglishWord(word) {
+  if (!word) return;
+  if (typeof window.speechSynthesis === "undefined") {
+    alert("当前浏览器不支持语音朗读。");
+    return;
+  }
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const doSpeak = () => {
+    const u = new SpeechSynthesisUtterance(word);
+    u.lang = "en-US";
+    const voices = synth.getVoices();
+    const en =
+      voices.find((v) => /^en(-|$)/i.test(v.lang.replace("_", "-"))) ||
+      voices.find((v) => v.lang.toLowerCase().startsWith("en"));
+    if (en) u.voice = en;
+    synth.speak(u);
+  };
+  if (synth.getVoices().length > 0) {
+    doSpeak();
+    return;
+  }
+  let spoken = false;
+  const once = () => {
+    if (spoken) return;
+    spoken = true;
+    synth.removeEventListener("voiceschanged", once);
+    doSpeak();
+  };
+  synth.addEventListener("voiceschanged", once);
+  setTimeout(once, 400);
+}
+
+/** @param {"vocab"|"scan"|"readinghf"|"readingskills"|"mc688"|"essay"} sub */
+function showEnglishSub(sub) {
+  const s =
+    sub === "scan" || sub === "essay" || sub === "readinghf" || sub === "readingskills" || sub === "mc688"
+      ? sub
+      : "vocab";
+  setEnglishSub(s);
+  document.querySelectorAll(".english-pane").forEach((pane) => {
+    pane.classList.toggle("active", pane.dataset.englishPane === s);
+  });
+  document.querySelectorAll("[data-english-sub]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.englishSub === s);
+  });
+  if (s === "essay") {
+    setEssaySubject("english");
+    renderEssayList("en");
+  }
+  if (s === "scan") {
+    renderReadingMaterials();
+  }
+  if (s === "readinghf") {
+    loadReadingHighFreq();
+  }
+  if (s === "readingskills") {
+    loadReadingSkills();
+  }
+  if (s === "mc688") {
+    loadMc688();
+  }
+}
+
+let readingSkillsLoaded = false;
+
+function loadReadingSkills() {
+  const root = $("reading-skills-root");
+  if (!root) return;
+  if (readingSkillsLoaded) return;
+  root.innerHTML = "<p class=\"muted\">加载中…</p>";
+  fetch("data/reading_skills_zhongkao.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      readingSkillsLoaded = true;
+      root.innerHTML = renderReadingSkillsHtml(data);
+    })
+    .catch(() => {
+      root.innerHTML = "<p class=\"muted\">加载失败，请确认存在 <code>data/reading_skills_zhongkao.json</code>。</p>";
+    });
+}
+
+/** @param {{ label?: string, intro?: string, topics: { id: string, title: string, summary?: string, sections: { subtitle?: string, paragraph?: string, bullets?: string[] }[] }[] }} data */
+function renderReadingSkillsHtml(data) {
+  const intro = data.intro ? `<p class="muted reading-skills-intro">${escapeHtml(data.intro)}</p>` : "";
+  const topics = (data.topics || [])
+    .map((t) => {
+      const sum = t.summary ? `<p class="muted small reading-skills-sum">${escapeHtml(t.summary)}</p>` : "";
+      const secs = (t.sections || [])
+        .map((s) => {
+          const sub = s.subtitle ? `<h4 class="reading-skills-sub">${escapeHtml(s.subtitle)}</h4>` : "";
+          const para = s.paragraph
+            ? `<p class="reading-skills-p">${escapeHtml(s.paragraph).replace(/\n/g, "<br/>")}</p>`
+            : "";
+          const ul =
+            s.bullets && s.bullets.length
+              ? `<ul class="reading-skills-ul">${s.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`
+              : "";
+          return `<div class="reading-skills-sec">${sub}${para}${ul}</div>`;
+        })
+        .join("");
+      return `<article class="reading-skills-topic card settings-block"><h3 class="reading-skills-h3">${escapeHtml(t.title)}</h3>${sum}${secs}</article>`;
+    })
+    .join("");
+  return `<div class="reading-skills-inner">${intro}${topics}</div>`;
+}
+
+let mc688Loaded = false;
+/** @type {{ rank: number, day: number, word: string, meaning: string }[]} */
+let mc688Entries = [];
+let mc688SelectedDay = 1;
+/** @type {{ words: { rank: number, word: string, meaning: string }[]; idx: number } | null} */
+let mc688Session = null;
+let mc688Answer = "";
+let mc688Feedback = "";
+
+function loadMc688() {
+  const root = $("mc688-root");
+  if (!root) return;
+  if (mc688Loaded) {
+    renderMc688();
+    return;
+  }
+  root.innerHTML = "<p class=\"muted\">加载中…</p>";
+  fetch("data/mc688_21day.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      mc688Entries = data.entries || [];
+      mc688Loaded = true;
+      renderMc688();
+    })
+    .catch(() => {
+      root.innerHTML = "<p class=\"muted\">加载失败，请确认存在 <code>data/mc688_21day.json</code>。</p>";
+    });
+}
+
+function shuffleArray(a) {
+  const x = a.slice();
+  for (let i = x.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [x[i], x[j]] = [x[j], x[i]];
+  }
+  return x;
+}
+
+function renderMc688() {
+  const root = $("mc688-root");
+  if (!root || !mc688Entries.length) {
+    if (root && !mc688Entries.length) root.innerHTML = "<p class=\"muted\">暂无数据。</p>";
+    return;
+  }
+  const pool = mc688Entries.filter((e) => e.day === mc688SelectedDay);
+  const maxN = Math.min(33, pool.length) || 1;
+  const dayBtns = Array.from({ length: 21 }, (_, i) => i + 1)
+    .map(
+      (d) =>
+        `<button type="button" class="btn-secondary mc688-day-btn ${d === mc688SelectedDay ? "active" : ""}" data-mc688-day="${d}">第${d}天</button>`
+    )
+    .join("");
+  const sess = mc688Session;
+  const cur = sess && sess.words[sess.idx];
+  const dictationBlock =
+    sess && cur
+      ? `<div class="mc688-dict card settings-block mt-8">
+      <p class="small muted">第 ${sess.idx + 1} / ${sess.words.length} 词 · 序号 ${cur.rank}</p>
+      <div class="row-actions wrap mt-8">
+        <input type="text" id="mc688-answer" class="input-search" style="flex:1;min-width:140px" placeholder="输入英文单词" autocomplete="off" value="${escapeAttr(mc688Answer)}" />
+        <button type="button" class="btn-primary" id="mc688-submit">提交</button>
+        <button type="button" class="btn-secondary" id="mc688-next">${sess.idx >= sess.words.length - 1 ? "结束" : "下一词"}</button>
+      </div>
+      <p class="mc688-feedback muted small mt-8">${escapeHtml(mc688Feedback)}</p>
+    </div>`
+      : "";
+
+  root.innerHTML =
+    `<p class="small muted mb-8">${escapeHtml(mc688Entries.length ? "共 688 词" : "")}</p>` +
+    `<div class="row-actions wrap mc688-day-row" role="group" aria-label="选择天数">${dayBtns}</div>` +
+    `<h3 class="section-title mt-16">听写</h3>` +
+    `<p class="muted small">从当天词汇中抽取若干词朗读，请输入英文。</p>` +
+    `<div class="row-actions wrap mt-8 align-center">` +
+    `<label class="small">词数 <input type="number" id="mc688-count" min="1" max="${maxN}" value="${Math.min(10, maxN)}" class="input-search" style="width:72px" /></label>` +
+    `<label class="small"><input type="checkbox" id="mc688-shuffle" /> 随机顺序</label>` +
+    `<button type="button" class="btn-primary" id="mc688-start">开始听写</button>` +
+    `<button type="button" class="btn-secondary" id="mc688-repeat"${sess && cur ? "" : " disabled"}>再听一遍</button>` +
+    `</div>` +
+    dictationBlock +
+    `<h3 class="section-title mt-16">本日词表</h3>` +
+    `<div class="reading-hf-scroll"><table class="reading-hf-table"><thead><tr><th>序号</th><th>单词</th><th>释义</th><th></th></tr></thead><tbody>` +
+    pool
+      .map(
+        (e) =>
+          `<tr><td>${e.rank}</td><td><span class="mc688-word-cell"><button type="button" class="linklike mc688-word" data-word="${escapeAttr(e.word)}">${escapeHtml(e.word)}</button>` +
+          `<button type="button" class="btn-nb-plus mc688-add-nb" data-word="${escapeAttr(e.word)}" aria-label="加入生词本">+</button></span></td><td>${escapeHtml(e.meaning)}</td>` +
+          `<td><button type="button" class="btn-secondary mc688-speak" data-word="${escapeAttr(e.word)}" aria-label="朗读">🔊</button></td></tr>`
+      )
+      .join("") +
+    `</tbody></table></div>`;
+
+  root.querySelectorAll(".mc688-day-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      mc688SelectedDay = parseInt(/** @type {HTMLElement} */ (btn).dataset.mc688Day || "1", 10);
+      mc688Session = null;
+      mc688Feedback = "";
+      mc688Answer = "";
+      renderMc688();
+    });
+  });
+  const startBtn = $("mc688-start");
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      const n = parseInt(($("mc688-count") && $("mc688-count").value) || "10", 10);
+      const shuf = $("mc688-shuffle") && $("mc688-shuffle").checked;
+      const p = mc688Entries.filter((e) => e.day === mc688SelectedDay);
+      if (!p.length) return;
+      const lim = Math.min(Math.max(1, n), Math.min(33, p.length));
+      let pick = p.slice(0, lim);
+      if (shuf) pick = shuffleArray(p).slice(0, lim);
+      mc688Session = { words: pick, idx: 0 };
+      mc688Answer = "";
+      mc688Feedback = "";
+      renderMc688();
+      const w = pick[0].word;
+      setTimeout(() => speakEnglishWord(w), 100);
+    });
+  }
+  const rep = $("mc688-repeat");
+  if (rep && sess && cur) {
+    rep.addEventListener("click", () => speakEnglishWord(cur.word));
+  }
+  root.querySelectorAll(".mc688-speak, .mc688-word").forEach((btn) => {
+    btn.addEventListener("click", () => speakEnglishWord((btn.dataset.word || "").trim()));
+  });
+  root.querySelectorAll(".mc688-add-nb").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const w = (btn.dataset.word || "").trim();
+      if (w) {
+        addToNotebook(w);
+        renderNotebook();
+      }
+    });
+  });
+  const ansEl = $("mc688-answer");
+  if (ansEl && sess && cur) {
+    ansEl.addEventListener("input", () => {
+      mc688Answer = /** @type {HTMLInputElement} */ (ansEl).value;
+    });
+    $("mc688-submit")?.addEventListener("click", () => {
+      const a = /** @type {HTMLInputElement} */ (ansEl).value.trim();
+      const ok = a.toLowerCase() === cur.word.toLowerCase();
+      mc688Feedback = ok ? "正确" : `正确写法：${cur.word}`;
+      renderMc688();
+    });
+    $("mc688-next")?.addEventListener("click", () => {
+      if (!sess) return;
+      if (sess.idx >= sess.words.length - 1) {
+        mc688Session = null;
+        mc688Feedback = "本轮完成";
+        mc688Answer = "";
+        renderMc688();
+        return;
+      }
+      sess.idx += 1;
+      mc688Answer = "";
+      mc688Feedback = "";
+      renderMc688();
+      const nw = sess.words[sess.idx].word;
+      setTimeout(() => speakEnglishWord(nw), 100);
+    });
+  }
+}
+
+function getDaofaSub() {
+  try {
+    const v = localStorage.getItem(STORAGE_DAOF_SUB);
+    if (v === "subjective" || v === "past") return v;
+    return "structure";
+  } catch (_) {
+    return "structure";
+  }
+}
+
+function setDaofaSub(v) {
+  try {
+    localStorage.setItem(STORAGE_DAOF_SUB, v);
+  } catch (_) {}
+}
+
+/** @param {"structure"|"subjective"|"past"} sub */
+function showDaofaSub(sub) {
+  const s =
+    sub === "subjective" ? "subjective" : sub === "past" ? "past" : "structure";
+  setDaofaSub(s);
+  closeDaofaDetail();
+  closeDaofaPastDetail();
+  document.querySelectorAll("#panel-daofa [data-daofa-pane]").forEach((pane) => {
+    pane.classList.toggle("active", pane.dataset.daofaPane === s);
+  });
+  document.querySelectorAll("[data-daofa-sub]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.daofaSub === s);
+  });
+  if (s === "subjective") {
+    renderDaofaList();
+  }
+  if (s === "past") {
+    renderDaofaPastList();
+  }
+}
+
+/** @returns {{ title: string, body: string }[]} */
+function parseDaofaSections(text) {
+  const lines = text.split("\n");
+  const sections = [];
+  let i = 0;
+  while (i < lines.length) {
+    const t = lines[i].trim();
+    if (t.startsWith("📚") || t.startsWith("📊")) {
+      const title = t;
+      const bodyLines = [];
+      i++;
+      while (i < lines.length) {
+        const lt = lines[i].trim();
+        if (lt.startsWith("📚") || lt.startsWith("📊")) break;
+        bodyLines.push(lines[i]);
+        i++;
+      }
+      sections.push({ title, body: bodyLines.join("\n").trim() });
+    } else {
+      i++;
+    }
+  }
+  return sections;
+}
+
+let daofaDataReady = false;
+/** @type {{ title: string, body: string }[]} */
+let daofaSectionsCache = [];
+/** @type {{ title: string, body: string }[]} */
+let daofaPastItemsCache = [];
+/** @type {string} */
+let daofaPastLabel = "";
+
+function loadDaofaTab() {
+  if (daofaDataReady) {
+    showDaofaSub(getDaofaSub());
+    return;
+  }
+  const stStatus = $("daofa-structure-status");
+  const stPre = $("daofa-structure-content");
+  Promise.all([
+    fetch("data/daofa_structure.txt").then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.text();
+    }),
+    fetch("data/daofa_reference.txt").then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.text();
+    }),
+    fetch("data/daofa_past_exams.json")
+      .then((r) => (r.ok ? r.json() : Promise.resolve({ items: [] })))
+      .catch(() => ({ items: [] })),
+  ])
+    .then(([structureT, refT, pastJson]) => {
+      daofaDataReady = true;
+      if (stPre) {
+        stPre.textContent = structureT;
+        stPre.hidden = false;
+      }
+      if (stStatus) stStatus.hidden = true;
+      daofaSectionsCache = parseDaofaSections(refT);
+      const items = pastJson && Array.isArray(pastJson.items) ? pastJson.items : [];
+      daofaPastItemsCache = items.map((it) => ({
+        title: it.title || "",
+        body: it.body || "",
+      }));
+      daofaPastLabel = (pastJson && pastJson.label) || "";
+      renderDaofaList();
+      renderDaofaPastList();
+      showDaofaSub(getDaofaSub());
+    })
+    .catch(() => {
+      if (stStatus) {
+        stStatus.textContent =
+          "加载失败，请确认存在 data/daofa_structure.txt 与 data/daofa_reference.txt";
+      }
+    });
+}
+
+function renderDaofaList() {
+  const listEl = $("daofa-stack-list");
+  if (!listEl) return;
+  const sections = daofaSectionsCache;
+  if (!sections.length) {
+    listEl.innerHTML = "<p class=\"muted\">暂无主观题条目。</p>";
+    return;
+  }
+  const parts = [];
+  for (let idx = 0; idx < sections.length; idx++) {
+    const sec = sections[idx];
+    parts.push(
+      `<div class="essay-row-card">` +
+        `<button type="button" class="essay-row-btn daofa-open-btn" data-daofa-idx="${String(idx)}">` +
+          `<span class="essay-row-title">${escapeHtml(sec.title)}</span><span class="muted essay-row-chevron" aria-hidden="true">›</span>` +
+        `</button>` +
+      `</div>`
+    );
+  }
+  listEl.innerHTML = parts.join("");
+  listEl.querySelectorAll(".daofa-open-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idx = parseInt(btn.dataset.daofaIdx || "0", 10);
+      openDaofaDetail(idx);
+    });
+  });
+}
+
+function openDaofaDetail(idx) {
+  const sec = daofaSectionsCache[idx];
+  if (!sec) return;
+  const listEl = $("daofa-stack-list");
+  const detailEl = $("daofa-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.add("hidden");
+  detailEl.classList.remove("hidden");
+  const bodyHtml = escapeHtml(sec.body).replace(/\n/g, "<br />");
+  detailEl.innerHTML =
+    `<div class="essay-detail-panel">` +
+    `<button type="button" class="btn-secondary essay-detail-back">← 返回</button>` +
+    `<h2 class="section-title essay-detail-sample-title">${escapeHtml(sec.title)}</h2>` +
+    `<div class="card settings-block mt-8">` +
+    `<h3 class="essay-block-label">正文</h3>` +
+    `<p class="essay-body-text">${bodyHtml}</p>` +
+    `</div></div>`;
+  detailEl.querySelector(".essay-detail-back")?.addEventListener("click", closeDaofaDetail);
+}
+
+function closeDaofaDetail() {
+  const listEl = $("daofa-stack-list");
+  const detailEl = $("daofa-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.remove("hidden");
+  detailEl.classList.add("hidden");
+  detailEl.innerHTML = "";
+}
+
+function renderDaofaPastList() {
+  const listEl = $("daofa-past-stack-list");
+  if (!listEl) return;
+  const sections = daofaPastItemsCache;
+  if (!sections.length) {
+    listEl.innerHTML = "<p class=\"muted\">暂无历年中考题数据。</p>";
+    return;
+  }
+  const hint =
+    daofaPastLabel && String(daofaPastLabel).trim()
+      ? `<p class="hint muted">${escapeHtml(String(daofaPastLabel).trim())}</p>`
+      : `<p class="hint muted">按条目浏览历年真题概览，点击查看全文（与主观题相同版式）。</p>`;
+  const parts = [];
+  for (let idx = 0; idx < sections.length; idx++) {
+    const sec = sections[idx];
+    parts.push(
+      `<div class="essay-row-card">` +
+        `<button type="button" class="essay-row-btn daofa-past-open-btn" data-daofa-past-idx="${String(idx)}">` +
+          `<span class="essay-row-title">${escapeHtml(sec.title)}</span><span class="muted essay-row-chevron" aria-hidden="true">›</span>` +
+        `</button>` +
+      `</div>`
+    );
+  }
+  listEl.innerHTML = hint + parts.join("");
+  listEl.querySelectorAll(".daofa-past-open-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idx = parseInt(btn.dataset.daofaPastIdx || "0", 10);
+      openDaofaPastDetail(idx);
+    });
+  });
+}
+
+function openDaofaPastDetail(idx) {
+  const sec = daofaPastItemsCache[idx];
+  if (!sec) return;
+  const listEl = $("daofa-past-stack-list");
+  const detailEl = $("daofa-past-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.add("hidden");
+  detailEl.classList.remove("hidden");
+  const bodyHtml = escapeHtml(sec.body).replace(/\n/g, "<br />");
+  detailEl.innerHTML =
+    `<div class="essay-detail-panel">` +
+    `<button type="button" class="btn-secondary essay-detail-back">← 返回</button>` +
+    `<h2 class="section-title essay-detail-sample-title">${escapeHtml(sec.title)}</h2>` +
+    `<div class="card settings-block mt-8">` +
+    `<h3 class="essay-block-label">正文</h3>` +
+    `<p class="essay-body-text">${bodyHtml}</p>` +
+    `</div></div>`;
+  detailEl.querySelector(".essay-detail-back")?.addEventListener("click", closeDaofaPastDetail);
+}
+
+function closeDaofaPastDetail() {
+  const listEl = $("daofa-past-stack-list");
+  const detailEl = $("daofa-past-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.remove("hidden");
+  detailEl.classList.add("hidden");
+  detailEl.innerHTML = "";
+}
+
+let chineseZkReady = false;
+/** @type {{ title: string, body: string }[]} */
+let chineseZkItemsCache = [];
+/** @type {string} */
+let chineseZkLabel = "";
+
+function getChineseSub() {
+  try {
+    const v = localStorage.getItem(STORAGE_CHINESE_SUB);
+    return v === "zhongkao" ? "zhongkao" : "essay";
+  } catch (_) {
+    return "essay";
+  }
+}
+
+function setChineseSub(v) {
+  try {
+    localStorage.setItem(STORAGE_CHINESE_SUB, v);
+  } catch (_) {}
+}
+
+/** @param {"essay"|"zhongkao"} sub */
+function showChineseSub(sub) {
+  const s = sub === "zhongkao" ? "zhongkao" : "essay";
+  setChineseSub(s);
+  closeChineseZhongkaoDetail();
+  document.querySelectorAll("#panel-chinese [data-chinese-pane]").forEach((pane) => {
+    pane.classList.toggle("active", pane.dataset.chinesePane === s);
+  });
+  document.querySelectorAll("[data-chinese-sub]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.chineseSub === s);
+  });
+  if (s === "essay") {
+    renderEssayList("cn");
+  }
+  if (s === "zhongkao") {
+    renderChineseZhongkaoList();
+  }
+}
+
+function loadChineseTab() {
+  showChineseSub(getChineseSub());
+  if (chineseZkReady) return;
+  fetch("data/chinese_zhongkao.json")
+    .then((r) => (r.ok ? r.json() : Promise.resolve({ items: [] })))
+    .catch(() => ({ items: [] }))
+    .then((data) => {
+      chineseZkReady = true;
+      const items = data && Array.isArray(data.items) ? data.items : [];
+      chineseZkItemsCache = items.map((it) => ({
+        title: it.title || "",
+        body: it.body || "",
+      }));
+      chineseZkLabel = (data && data.label) || "";
+      renderChineseZhongkaoList();
+    });
+}
+
+function renderChineseZhongkaoList() {
+  const listEl = $("chinese-zk-stack-list");
+  if (!listEl) return;
+  const sections = chineseZkItemsCache;
+  if (!sections.length) {
+    listEl.innerHTML =
+      "<p class=\"muted\">" +
+      (chineseZkReady ? "暂无中考真题数据。" : "加载中…") +
+      "</p>";
+    return;
+  }
+  const hint =
+    chineseZkLabel && String(chineseZkLabel).trim()
+      ? `<p class="hint muted">${escapeHtml(String(chineseZkLabel).trim())}</p>`
+      : `<p class="hint muted">按条目浏览 2024 年中考语文试题与答案整合，点击查看全文。</p>`;
+  const parts = [];
+  for (let idx = 0; idx < sections.length; idx++) {
+    const sec = sections[idx];
+    parts.push(
+      `<div class="essay-row-card">` +
+        `<button type="button" class="essay-row-btn chinese-zk-open-btn" data-chinese-zk-idx="${String(idx)}">` +
+          `<span class="essay-row-title">${escapeHtml(sec.title)}</span><span class="muted essay-row-chevron" aria-hidden="true">›</span>` +
+        `</button>` +
+      `</div>`
+    );
+  }
+  listEl.innerHTML = hint + parts.join("");
+  listEl.querySelectorAll(".chinese-zk-open-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idx = parseInt(btn.dataset.chineseZkIdx || "0", 10);
+      openChineseZhongkaoDetail(idx);
+    });
+  });
+}
+
+function openChineseZhongkaoDetail(idx) {
+  const sec = chineseZkItemsCache[idx];
+  if (!sec) return;
+  const listEl = $("chinese-zk-stack-list");
+  const detailEl = $("chinese-zk-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.add("hidden");
+  detailEl.classList.remove("hidden");
+  const bodyHtml = escapeHtml(sec.body).replace(/\n/g, "<br />");
+  detailEl.innerHTML =
+    `<div class="essay-detail-panel">` +
+    `<button type="button" class="btn-secondary essay-detail-back">← 返回</button>` +
+    `<h2 class="section-title essay-detail-sample-title">${escapeHtml(sec.title)}</h2>` +
+    `<div class="card settings-block mt-8">` +
+    `<h3 class="essay-block-label">正文</h3>` +
+    `<p class="essay-body-text">${bodyHtml}</p>` +
+    `</div></div>`;
+  detailEl.querySelector(".essay-detail-back")?.addEventListener("click", closeChineseZhongkaoDetail);
+}
+
+function closeChineseZhongkaoDetail() {
+  const listEl = $("chinese-zk-stack-list");
+  const detailEl = $("chinese-zk-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.remove("hidden");
+  detailEl.classList.add("hidden");
+  detailEl.innerHTML = "";
+}
+
 function showTab(name) {
-  if (name !== "scan") {
+  if (name !== "english") {
     closeCameraModal();
+  }
+  if (name !== "chinese" && name !== "english") {
+    closeEssayDetail();
+  }
+  if (name !== "chinese") {
+    closeChineseZhongkaoDetail();
+  }
+  if (name !== "daofa") {
+    closeDaofaDetail();
+    closeDaofaPastDetail();
   }
   document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
   const panel = $(`panel-${name}`);
-  panel.classList.add("active");
+  if (panel) panel.classList.add("active");
   document.querySelectorAll(".nav-item").forEach((n) => {
     n.classList.toggle("active", n.dataset.tab === name);
   });
   $("bottom-nav").classList.toggle("hidden", name === "result");
   $("btn-result-back").classList.toggle("hidden", name !== "result");
-  $("app-title").textContent = name === "result" ? "识别结果" : "中考词汇扫描助手";
+  if (name === "result") {
+    $("app-title").textContent = "识别结果";
+  } else {
+    $("app-title").textContent = TAB_HEADER_TITLES[name] || "中考应试";
+  }
+  if (name === "chinese") {
+    closeEssayDetail("en");
+    setEssaySubject("chinese");
+    loadChineseTab();
+  }
+  if (name === "english") {
+    closeEssayDetail("cn");
+    showEnglishSub(getEnglishSub());
+  }
+  if (name === "daofa") {
+    loadDaofaTab();
+  }
 }
 
 function processText(text) {
@@ -704,8 +1527,16 @@ function renderVocabList() {
       : `<div class="word-meaning-cn muted">暂无释义</div>`;
     const ph = (rec.phonetic || "").trim();
     const metaLine = ph ? `${typeLabel} · ${escapeHtml(ph)}` : typeLabel;
-    li.innerHTML = `<div class="word-line">${escapeHtml(rec.word)}</div>${cnBlock}<div class="word-meta">${metaLine}</div>`;
-    li.addEventListener("click", () => openWordModal(rec.word, "list"));
+    li.innerHTML = `<div class="vocab-row-head"><span class="word-line">${escapeHtml(rec.word)}</span><button type="button" class="btn-nb-plus" aria-label="加入生词本">+</button></div>${cnBlock}<div class="word-meta">${metaLine}</div>`;
+    li.addEventListener("click", (e) => {
+      if (e.target.closest(".btn-nb-plus")) return;
+      openWordModal(rec.word, "list");
+    });
+    li.querySelector(".btn-nb-plus")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      addToNotebook(rec.word);
+      renderNotebook();
+    });
     ul.appendChild(li);
   }
 
@@ -723,17 +1554,27 @@ function renderVocabList() {
   }
 }
 
+function syncModalNotebookUi(w) {
+  const c = notebookCount(w);
+  $("modal-note").textContent = c > 0 ? `已记 ${c} 次` : "";
+  $("modal-add-notebook").textContent = c === 0 ? "加入生词本" : `再记一次（已 ${c} 次）`;
+  $("modal-add-notebook").disabled = false;
+}
+
 function renderNotebook() {
   const ul = $("notebook-list");
-  const words = loadNotebook().sort((a, b) => a.localeCompare(b, "en"));
+  const entries = loadNotebookSortedEntries();
+  const totalAdds = entries.reduce((s, [, c]) => s + c, 0);
+  const nh = $("notebook-heading");
+  if (nh) nh.textContent = `生词本（${entries.length} 个词 · 累计 ${totalAdds} 次）`;
   ul.innerHTML = "";
-  if (words.length === 0) {
-    ul.innerHTML = '<li class="muted">暂无收藏生词</li>';
+  if (entries.length === 0) {
+    ul.innerHTML = '<li class="muted">生词本为空</li>';
     return;
   }
-  for (const w of words) {
+  for (const [w, c] of entries) {
     const li = document.createElement("li");
-    li.innerHTML = `<span>${escapeHtml(w)}</span><button type="button" data-remove="${escapeAttr(w)}">删除</button>`;
+    li.innerHTML = `<span class="nb-main"><span>${escapeHtml(w)}</span><span class="nb-count">${c}次</span></span><button type="button" data-remove="${escapeAttr(w)}">删除</button>`;
     li.querySelector("button")?.addEventListener("click", (e) => {
       e.stopPropagation();
       removeFromNotebook(w);
@@ -824,10 +1665,7 @@ function openWordModal(word, context) {
     });
   }
 
-  const inNb = loadNotebook().includes(w);
-  $("modal-note").textContent = inNb ? "已在生词本中" : "";
-  $("modal-add-notebook").textContent = inNb ? "已在生词本" : "加入生词本";
-  $("modal-add-notebook").disabled = inNb;
+  syncModalNotebookUi(w);
 
   const showNav = context === "result" && unknownWordsList.length > 0;
   const idx = unknownWordsList.indexOf(w);
@@ -912,6 +1750,8 @@ function captureFromCamera() {
         return;
       }
       closeCameraModal();
+      showTab("english");
+      showEnglishSub("scan");
       runOcr(blob);
     },
     "image/jpeg",
@@ -981,14 +1821,33 @@ function wireEvents() {
   });
 
   document.querySelectorAll(".nav-item").forEach((btn) => {
-    btn.addEventListener("click", () => showTab(btn.dataset.tab || "vocab"));
+    btn.addEventListener("click", () => showTab(btn.dataset.tab || "chinese"));
+  });
+
+  document.querySelectorAll("[data-english-sub]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showEnglishSub(/** @type {HTMLElement} */ (btn).dataset.englishSub || "vocab");
+    });
+  });
+
+  document.querySelectorAll("[data-daofa-sub]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showDaofaSub(/** @type {HTMLElement} */ (btn).dataset.daofaSub || "structure");
+    });
+  });
+
+  document.querySelectorAll("[data-chinese-sub]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showChineseSub(/** @type {HTMLElement} */ (btn).dataset.chineseSub || "essay");
+    });
   });
 
   $("scan-file").addEventListener("change", (e) => {
     const input = e.target;
     const f = input.files?.[0];
     if (f) {
-      showTab("scan");
+      showTab("english");
+      showEnglishSub("scan");
       const st = $("ocr-status");
       st.hidden = false;
       st.textContent = `已选择「${f.name}」，开始识别…`;
@@ -1045,8 +1904,14 @@ function wireEvents() {
     showTab("result");
   });
 
-  $("btn-result-back").addEventListener("click", () => showTab("scan"));
-  $("btn-rescan").addEventListener("click", () => showTab("scan"));
+  $("btn-result-back").addEventListener("click", () => {
+    showTab("english");
+    showEnglishSub("scan");
+  });
+  $("btn-rescan").addEventListener("click", () => {
+    showTab("english");
+    showEnglishSub("scan");
+  });
   $("btn-query-all").addEventListener("click", () => {
     if (unknownWordsList.length === 0) {
       alert("没有发现生词");
@@ -1061,12 +1926,10 @@ function wireEvents() {
   });
 
   $("modal-add-notebook").addEventListener("click", () => {
-    const w = $("modal-word-title").textContent.trim();
+    const w = $("modal-word-title").textContent.trim().toLowerCase();
     if (!w) return;
     addToNotebook(w);
-    $("modal-note").textContent = "已加入生词本";
-    $("modal-add-notebook").textContent = "已在生词本";
-    $("modal-add-notebook").disabled = true;
+    syncModalNotebookUi(w);
     renderNotebook();
   });
 
@@ -1083,18 +1946,18 @@ function wireEvents() {
   });
 
   $("btn-notebook-review").addEventListener("click", () => {
-    const nb = loadNotebook();
-    if (nb.length === 0) {
+    const keys = Object.keys(loadNotebookMap());
+    if (keys.length === 0) {
       alert("生词本为空");
       return;
     }
-    const w = nb[Math.floor(Math.random() * nb.length)];
+    const w = keys[Math.floor(Math.random() * keys.length)];
     openWordModal(w, "notebook");
   });
 
   $("btn-notebook-clear").addEventListener("click", () => {
     if (confirm("确定清空生词本？")) {
-      saveNotebook([]);
+      saveNotebookMap({});
       renderNotebook();
     }
   });
@@ -1116,13 +1979,381 @@ function wireEvents() {
     }
   });
 
-  document.querySelectorAll("#font-size-seg button").forEach((b) => {
-    b.addEventListener("click", () => {
-      const size = b.dataset.size || "standard";
-      localStorage.setItem(STORAGE_FONT, size);
-      applyFontClass();
+}
+
+function getEssaySubject() {
+  try {
+    return localStorage.getItem(STORAGE_ESSAY_SUBJECT) || "english";
+  } catch (_) {
+    return "english";
+  }
+}
+
+function setEssaySubject(v) {
+  try {
+    localStorage.setItem(STORAGE_ESSAY_SUBJECT, v);
+  } catch (_) {}
+}
+
+function getReadingSubject() {
+  try {
+    return localStorage.getItem(STORAGE_READING_SUBJECT) || "english";
+  } catch (_) {
+    return "english";
+  }
+}
+
+function setReadingSubject(v) {
+  try {
+    localStorage.setItem(STORAGE_READING_SUBJECT, v);
+  } catch (_) {}
+}
+
+function renderReadingMaterials() {
+  const root = $("reading-materials-root");
+  if (!root) return;
+  const data = window.READING_DATA;
+  if (!data?.subjects?.length) {
+    root.innerHTML =
+      '<p class="muted">暂无阅读材料。请确认已加载 <code>data/reading-data.js</code>（与 iOS/Android 中 <code>reading_content.json</code> 同源）。</p>';
+    return;
+  }
+  const subjects = data.subjects;
+  let subjVal = getReadingSubject();
+  if (!subjects.some((s) => s.id === subjVal)) {
+    subjVal = subjects[0].id;
+  }
+  const current = subjects.find((s) => s.id === subjVal) || subjects[0];
+  const parts = [];
+  parts.push('<h2 class="section-title">阅读材料</h2>');
+  parts.push('<p class="muted small">分学科收录真题与节选</p>');
+  parts.push(
+    '<div class="essay-subject-bar reading-subject-bar"><label class="essay-subject-label" for="reading-subject">学科</label>' +
+      '<select id="reading-subject" class="essay-subject-select" aria-label="选择学科">'
+  );
+  for (const s of subjects) {
+    parts.push(
+      `<option value="${escapeAttr(s.id)}"${s.id === subjVal ? " selected" : ""}>${escapeHtml(s.label)}</option>`
+    );
+  }
+  parts.push("</select></div>");
+
+  if (!current.packs?.length) {
+    parts.push('<p class="muted">该学科阅读材料将陆续补充。</p>');
+  } else {
+    for (const pack of current.packs) {
+      parts.push('<div class="reading-pack">');
+      parts.push(`<div class="reading-pack-title">📚 ${escapeHtml(pack.title)}</div>`);
+      for (const sec of pack.sections || []) {
+        parts.push('<div class="reading-section-block">');
+        parts.push(`<div class="reading-section-headline">${escapeHtml(sec.headline)}</div>`);
+        parts.push(
+          `<div class="reading-section-body">${escapeHtml(sec.body || "").replace(/\n/g, "<br />")}</div>`
+        );
+        parts.push("</div>");
+      }
+      if (pack.footer) {
+        parts.push(
+          `<div class="reading-footer-text muted small">${escapeHtml(pack.footer).replace(/\n/g, "<br />")}</div>`
+        );
+      }
+      parts.push("</div>");
+    }
+  }
+  root.innerHTML = parts.join("");
+  const sel = $("reading-subject");
+  if (sel) {
+    sel.addEventListener("change", () => {
+      setReadingSubject(sel.value);
+      renderReadingMaterials();
     });
+  }
+}
+
+function getEssaySample(examId, sampleId) {
+  const data = window.ESSAYS_DATA;
+  const exam = data?.exams?.find((e) => e.id === examId);
+  const sample = exam?.samples?.find((s) => s.id === sampleId);
+  return { exam, sample };
+}
+
+/** English-only text for TTS when body includes 【中文翻译】 / 【写作要点】 blocks. */
+function essayTtsSourceText(body) {
+  const s = String(body || "").trim();
+  const marker = "【中文翻译】";
+  let t = s.includes(marker) ? s.split(marker)[0].trim() : s;
+  const enLabel = "【英文范文】";
+  if (t.startsWith(enLabel)) {
+    t = t.slice(enLabel.length).trim();
+  }
+  t = t.replace(/\n*（全文约\d+字）\s*$/u, "").trim();
+  return t;
+}
+
+function formatAudioTime(sec) {
+  const v = Number.isFinite(sec) ? Math.max(0, Math.floor(sec)) : 0;
+  const m = Math.floor(v / 60);
+  const s = v % 60;
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+
+async function requestEssayTtsAudio(text) {
+  const res = await fetch(`${aiBase()}/essay-tts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "gemini-2.5-flash-tts",
+      voiceName: DEFAULT_ESSAY_TTS_VOICE,
+      text,
+    }),
   });
+  if (!res.ok) {
+    const msg = await res.text();
+    throw new Error(msg || `HTTP ${res.status}`);
+  }
+  return await res.blob();
+}
+
+function getEssayDetailPlaybackRate(detailRoot) {
+  const el =
+    detailRoot && typeof detailRoot.querySelector === "function"
+      ? detailRoot.querySelector(".essay-tts-speed")
+      : null;
+  const fallback = document.querySelector(".essay-stack:not(.hidden) .essay-tts-speed");
+  const node = el || fallback;
+  if (!node) return 1;
+  const v = parseFloat(node.value, 10);
+  return Number.isFinite(v) ? v : 1;
+}
+
+function updateEssayTtsUi(sampleId) {
+  const root = document.querySelector(`[data-tts-for="${CSS.escape(sampleId)}"]`);
+  if (!root) return;
+  const st = essayTtsState.get(sampleId) || {};
+  const btn = root.querySelector(".essay-tts-btn");
+  const pg = root.querySelector(".essay-tts-progress");
+  const tm = root.querySelector(".essay-tts-time");
+  if (btn) {
+    btn.disabled = !!st.loading;
+    const label = st.loading ? "生成中…" : st.playing ? "暂停" : st.url ? "继续播放" : "播放";
+    btn.textContent = label;
+    btn.setAttribute("aria-label", label);
+    btn.classList.toggle("essay-tts-playing", !!st.playing && !st.loading);
+  }
+  if (pg) {
+    if (st.seeking) {
+      /* 拖动中由 input 事件更新，避免与 timeupdate 争抢 */
+    } else {
+      const ratio = st.duration > 0 ? (st.current || 0) / st.duration : 0;
+      pg.value = String(Math.max(0, Math.min(100, ratio * 100)));
+    }
+    pg.disabled = !st.audio || !!st.loading;
+  }
+  if (tm) {
+    tm.textContent = `${formatAudioTime(st.current || 0)} / ${formatAudioTime(st.duration || 0)}`;
+  }
+}
+
+function stopOtherEssayAudio(currentId) {
+  for (const [id, st] of essayTtsState.entries()) {
+    if (id === currentId || !st.audio) continue;
+    st.audio.pause();
+    st.playing = false;
+    updateEssayTtsUi(id);
+  }
+}
+
+async function toggleEssayTts(examId, sampleId, detailRoot) {
+  const { sample } = getEssaySample(examId, sampleId);
+  if (!sample) return;
+  const st = essayTtsState.get(sampleId) || {};
+  if (st.loading) return;
+  if (st.audio) {
+    if (st.audio.paused) {
+      stopOtherEssayAudio(sampleId);
+      st.audio.playbackRate = getEssayDetailPlaybackRate(detailRoot);
+      await st.audio.play();
+      st.playing = true;
+    } else {
+      st.audio.pause();
+      st.playing = false;
+    }
+    essayTtsState.set(sampleId, st);
+    updateEssayTtsUi(sampleId);
+    return;
+  }
+
+  st.loading = true;
+  essayTtsState.set(sampleId, st);
+  updateEssayTtsUi(sampleId);
+  try {
+    const blob = await requestEssayTtsAudio(essayTtsSourceText(sample.body));
+    const url = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    audio.playbackRate = getEssayDetailPlaybackRate(detailRoot);
+    st.url = url;
+    st.audio = audio;
+    st.loading = false;
+    st.current = 0;
+    st.duration = 0;
+    st.playing = false;
+    st.seeking = false;
+    audio.addEventListener("loadedmetadata", () => {
+      st.duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+      updateEssayTtsUi(sampleId);
+    });
+    audio.addEventListener("timeupdate", () => {
+      const cur = essayTtsState.get(sampleId);
+      if (!cur || cur.seeking) return;
+      cur.current = audio.currentTime || 0;
+      essayTtsState.set(sampleId, cur);
+      updateEssayTtsUi(sampleId);
+    });
+    audio.addEventListener("ended", () => {
+      st.playing = false;
+      st.current = st.duration || audio.duration || 0;
+      updateEssayTtsUi(sampleId);
+    });
+    stopOtherEssayAudio(sampleId);
+    await audio.play();
+    st.playing = true;
+    essayTtsState.set(sampleId, st);
+    updateEssayTtsUi(sampleId);
+  } catch (e) {
+    st.loading = false;
+    essayTtsState.set(sampleId, st);
+    updateEssayTtsUi(sampleId);
+    alert(`语音生成失败：${e && e.message ? e.message : "请检查本地代理与网络"}`);
+  }
+}
+
+/** @param {"cn"|"en"} suffix */
+function renderEssayList(suffix) {
+  const data = window.ESSAYS_DATA;
+  const listEl = $(`essay-stack-list-${suffix}`);
+  if (!listEl) return;
+  const subj = suffix === "cn" ? "chinese" : "english";
+  if (!data?.exams?.length) {
+    listEl.innerHTML =
+      "<p class=\"muted\">暂无作文数据。请确认已加载 <code>data/essays-data.js</code>（与 iOS 应用包内 <code>essays.json</code> 同源）。</p>";
+    return;
+  }
+  const exams = data.exams.filter((e) => (e.subject || "english") === subj);
+  const parts = [];
+  if (exams.length === 0) {
+    listEl.innerHTML = "<p class=\"muted\">该科目暂无范文，请切换科目或稍后再试。</p>";
+    return;
+  }
+  for (const exam of exams) {
+    parts.push(`<div class="essay-year-badge">📚 ${escapeHtml(exam.title)}</div>`);
+    for (const s of exam.samples) {
+      parts.push(
+        `<div class="essay-row-card">` +
+          `<button type="button" class="essay-row-btn essay-open-btn" data-exam-id="${escapeAttr(exam.id)}" data-sample-id="${escapeAttr(s.id)}">` +
+            `<span class="essay-row-title">${escapeHtml(s.title)}</span><span class="muted essay-row-chevron" aria-hidden="true">›</span>` +
+          `</button>` +
+        `</div>`
+      );
+    }
+  }
+  listEl.innerHTML = parts.join("");
+  listEl.querySelectorAll(".essay-open-btn").forEach((btn) => {
+    btn.addEventListener("click", () =>
+      openEssayDetail(btn.dataset.examId, btn.dataset.sampleId, suffix)
+    );
+  });
+}
+
+/** @param {"cn"|"en"} suffix */
+function openEssayDetail(examId, sampleId, suffix) {
+  const data = window.ESSAYS_DATA;
+  const exam = data?.exams?.find((e) => e.id === examId);
+  const sample = exam?.samples?.find((s) => s.id === sampleId);
+  if (!exam || !sample) return;
+  const listEl = $(`essay-stack-list-${suffix}`);
+  const detailEl = $(`essay-stack-detail-${suffix}`);
+  if (!listEl || !detailEl) return;
+  listEl.classList.add("hidden");
+  detailEl.classList.remove("hidden");
+  const topicsHtml = escapeHtml(exam.topics).replace(/\n/g, "<br />");
+  const bodyHtml = escapeHtml(sample.body.trim()).replace(/\n/g, "<br />");
+  detailEl.innerHTML =
+    `<div class="essay-detail-panel">` +
+    `<button type="button" class="btn-secondary essay-detail-back">← 返回</button>` +
+    `<h2 class="section-title essay-detail-sample-title">${escapeHtml(sample.title)}</h2>` +
+    `<div class="card settings-block mt-8">` +
+    `<h3 class="essay-block-label essay-block-label-topic">本年题目</h3>` +
+    `<p class="essay-topics-text">${topicsHtml}</p>` +
+    `</div>` +
+    `<div class="essay-tts-row mt-8" data-tts-for="${escapeAttr(sample.id)}">` +
+      `<button type="button" class="essay-tts-play-btn essay-tts-btn essay-detail-tts" data-exam-id="${escapeAttr(exam.id)}" data-sample-id="${escapeAttr(sample.id)}">播放</button>` +
+      `<input type="range" class="essay-tts-progress" min="0" max="100" value="0" step="0.1" disabled aria-label="播放进度" />` +
+      `<span class="essay-tts-time muted small">0:00 / 0:00</span>` +
+      `<select class="essay-tts-speed" aria-label="播放倍速">` +
+      `<option value="0.75">0.75×</option>` +
+      `<option value="1" selected>1×</option>` +
+      `<option value="1.25">1.25×</option>` +
+      `<option value="1.5">1.5×</option>` +
+      `<option value="2">2×</option>` +
+      `</select>` +
+    `</div>` +
+    `<div class="card settings-block mt-8">` +
+    `<h3 class="essay-block-label">正文</h3>` +
+    `<p class="essay-body-text">${bodyHtml}</p>` +
+    `</div></div>`;
+  detailEl.querySelector(".essay-detail-back")?.addEventListener("click", () => closeEssayDetail(suffix));
+  detailEl.querySelector(".essay-detail-tts")?.addEventListener("click", async () => {
+    await toggleEssayTts(exam.id, sample.id, detailEl);
+  });
+  const speedEl = detailEl.querySelector(".essay-tts-speed");
+  if (speedEl) {
+    speedEl.addEventListener("change", () => {
+      const rate = getEssayDetailPlaybackRate(detailEl);
+      const st = essayTtsState.get(sample.id);
+      if (st && st.audio) {
+        st.audio.playbackRate = rate;
+      }
+    });
+  }
+  wireEssayTtsScrubber(sample.id, detailEl);
+  updateEssayTtsUi(sample.id);
+}
+
+function wireEssayTtsScrubber(sampleId, detailRoot) {
+  const range = detailRoot.querySelector(".essay-tts-progress");
+  if (!range || range.tagName !== "INPUT") return;
+  const setSeeking = (v) => {
+    const st = essayTtsState.get(sampleId);
+    if (st) {
+      st.seeking = v;
+      essayTtsState.set(sampleId, st);
+    }
+  };
+  range.addEventListener("pointerdown", () => setSeeking(true));
+  range.addEventListener("pointerup", () => setSeeking(false));
+  range.addEventListener("pointercancel", () => setSeeking(false));
+  range.addEventListener("change", () => setSeeking(false));
+  range.addEventListener("input", (e) => {
+    const st = essayTtsState.get(sampleId);
+    if (!st || !st.audio || !(st.duration > 0)) return;
+    const t = (Number(e.target.value) / 100) * st.duration;
+    st.audio.currentTime = t;
+    st.current = t;
+    updateEssayTtsUi(sampleId);
+  });
+}
+
+/** @param {"cn"|"en"|undefined} suffix — 不传则关闭中英文两处详情 */
+function closeEssayDetail(suffix) {
+  const sufs = suffix ? [suffix] : ["cn", "en"];
+  for (const suf of sufs) {
+    const listEl = $(`essay-stack-list-${suf}`);
+    const detailEl = $(`essay-stack-detail-${suf}`);
+    if (!listEl || !detailEl) continue;
+    listEl.classList.remove("hidden");
+    detailEl.classList.add("hidden");
+    detailEl.innerHTML = "";
+  }
 }
 
 function boot() {
@@ -1136,7 +2367,10 @@ function boot() {
   wireEvents();
   renderVocabList();
   renderNotebook();
-  showTab("vocab");
+  renderEssayList("cn");
+  renderEssayList("en");
+  renderReadingMaterials();
+  showTab("chinese");
 }
 
 boot();

@@ -1,28 +1,59 @@
 import SwiftUI
+import UIKit
 
 struct MainTabView: View {
     @StateObject private var vocabulary = VocabularyStore()
     @StateObject private var notebook = NotebookStore()
     @AppStorage("aienglish_font") private var fontScale: String = "standard"
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        TabView {
-            VocabularyTabView()
-                .environmentObject(vocabulary)
-                .environmentObject(notebook)
-                .tabItem { Label("词库", systemImage: "books.vertical") }
+        ZStack {
+            TabView {
+                ChineseHubView()
+                    .tabItem { Label("语文", systemImage: "doc.text") }
 
-            ScanTabView()
-                .environmentObject(vocabulary)
-                .environmentObject(notebook)
-                .tabItem { Label("扫描", systemImage: "magnifyingglass") }
+                EnglishHubView()
+                    .environmentObject(vocabulary)
+                    .environmentObject(notebook)
+                    .tabItem { Label("英语", systemImage: "book") }
 
-            ProfileTabView()
-                .environmentObject(vocabulary)
-                .environmentObject(notebook)
-                .tabItem { Label("我的", systemImage: "person") }
+                DaofaTabView()
+                    .tabItem { Label("道法", systemImage: "list.clipboard") }
+
+                ProfileTabView()
+                    .environmentObject(vocabulary)
+                    .environmentObject(notebook)
+                    .tabItem { Label("我的", systemImage: "person") }
+            }
+            /// iPad（尤其 iPadOS 18+）默认会把主导航放在顶部/侧边；对 TabView 使用 compact 横屏尺寸类可恢复底部标签栏。
+            .environment(\.horizontalSizeClass, tabBarHorizontalSizeClass)
+            .environment(\.fontScale, FontScale(rawValue: fontScale) ?? .standard)
+
+            if let msg = notebook.toastMessage {
+                VStack {
+                    Spacer()
+                    Text(msg)
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 12)
+                        .background(Color.black.opacity(0.82))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .padding(.bottom, 96)
+                }
+                .transition(.opacity)
+                .animation(.easeInOut(duration: 0.2), value: notebook.toastMessage)
+                .allowsHitTesting(false)
+            }
         }
-        .environment(\.fontScale, FontScale(rawValue: fontScale) ?? .standard)
+    }
+
+    private var tabBarHorizontalSizeClass: UserInterfaceSizeClass {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return .compact
+        }
+        return horizontalSizeClass ?? .compact
     }
 }
 

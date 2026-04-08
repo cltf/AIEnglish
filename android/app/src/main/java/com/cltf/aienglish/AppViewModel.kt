@@ -8,7 +8,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.cltf.aienglish.data.EssayExam
+import com.cltf.aienglish.data.EssayRepository
 import com.cltf.aienglish.data.NotebookRepository
+import com.cltf.aienglish.data.ReadingRepository
+import com.cltf.aienglish.data.ReadingSubject
 import com.cltf.aienglish.data.VocabularyRepository
 import com.cltf.aienglish.data.WordRecord
 import com.cltf.aienglish.domain.ReadingAnalysis
@@ -16,11 +20,15 @@ import com.cltf.aienglish.domain.ReadingAnalysisEngine
 import com.cltf.aienglish.domain.ScanTextAnalyzer
 import com.cltf.aienglish.network.AiRepository
 import com.cltf.aienglish.network.DictionaryRepository
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     val vocabularyRepository = VocabularyRepository(application)
+    val essayRepository = EssayRepository(application)
+    val readingRepository = ReadingRepository(application)
     val notebookRepository = NotebookRepository(application)
     val aiRepository = AiRepository()
     val dictionaryRepository = DictionaryRepository()
@@ -28,12 +36,31 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     var vocabLoaded by mutableStateOf(false)
         private set
 
+    var essaysLoaded by mutableStateOf(false)
+        private set
+
+    var essayLoadError by mutableStateOf<String?>(null)
+        private set
+
+    var essayExams by mutableStateOf<List<EssayExam>>(emptyList())
+        private set
+
+    var readingLoaded by mutableStateOf(false)
+        private set
+
+    var readingLoadError by mutableStateOf<String?>(null)
+        private set
+
+    var readingSubjects by mutableStateOf<List<ReadingSubject>>(emptyList())
+        private set
+
     var vocabSearch by mutableStateOf("")
     var vocabFilter by mutableStateOf("ALL")
     var vocabPage by mutableIntStateOf(1)
     private val pageSize = 20
 
-    var notebookWords by mutableStateOf<List<String>>(emptyList())
+    /** 生词本条目（单词小写 → 累计加入次数），按字母序 */
+    var notebookEntries by mutableStateOf<List<Pair<String, Int>>>(emptyList())
         private set
 
     var fontScaleKey by mutableStateOf("standard")
@@ -49,19 +76,54 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             vocabularyRepository.load()
             vocabLoaded = true
+            essayRepository.load().fold(
+                onSuccess = {
+                    essayExams = essayRepository.exams()
+                    essayLoadError = null
+                },
+                onFailure = { e ->
+                    essayExams = emptyList()
+                    essayLoadError = e.message ?: e.toString()
+                }
+            )
+            essaysLoaded = true
+            readingRepository.load().fold(
+                onSuccess = {
+                    readingSubjects = readingRepository.subjects()
+                    readingLoadError = null
+                },
+                onFailure = { e ->
+                    readingSubjects = emptyList()
+                    readingLoadError = e.message ?: e.toString()
+                }
+            )
+            readingLoaded = true
         }
-        notebookWords = notebookRepository.loadWords()
+        notebookEntries = notebookRepository.loadEntriesSorted()
         val prefs = getApplication<Application>().getSharedPreferences("aienglish_prefs", 0)
         fontScaleKey = prefs.getString("aienglish_font", "standard") ?: "standard"
     }
 
     fun refreshNotebook() {
-        notebookWords = notebookRepository.loadWords()
+        notebookEntries = notebookRepository.loadEntriesSorted()
     }
+
+    fun notebookCountFor(word: String): Int = notebookRepository.countFor(word)
+
+    var notebookToast by mutableStateOf<String?>(null)
+        private set
+
+    private var notebookToastJob: Job? = null
 
     fun addNotebook(word: String) {
         notebookRepository.add(word)
         refreshNotebook()
+        notebookToast = "加入生词本成功"
+        notebookToastJob?.cancel()
+        notebookToastJob = viewModelScope.launch {
+            delay(2000)
+            notebookToast = null
+        }
     }
 
     fun removeNotebook(word: String) {

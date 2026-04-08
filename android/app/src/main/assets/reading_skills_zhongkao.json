@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "label": "中考英语阅读技巧",
+  "intro": "以下内容整理自「04 解题技巧详解」「05 辨析错误答案」「06 阅读题型训练」等讲义，便于考前速查。",
+  "topics": [
+    {
+      "id": "detail",
+      "title": "细节理解题",
+      "summary": "考查原文事实与细节，题干常为特殊疑问词或 true/false、mentioned 类判断。",
+      "sections": [
+        {
+          "subtitle": "常用疑问词",
+          "paragraph": "What / When / Why / Who / Where / How / How many / How much …"
+        },
+        {
+          "subtitle": "常见设问方式（英文题干）",
+          "bullets": [
+            "Which of the following is true / not true?",
+            "Which of the following is mentioned / not mentioned in the passage?",
+            "Which of the following statements is true / false according to this passage?"
+          ]
+        },
+        {
+          "subtitle": "解题要点",
+          "bullets": [
+            "用题干关键词回原文定位，注意同义改写。",
+            "区分「未提及」与「错误」：原文没有的信息不能选为「正确」。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "word_guess",
+      "title": "词义猜测题",
+      "summary": "包括词义猜测与代词指代；答案多在上下句，不必死扣词典义。",
+      "sections": [
+        {
+          "subtitle": "设问方式 · 意义猜测",
+          "bullets": [
+            "What does the underlined word mean in Paragraph …?",
+            "What does the word \"…\" in the passage most likely mean?"
+          ]
+        },
+        {
+          "subtitle": "设问方式 · 代词指代",
+          "bullets": [
+            "What does the underlined word in Paragraph … refer to?",
+            "The underlined word \"them\" refers to ________."
+          ]
+        },
+        {
+          "subtitle": "解题技巧 1：上下文逻辑推测法",
+          "bullets": [
+            "操作：通过句间因果、转折等逻辑关系推测词义。",
+            "适用：单词出现在逻辑关系清楚的句子中。",
+            "注意：抓住 but、however、because 等逻辑词。"
+          ]
+        },
+        {
+          "subtitle": "解题技巧 2：近义替换法",
+          "bullets": [
+            "操作：寻找近义词、解释性短语或上下文定义。",
+            "适用：上下文有同义或解释性内容时。",
+            "注意：词义推测必须基于上下文，忌孤立看词。"
+          ]
+        },
+        {
+          "subtitle": "猜词：「上下文比词典更有用」",
+          "paragraph": "遇到生词不必慌，答案常在该词的前一句或后一句。常见两种逻辑：",
+          "bullets": [
+            "解释逻辑：后出现 that is、即、换句话说，或破折号、括号补充说明，可直接对应解释。例：She is fond of philately, that is, the collection of stamps. → philately 与「集邮」对应。",
+            "因果/转折逻辑：有 because、but、however 时，用前后因果或对比推断。例：天冷 → 穿厚外套，可推 overcoat 与「外套」相关。"
+          ]
+        },
+        {
+          "subtitle": "同步训练 · 例（词义）",
+          "paragraph": "Rule 1: Eat two pounds of vegetables… They really help you to fight against some diseases and they are really good for your health.\n问题：What does the underlined word \"diseases\" mean?\n思路：fight against（对抗）+ good for health（有益健康）→ 与疾病/不健康状态相关，选项 Illnesses 合理。"
+        }
+      ]
+    },
+    {
+      "id": "inference",
+      "title": "推理判断题",
+      "summary": "考查隐含信息、出处文体或作者未直说的结论。",
+      "sections": [
+        {
+          "subtitle": "设问方式 · 隐含含义",
+          "bullets": [
+            "What can we infer from the passage?",
+            "From the last paragraph, we can tell that ___."
+          ]
+        },
+        {
+          "subtitle": "设问方式 · 文章出处 / 类型",
+          "bullets": [
+            "Where is this passage most probably from?",
+            "What kind of text is this passage?"
+          ]
+        },
+        {
+          "subtitle": "常考文章来源词汇（英中对照）",
+          "bullets": [
+            "newspaper 报纸",
+            "poster 海报",
+            "advertisement（ad）广告",
+            "travel guide 旅游指南",
+            "science report 科学报告",
+            "magazine 杂志",
+            "notice 通知",
+            "novel 小说",
+            "letter 信件"
+          ]
+        },
+        {
+          "subtitle": "解题技巧 1：逻辑延伸法",
+          "bullets": [
+            "操作：依据文中明确写出的事实或观点，逻辑推断隐含信息。",
+            "适用：原文信息链条清晰、可向前或向后延伸时。",
+            "注意：推断不能超出文章范围。"
+          ]
+        },
+        {
+          "subtitle": "解题技巧 2：矛盾排除法",
+          "bullets": [
+            "操作：逐项排除与原文逻辑矛盾的选项，锁定最合理项。",
+            "适用：选项含绝对化表述或与原文相悖信息时。",
+            "注意：警惕 always、never、only 等绝对词。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "structure",
+      "title": "文章结构 / 框架题",
+      "summary": "判断段落关系或全文结构（总—分—总、图示选项等）。",
+      "sections": [
+        {
+          "subtitle": "[新考法] 结构图示题",
+          "paragraph": "常见题干：Which best shows the structure of the passage? 关注 shows the structure of 等信号。",
+          "bullets": [
+            "示例思路：首段引出现象（总起）→ 中间几段分述细节（分）→ 末段总结或展望（总），即「总分总」。",
+            "选示意图时：中间多段并列展开、末段收束，需与原文段落功能一致。"
+          ]
+        },
+        {
+          "subtitle": "文章框架题 · 解题技巧",
+          "bullets": [
+            "技巧 1 分析答案结构 → 排除：先看选项结构（总—分—总、总—分、分—总），再读每段首句或段中心句、总领句，理清段间关系。",
+            "技巧 2 观察答案差异 → 找原文：在段首寻找关键逻辑词；若段落间出现 also、besides，多表示并列；否则可能是递进或包含关系。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "not_except",
+      "title": "审题：NOT / EXCEPT",
+      "summary": "题干含 NOT、EXCEPT 时，选「与原文不符」或「未提及」的一项。",
+      "sections": [
+        {
+          "subtitle": "同步训练 · 例（配料）",
+          "paragraph": "题干：Which of the following is NOT the ingredient for egg fried rice? 关键：圈出 NOT。将选项与文中配料逐项核对；未在文中出现的即为答案（如文中无 milk 而选项为牛奶）。"
+        }
+      ]
+    },
+    {
+      "id": "attitude",
+      "title": "态度题",
+      "summary": "判断作者或文中人物态度、语气。",
+      "sections": [
+        {
+          "subtitle": "技巧要点",
+          "bullets": [
+            "根据事实与背景，推断人物表情、动作、语言所体现的态度。",
+            "关注主旨句、关键句中的副词、形容词、情态动词/系动词（should / must / seem 等），从感情色彩判断态度。",
+            "态度不明时，多看首段、末段及转折处（but、however、yet）。",
+            "若四个选项中出现一对反义词，答案多为二者之一。"
+          ]
+        },
+        {
+          "subtitle": "【技巧点拨】",
+          "paragraph": "有客观选客观，没客观选乐观，没乐观选谨慎，没谨慎选惊讶。（应试口诀，仅供参考）"
+        },
+        {
+          "subtitle": "同步训练 · 例（作者态度）",
+          "paragraph": "Online learning… 既写 advantages（flexibility），又用 However 写 problems。既有优点又有缺点、未一边倒时，多选「客观呈现事实」类选项（如 presenting facts without a strong personal opinion）。"
+        }
+      ]
+    },
+    {
+      "id": "writing_technique",
+      "title": "写作手法题",
+      "summary": "问作者如何展开主题、如何开头、使用了哪些写作技巧。",
+      "sections": [
+        {
+          "subtitle": "常见设问（英文）",
+          "bullets": [
+            "How does the writer develop / describe / explain the topic of …?",
+            "How does the writer begin the text?",
+            "What writing skills does the writer use in …?",
+            "At the beginning of the passage, the writer introduces / leads in the topic by ________."
+          ]
+        },
+        {
+          "subtitle": "常见写作手法（形式）",
+          "bullets": [
+            "by listing numbers 列数字",
+            "by telling stories 讲故事",
+            "by giving examples 举例子",
+            "by comparing facts 作比较",
+            "by describing pictures 描述图片",
+            "by raising / asking a question 提问题",
+            "by listing reasons 列原因",
+            "by explaining facts 讲事实",
+            "by showing differences 展示不同点"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrong_options",
+      "title": "辨析错误答案 · 信息矛盾型",
+      "summary": "选项与原文直接冲突或逻辑相反。",
+      "sections": [
+        {
+          "subtitle": "【特点】",
+          "bullets": [
+            "选项内容与原文相反或逻辑矛盾。",
+            "常利用考生粗心、未细读原文。"
+          ]
+        },
+        {
+          "subtitle": "【方法】",
+          "bullets": [
+            "对比选项与原文关键表述，查是否有直接冲突。",
+            "注意语气词、程度词变化（如 always、never、only）。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "practice_passage",
+      "title": "阅读题型训练示例",
+      "summary": "段落插入句、句子还原等需关注上下句衔接。",
+      "sections": [
+        {
+          "subtitle": "06 阅读题型训练（节选）",
+          "paragraph": "Greenland sharks… 段间有空白 ▲，后文讨论「如何捕食」等猜测。解题时：看空格后句首逻辑，选能承上启下、引出下文的句子。"
+        }
+      ]
+    }
+  ]
+}

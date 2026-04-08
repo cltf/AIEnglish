@@ -43,19 +43,33 @@ struct VocabularyTabView: View {
                     .padding(.horizontal)
 
                 List(pageItems) { rec in
-                    Button {
-                        selectedWord = rec.word
-                    } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(rec.word)
-                                .font(.system(size: fontScale.size + 1, weight: .semibold))
-                            Text(meaningLine(rec))
-                                .font(.system(size: fontScale.size * 0.9))
-                                .foregroundStyle(.primary)
-                            Text(metaLine(rec))
-                                .font(.system(size: fontScale.size * 0.8))
-                                .foregroundStyle(.secondary)
+                    HStack(alignment: .top, spacing: 10) {
+                        Button {
+                            selectedWord = rec.word
+                        } label: {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(rec.word)
+                                    .font(.system(size: fontScale.size + 1, weight: .semibold))
+                                Text(meaningLine(rec))
+                                    .font(.system(size: fontScale.size * 0.9))
+                                    .foregroundStyle(.primary)
+                                Text(metaLine(rec))
+                                    .font(.system(size: fontScale.size * 0.8))
+                                    .foregroundStyle(.secondary)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
+                        .buttonStyle(.plain)
+
+                        Button {
+                            notebook.add(rec.word)
+                        } label: {
+                            Text("+")
+                                .font(.system(size: 22, weight: .bold))
+                                .foregroundStyle(Color.accentColor)
+                                .frame(minWidth: 44, minHeight: 44)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .listStyle(.plain)

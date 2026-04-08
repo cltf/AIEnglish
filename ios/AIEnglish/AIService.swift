@@ -3,12 +3,36 @@ import UIKit
 
 /// 调用本地 Go 代理（与 web/js 一致）
 enum AIService {
-    private static let baseURL = URL(string: "http://127.0.0.1:8787/openai-compatible/v1/chat/completions")!
+    /// 默认模拟器连本机 Mac；真机调试请改为 Mac 的局域网 IP，例如 `http://192.168.1.5:8787`（Info.plist 键 `AIProxyBaseURL`）。
+    private static var proxyBaseURL: URL {
+        let fallback = URL(string: "http://127.0.0.1:8787")!
+        guard let raw = Bundle.main.object(forInfoDictionaryKey: "AIProxyBaseURL") as? String else { return fallback }
+        let s = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !s.isEmpty, let u = URL(string: s) else { return fallback }
+        return u
+    }
+
+    private static func proxyURL(path: String) -> URL {
+        var base = proxyBaseURL.absoluteString
+        while base.hasSuffix("/") { base.removeLast() }
+        let p = path.hasPrefix("/") ? path : "/" + path
+        if let u = URL(string: base + p) { return u }
+        return URL(string: "http://127.0.0.1:8787" + p)!
+    }
+
+    private static var chatCompletionsURL: URL {
+        proxyURL(path: "/openai-compatible/v1/chat/completions")
+    }
+
+    private static var essayTTSURL: URL {
+        proxyURL(path: "/openai-compatible/v1/essay-tts")
+    }
+
     static let defaultReadModel = "gemini-3-pro"
     static let defaultOcrModel = "gemini-2.5-flash-image"
 
     private static func postJSON(_ body: [String: Any]) async throws -> [String: Any] {
-        var req = URLRequest(url: baseURL)
+        var req = URLRequest(url: chatCompletionsURL)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = try JSONSerialization.data(withJSONObject: body)
@@ -80,5 +104,25 @@ enum AIService {
         ]
         let json = try await postJSON(body)
         return contentString(from: json).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    static func synthesizeEssayAudio(text: String, voiceName: String = "Kore") async throws -> Data {
+        var req = URLRequest(url: essayTTSURL)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try JSONSerialization.data(withJSONObject: [
+            "model": "gemini-2.5-flash-tts",
+            "voiceName": voiceName,
+            "text": text
+        ])
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        guard let http = resp as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
+            let t = String(data: data, encoding: .utf8) ?? ""
+            throw NSError(domain: "AI", code: (resp as? HTTPURLResponse)?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey: String(t.prefix(400))])
+        }
+        if data.isEmpty {
+            throw NSError(domain: "AI", code: -3, userInfo: [NSLocalizedDescriptionKey: "TTS 返回空音频"])
+        }
+        return data
     }
 }

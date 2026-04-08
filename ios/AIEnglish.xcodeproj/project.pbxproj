@@ -22,8 +22,29 @@
 		E1010000000000000000000D /* WordDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000000D /* WordDetailSheet.swift */; };
 		E1010000000000000000000E /* ScanTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000000E /* ScanTabView.swift */; };
 		E1010000000000000000000F /* ProfileTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000000F /* ProfileTabView.swift */; };
+		E10100000000000000000012 /* EssayTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000013 /* EssayTabView.swift */; };
 		E10100000000000000000010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000010 /* Assets.xcassets */; };
 		E10100000000000000000011 /* vocabulary.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000011 /* vocabulary.json */; };
+		E10100000000000000000016 /* EssayModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000014 /* EssayModels.swift */; };
+		E10100000000000000000017 /* EssayDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000015 /* EssayDetailView.swift */; };
+		E10100000000000000000018 /* essays.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000016 /* essays.json */; };
+		E10100000000000000000019 /* ReadingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000017 /* ReadingModels.swift */; };
+		E1010000000000000000001A /* reading_content.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000018 /* reading_content.json */; };
+		E1010000000000000000001B /* essays_audio in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000019 /* essays_audio */; };
+		E1010000000000000000001C /* daofa_reference.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000001C /* daofa_reference.txt */; };
+		E1010000000000000000001D /* EnglishHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000001D /* EnglishHubView.swift */; };
+		E1010000000000000000001E /* DaofaTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000001E /* DaofaTabView.swift */; };
+		E1010000000000000000001F /* daofa_structure.txt in Resources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000001F /* daofa_structure.txt */; };
+		E10100000000000000000020 /* reading_high_freq.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000020 /* reading_high_freq.json */; };
+		E10100000000000000000021 /* ReadingHighFreqTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000021 /* ReadingHighFreqTabView.swift */; };
+		E10100000000000000000022 /* mc688_21day.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000022 /* mc688_21day.json */; };
+		E10100000000000000000023 /* Mc688TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000023 /* Mc688TabView.swift */; };
+		E10100000000000000000024 /* reading_skills_zhongkao.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000024 /* reading_skills_zhongkao.json */; };
+		E10100000000000000000025 /* ReadingSkillsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000025 /* ReadingSkillsTabView.swift */; };
+		E10100000000000000000026 /* daofa_past_exams.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000026 /* daofa_past_exams.json */; };
+		E10100000000000000000027 /* ChineseHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000027 /* ChineseHubView.swift */; };
+		E10100000000000000000028 /* ChineseZhongkaoTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000028 /* ChineseZhongkaoTabView.swift */; };
+		E10100000000000000000029 /* chinese_zhongkao.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000029 /* chinese_zhongkao.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +63,27 @@
 		E2010000000000000000000D /* WordDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailSheet.swift; sourceTree = "<group>"; };
 		E2010000000000000000000E /* ScanTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanTabView.swift; sourceTree = "<group>"; };
 		E2010000000000000000000F /* ProfileTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000013 /* EssayTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssayTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000014 /* EssayModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssayModels.swift; sourceTree = "<group>"; };
+		E20100000000000000000015 /* EssayDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssayDetailView.swift; sourceTree = "<group>"; };
+		E20100000000000000000016 /* essays.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = essays.json; path = ../web/data/essays.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000017 /* ReadingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingModels.swift; sourceTree = "<group>"; };
+		E20100000000000000000018 /* reading_content.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = reading_content.json; path = ../web/data/reading_content.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000019 /* essays_audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = essays_audio; path = ../web/data/audio/essays; sourceTree = SOURCE_ROOT; };
+		E2010000000000000000001C /* daofa_reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = daofa_reference.txt; path = ../web/data/daofa_reference.txt; sourceTree = SOURCE_ROOT; };
+		E2010000000000000000001D /* EnglishHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishHubView.swift; sourceTree = "<group>"; };
+		E2010000000000000000001E /* DaofaTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaofaTabView.swift; sourceTree = "<group>"; };
+		E2010000000000000000001F /* daofa_structure.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = daofa_structure.txt; path = ../web/data/daofa_structure.txt; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000020 /* reading_high_freq.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = reading_high_freq.json; path = ../web/data/reading_high_freq.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000021 /* ReadingHighFreqTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHighFreqTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000022 /* mc688_21day.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = mc688_21day.json; path = ../web/data/mc688_21day.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000023 /* Mc688TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mc688TabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000024 /* reading_skills_zhongkao.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = reading_skills_zhongkao.json; path = ../web/data/reading_skills_zhongkao.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000025 /* ReadingSkillsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSkillsTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000026 /* daofa_past_exams.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = daofa_past_exams.json; path = ../web/data/daofa_past_exams.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000027 /* ChineseHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseHubView.swift; sourceTree = "<group>"; };
+		E20100000000000000000028 /* ChineseZhongkaoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseZhongkaoTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000029 /* chinese_zhongkao.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = chinese_zhongkao.json; path = ../web/data/chinese_zhongkao.json; sourceTree = SOURCE_ROOT; };
 		E20100000000000000000010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E20100000000000000000011 /* vocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = vocabulary.json; path = ../web/data/vocabulary.json; sourceTree = SOURCE_ROOT; };
 		E20100000000000000000012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,9 +126,30 @@
 				E2010000000000000000000C /* VocabularyTabView.swift */,
 				E2010000000000000000000D /* WordDetailSheet.swift */,
 				E2010000000000000000000E /* ScanTabView.swift */,
+				E20100000000000000000013 /* EssayTabView.swift */,
+				E20100000000000000000014 /* EssayModels.swift */,
+				E20100000000000000000015 /* EssayDetailView.swift */,
 				E2010000000000000000000F /* ProfileTabView.swift */,
 				E20100000000000000000010 /* Assets.xcassets */,
 				E20100000000000000000011 /* vocabulary.json */,
+				E20100000000000000000016 /* essays.json */,
+				E20100000000000000000017 /* ReadingModels.swift */,
+				E20100000000000000000018 /* reading_content.json */,
+				E20100000000000000000019 /* essays_audio */,
+				E2010000000000000000001C /* daofa_reference.txt */,
+				E2010000000000000000001F /* daofa_structure.txt */,
+				E20100000000000000000020 /* reading_high_freq.json */,
+				E20100000000000000000021 /* ReadingHighFreqTabView.swift */,
+				E20100000000000000000022 /* mc688_21day.json */,
+				E20100000000000000000023 /* Mc688TabView.swift */,
+				E20100000000000000000024 /* reading_skills_zhongkao.json */,
+				E20100000000000000000025 /* ReadingSkillsTabView.swift */,
+				E20100000000000000000026 /* daofa_past_exams.json */,
+				E20100000000000000000029 /* chinese_zhongkao.json */,
+				E20100000000000000000027 /* ChineseHubView.swift */,
+				E20100000000000000000028 /* ChineseZhongkaoTabView.swift */,
+				E2010000000000000000001D /* EnglishHubView.swift */,
+				E2010000000000000000001E /* DaofaTabView.swift */,
 				E20100000000000000000012 /* Info.plist */,
 			);
 			path = AIEnglish;
@@ -161,6 +224,16 @@
 			files = (
 				E10100000000000000000010 /* Assets.xcassets in Resources */,
 				E10100000000000000000011 /* vocabulary.json in Resources */,
+				E10100000000000000000018 /* essays.json in Resources */,
+				E1010000000000000000001A /* reading_content.json in Resources */,
+				E1010000000000000000001B /* essays_audio in Resources */,
+				E1010000000000000000001C /* daofa_reference.txt in Resources */,
+				E1010000000000000000001F /* daofa_structure.txt in Resources */,
+				E10100000000000000000020 /* reading_high_freq.json in Resources */,
+				E10100000000000000000022 /* mc688_21day.json in Resources */,
+				E10100000000000000000024 /* reading_skills_zhongkao.json in Resources */,
+				E10100000000000000000026 /* daofa_past_exams.json in Resources */,
+				E10100000000000000000029 /* chinese_zhongkao.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,7 +258,18 @@
 				E1010000000000000000000C /* VocabularyTabView.swift in Sources */,
 				E1010000000000000000000D /* WordDetailSheet.swift in Sources */,
 				E1010000000000000000000E /* ScanTabView.swift in Sources */,
+				E10100000000000000000012 /* EssayTabView.swift in Sources */,
+				E10100000000000000000016 /* EssayModels.swift in Sources */,
+				E10100000000000000000017 /* EssayDetailView.swift in Sources */,
+				E10100000000000000000019 /* ReadingModels.swift in Sources */,
 				E1010000000000000000000F /* ProfileTabView.swift in Sources */,
+				E1010000000000000000001D /* EnglishHubView.swift in Sources */,
+				E1010000000000000000001E /* DaofaTabView.swift in Sources */,
+				E10100000000000000000021 /* ReadingHighFreqTabView.swift in Sources */,
+				E10100000000000000000023 /* Mc688TabView.swift in Sources */,
+				E10100000000000000000025 /* ReadingSkillsTabView.swift in Sources */,
+				E10100000000000000000027 /* ChineseHubView.swift in Sources */,
+				E10100000000000000000028 /* ChineseZhongkaoTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

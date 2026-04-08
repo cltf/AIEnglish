@@ -1,0 +1,2674 @@
+{
+  "version": 2,
+  "label": "阅读高频词汇",
+  "note": "",
+  "entries": [
+    {
+      "rank": 1,
+      "word": "motivate",
+      "phonetic": "[ˈməʊtɪveɪt]",
+      "meaning": "vt. 驱使，激发",
+      "frequency": 42
+    },
+    {
+      "rank": 2,
+      "word": "plastic",
+      "phonetic": "[ˈplæstɪk]",
+      "meaning": "n./adj. 塑料",
+      "frequency": 41
+    },
+    {
+      "rank": 3,
+      "word": "positive",
+      "phonetic": "[ˈpɒzətɪv]",
+      "meaning": "adj. 积极的，肯定的",
+      "frequency": 38
+    },
+    {
+      "rank": 4,
+      "word": "physical",
+      "phonetic": "[ˈfɪzɪkl]",
+      "meaning": "adj. 身体的，物理的",
+      "frequency": 30
+    },
+    {
+      "rank": 5,
+      "word": "reduce",
+      "phonetic": "[rɪˈdjuːs]",
+      "meaning": "v. 减少，缩小",
+      "frequency": 30
+    },
+    {
+      "rank": 6,
+      "word": "performance",
+      "phonetic": "[pəˈfɔːməns]",
+      "meaning": "n. 表现，表演",
+      "frequency": 29
+    },
+    {
+      "rank": 7,
+      "word": "emotional",
+      "phonetic": "[ɪˈməʊʃənl]",
+      "meaning": "adj. 情感的，情绪的",
+      "frequency": 27
+    },
+    {
+      "rank": 8,
+      "word": "participant",
+      "phonetic": "[pɑːˈtɪsɪpənt]",
+      "meaning": "n. 参加者",
+      "frequency": 25
+    },
+    {
+      "rank": 9,
+      "word": "view",
+      "phonetic": "[vjuː]",
+      "meaning": "n./vt. 风景，视野，见解；观看",
+      "frequency": 24
+    },
+    {
+      "rank": 10,
+      "word": "cooperate",
+      "phonetic": "[kəʊˈɒpəreɪt]",
+      "meaning": "vi. 合作，配合",
+      "frequency": 22
+    },
+    {
+      "rank": 11,
+      "word": "negative",
+      "phonetic": "[ˈneɡətɪv]",
+      "meaning": "adj. 负面的，消极的，肯定的",
+      "frequency": 21
+    },
+    {
+      "rank": 12,
+      "word": "pressure",
+      "phonetic": "[ˈpreʃə(r)]",
+      "meaning": "n. 压力",
+      "frequency": 21
+    },
+    {
+      "rank": 13,
+      "word": "failure",
+      "phonetic": "[ˈfeɪljə(r)]",
+      "meaning": "n. 失败",
+      "frequency": 20
+    },
+    {
+      "rank": 14,
+      "word": "garbage",
+      "phonetic": "[ˈɡɑːbɪdʒ]",
+      "meaning": "n. 垃圾",
+      "frequency": 20
+    },
+    {
+      "rank": 15,
+      "word": "journal",
+      "phonetic": "[ˈdʒɜːnl]",
+      "meaning": "n. 杂志，期刊，日志",
+      "frequency": 20
+    },
+    {
+      "rank": 16,
+      "word": "device",
+      "phonetic": "[dɪˈvaɪs]",
+      "meaning": "n. 设备",
+      "frequency": 19
+    },
+    {
+      "rank": 17,
+      "word": "literature",
+      "phonetic": "[ˈlɪtrətʃə(r)]",
+      "meaning": "n. 文学，文学作品",
+      "frequency": 19
+    },
+    {
+      "rank": 18,
+      "word": "bacteria",
+      "phonetic": "[bækˈtɪəriə]",
+      "meaning": "n. 细菌",
+      "frequency": 18
+    },
+    {
+      "rank": 19,
+      "word": "landfill",
+      "phonetic": "[ˈlændfɪl]",
+      "meaning": "n. 垃圾填埋场",
+      "frequency": 18
+    },
+    {
+      "rank": 20,
+      "word": "personality",
+      "phonetic": "[ˌpɜːsəˈnæləti]",
+      "meaning": "n. 性格，个性；特色，特征",
+      "frequency": 18
+    },
+    {
+      "rank": 21,
+      "word": "solution",
+      "phonetic": "[səˈluːʃn]",
+      "meaning": "n. 解决办法，答案",
+      "frequency": 18
+    },
+    {
+      "rank": 22,
+      "word": "affect",
+      "phonetic": "[əˈfekt]",
+      "meaning": "vt. 影响，感动，侵袭",
+      "frequency": 17
+    },
+    {
+      "rank": 23,
+      "word": "average",
+      "phonetic": "[ˈævərɪdʒ]",
+      "meaning": "n./adj. 平均数，平均水平；平均的",
+      "frequency": 17
+    },
+    {
+      "rank": 24,
+      "word": "comfort",
+      "phonetic": "[ˈkʌmfət]",
+      "meaning": "n./vt. 舒适，安慰",
+      "frequency": 17
+    },
+    {
+      "rank": 25,
+      "word": "connection",
+      "phonetic": "[kəˈnekʃn]",
+      "meaning": "n. 联系，连接",
+      "frequency": 17
+    },
+    {
+      "rank": 26,
+      "word": "quality",
+      "phonetic": "[ˈkwɒləti]",
+      "meaning": "n. 质量，品质，性质",
+      "frequency": 17
+    },
+    {
+      "rank": 27,
+      "word": "violent",
+      "phonetic": "[ˈvaɪələnt]",
+      "meaning": "adj. 猛烈的，暴力的",
+      "frequency": 17
+    },
+    {
+      "rank": 28,
+      "word": "generate",
+      "phonetic": "[ˈdʒenəreɪt]",
+      "meaning": "vt. 产生，引起",
+      "frequency": 16
+    },
+    {
+      "rank": 29,
+      "word": "publish",
+      "phonetic": "[ˈpʌblɪʃ]",
+      "meaning": "v. 出版",
+      "frequency": 16
+    },
+    {
+      "rank": 30,
+      "word": "effective",
+      "phonetic": "[ɪˈfektɪv]",
+      "meaning": "adj. 有效的",
+      "frequency": 15
+    },
+    {
+      "rank": 31,
+      "word": "gossip",
+      "phonetic": "[ˈɡɒsɪp]",
+      "meaning": "n.流言蜚语",
+      "frequency": 15
+    },
+    {
+      "rank": 32,
+      "word": "intelligence",
+      "phonetic": "[ɪnˈtelɪdʒəns]",
+      "meaning": "n.智力，聪明，智能",
+      "frequency": 15
+    },
+    {
+      "rank": 33,
+      "word": "reality",
+      "phonetic": "[riˈæləti]",
+      "meaning": "n.真实，事实，现实",
+      "frequency": 15
+    },
+    {
+      "rank": 34,
+      "word": "exploration",
+      "phonetic": "[ˌekspləˈreɪʃn]",
+      "meaning": "n.探索，探究",
+      "frequency": 14
+    },
+    {
+      "rank": 35,
+      "word": "species",
+      "phonetic": "[ˈspiːʃiːz]",
+      "meaning": "n.种类，物种",
+      "frequency": 14
+    },
+    {
+      "rank": 36,
+      "word": "cognitive",
+      "phonetic": "[ˈkɒɡnətɪv]",
+      "meaning": "adj.认知的",
+      "frequency": 13
+    },
+    {
+      "rank": 37,
+      "word": "compete",
+      "phonetic": "[kəmˈpiːt]",
+      "meaning": "vi.竞争，比赛",
+      "frequency": 13
+    },
+    {
+      "rank": 38,
+      "word": "disease",
+      "phonetic": "[dɪˈziːz]",
+      "meaning": "n.疾病",
+      "frequency": 13
+    },
+    {
+      "rank": 39,
+      "word": "evidence",
+      "phonetic": "[ˈevɪdəns]",
+      "meaning": "n.证据",
+      "frequency": 13
+    },
+    {
+      "rank": 40,
+      "word": "memorize",
+      "phonetic": "[ˈmeməraɪz]",
+      "meaning": "v.记住",
+      "frequency": 13
+    },
+    {
+      "rank": 41,
+      "word": "recycle",
+      "phonetic": "[ˌriːˈsaɪkl]",
+      "meaning": "vt.回收",
+      "frequency": 13
+    },
+    {
+      "rank": 42,
+      "word": "resource",
+      "phonetic": "[rɪˈsɔːs]",
+      "meaning": "n.资源",
+      "frequency": 13
+    },
+    {
+      "rank": 43,
+      "word": "argument",
+      "phonetic": "[ˈɑːɡjumənt]",
+      "meaning": "n.争论(吵)，辩论，理由，论证",
+      "frequency": 12
+    },
+    {
+      "rank": 44,
+      "word": "esteem",
+      "phonetic": "[ɪˈstiːm]",
+      "meaning": "n./vt.尊重，敬重；把...看作，认为",
+      "frequency": 12
+    },
+    {
+      "rank": 45,
+      "word": "injury",
+      "phonetic": "[ˈɪndʒəri]",
+      "meaning": "n.伤害",
+      "frequency": 12
+    },
+    {
+      "rank": 46,
+      "word": "powerful",
+      "phonetic": "[ˈpauəful]",
+      "meaning": "adj.强大的，有权力的",
+      "frequency": 12
+    },
+    {
+      "rank": 47,
+      "word": "throughout",
+      "phonetic": "[θruːˈaut]",
+      "meaning": "prep./adv.遍及，贯穿；始终",
+      "frequency": 12
+    },
+    {
+      "rank": 48,
+      "word": "appreciate",
+      "phonetic": "[əˈpriːʃieɪt]",
+      "meaning": "vt.欣赏，感激，理解",
+      "frequency": 11
+    },
+    {
+      "rank": 49,
+      "word": "gratitude",
+      "phonetic": "[ˈɡrætɪtjuːd]",
+      "meaning": "n.感激",
+      "frequency": 11
+    },
+    {
+      "rank": 50,
+      "word": "limited",
+      "phonetic": "[ˈlɪmɪtɪd]",
+      "meaning": "adj.有限的",
+      "frequency": 11
+    },
+    {
+      "rank": 51,
+      "word": "mental",
+      "phonetic": "[ˈmentl]",
+      "meaning": "adj.精神的，心理的",
+      "frequency": 11
+    },
+    {
+      "rank": 52,
+      "word": "outcome",
+      "phonetic": "[ˈautkʌm]",
+      "meaning": "n.结果",
+      "frequency": 11
+    },
+    {
+      "rank": 53,
+      "word": "reward",
+      "phonetic": "[rɪˈwɔːd]",
+      "meaning": "n./vt.报酬，酬劳；奖赏",
+      "frequency": 11
+    },
+    {
+      "rank": 54,
+      "word": "beneficial",
+      "phonetic": "[ˌbenɪˈfɪʃl]",
+      "meaning": "adj.有益的，有利的",
+      "frequency": 10
+    },
+    {
+      "rank": 55,
+      "word": "biological",
+      "phonetic": "[ˌbaɪəˈlɒdʒɪkl]",
+      "meaning": "adj.生物学的",
+      "frequency": 10
+    },
+    {
+      "rank": 56,
+      "word": "conclude",
+      "phonetic": "[kənˈkluːd]",
+      "meaning": "v.得出结论，(使)结束",
+      "frequency": 10
+    },
+    {
+      "rank": 57,
+      "word": "define",
+      "phonetic": "[dɪˈfaɪn]",
+      "meaning": "vt.阐明，限定；给...下定义",
+      "frequency": 10
+    },
+    {
+      "rank": 58,
+      "word": "package",
+      "phonetic": "[ˈpækɪdʒ]",
+      "meaning": "n.包裹",
+      "frequency": 10
+    },
+    {
+      "rank": 59,
+      "word": "psychological",
+      "phonetic": "[ˌsaɪkəˈlɒdʒɪkl]",
+      "meaning": "adj.心理的；精神上的；心理学的",
+      "frequency": 10
+    },
+    {
+      "rank": 60,
+      "word": "recall",
+      "phonetic": "[riˈkɔː(l)]",
+      "meaning": "v.想起，召回",
+      "frequency": 10
+    },
+    {
+      "rank": 61,
+      "word": "recipe",
+      "phonetic": "[ˈresəpi]",
+      "meaning": "n.食谱，处方，秘诀",
+      "frequency": 10
+    },
+    {
+      "rank": 62,
+      "word": "replace",
+      "phonetic": "[rɪˈpleɪs]",
+      "meaning": "vt.代替",
+      "frequency": 10
+    },
+    {
+      "rank": 63,
+      "word": "respond",
+      "phonetic": "[rɪˈspɒnd]",
+      "meaning": "v.反映，回应",
+      "frequency": 10
+    },
+    {
+      "rank": 64,
+      "word": "status",
+      "phonetic": "[ˈsteɪtəs]",
+      "meaning": "n.地位，身份，状态",
+      "frequency": 10
+    },
+    {
+      "rank": 65,
+      "word": "strengthen",
+      "phonetic": "[ˈstreŋθən]",
+      "meaning": "v.加强，巩固",
+      "frequency": 10
+    },
+    {
+      "rank": 66,
+      "word": "stressed",
+      "phonetic": "[strest]",
+      "meaning": "adj.焦虑不安的；心力交瘁的",
+      "frequency": 10
+    },
+    {
+      "rank": 67,
+      "word": "unlock",
+      "phonetic": "[ˌʌnˈlɒk]",
+      "meaning": "vt.开...的锁；揭示",
+      "frequency": 10
+    },
+    {
+      "rank": 68,
+      "word": "willing",
+      "phonetic": "[ˈwɪlɪŋ]",
+      "meaning": "adj.愿意的，乐意的",
+      "frequency": 10
+    },
+    {
+      "rank": 69,
+      "word": "challenging",
+      "phonetic": "[ˈtʃælɪndʒɪŋ]",
+      "meaning": "adj.有挑战性的",
+      "frequency": 9
+    },
+    {
+      "rank": 70,
+      "word": "detail",
+      "phonetic": "[ˈdiːteɪl]",
+      "meaning": "n.细节",
+      "frequency": 9
+    },
+    {
+      "rank": 71,
+      "word": "digital",
+      "phonetic": "[ˈdɪdʒɪtəl]",
+      "meaning": "adj.数字式的",
+      "frequency": 9
+    },
+    {
+      "rank": 72,
+      "word": "discipline",
+      "phonetic": "[ˈdɪsɪplɪn]",
+      "meaning": "n./v.学科，纪律；管教",
+      "frequency": 9
+    },
+    {
+      "rank": 73,
+      "word": "exposure",
+      "phonetic": "[ɪkˈspəʊʒə]",
+      "meaning": "n.暴露，显露，揭露",
+      "frequency": 9
+    },
+    {
+      "rank": 74,
+      "word": "imagination",
+      "phonetic": "[ɪˌmædʒɪˈneɪʃən]",
+      "meaning": "n.想象，想象力",
+      "frequency": 9
+    },
+    {
+      "rank": 75,
+      "word": "literacy",
+      "phonetic": "[ˈlɪtərəsi]",
+      "meaning": "n.识字；有文化",
+      "frequency": 9
+    },
+    {
+      "rank": 76,
+      "word": "overweight",
+      "phonetic": "[ˌəʊvəˈweɪt]",
+      "meaning": "n.超重",
+      "frequency": 9
+    },
+    {
+      "rank": 77,
+      "word": "tend",
+      "phonetic": "[tend]",
+      "meaning": "v.倾向，照料",
+      "frequency": 9
+    },
+    {
+      "rank": 78,
+      "word": "track",
+      "phonetic": "[træk]",
+      "meaning": "n./vt.踪迹，轨道，跑道，小径；跟踪",
+      "frequency": 9
+    },
+    {
+      "rank": 79,
+      "word": "transportation",
+      "phonetic": "[ˌtrænspɔːˈteɪʃn]",
+      "meaning": "n.运输",
+      "frequency": 9
+    },
+    {
+      "rank": 80,
+      "word": "athlete",
+      "phonetic": "[ˈæθliːt]",
+      "meaning": "n.运动员",
+      "frequency": 8
+    },
+    {
+      "rank": 81,
+      "word": "climate",
+      "phonetic": "[ˈklaɪmət]",
+      "meaning": "n.气候",
+      "frequency": 8
+    },
+    {
+      "rank": 82,
+      "word": "desire",
+      "phonetic": "[dɪˈzaɪə(r)]",
+      "meaning": "n./v.渴望，要求",
+      "frequency": 8
+    },
+    {
+      "rank": 83,
+      "word": "distance",
+      "phonetic": "[ˈdɪstəns]",
+      "meaning": "n.距离",
+      "frequency": 8
+    },
+    {
+      "rank": 84,
+      "word": "exist",
+      "phonetic": "[ɪɡˈzɪst]",
+      "meaning": "v.存在，生存",
+      "frequency": 8
+    },
+    {
+      "rank": 85,
+      "word": "function",
+      "phonetic": "[ˈfʌŋkʃən]",
+      "meaning": "n./vi 功能，机能，函数；运转，起作用",
+      "frequency": 8
+    },
+    {
+      "rank": 86,
+      "word": "gradual",
+      "phonetic": "[ˈɡrædʒuəl]",
+      "meaning": "adj.逐渐的",
+      "frequency": 8
+    },
+    {
+      "rank": 87,
+      "word": "inspire",
+      "phonetic": "[ɪnˈspaɪə]",
+      "meaning": "vt.鼓舞，给...以灵感",
+      "frequency": 8
+    },
+    {
+      "rank": 88,
+      "word": "potential",
+      "phonetic": "[pəˈtenʃəl]",
+      "meaning": "n./adj.潜能，可能性；可能的，潜在的",
+      "frequency": 8
+    },
+    {
+      "rank": 89,
+      "word": "procrastinate",
+      "phonetic": "[prəʊˈkræstɪneɪt]",
+      "meaning": "v.耽搁，拖延",
+      "frequency": 8
+    },
+    {
+      "rank": 90,
+      "word": "puzzle",
+      "phonetic": "[ˈpʌzl]",
+      "meaning": "n./v.谜；迷惑，使困惑",
+      "frequency": 8
+    },
+    {
+      "rank": 91,
+      "word": "signal",
+      "phonetic": "[ˈsɪɡnəl]",
+      "meaning": "n./v.信号；发信号，表明",
+      "frequency": 8
+    },
+    {
+      "rank": 92,
+      "word": "structure",
+      "phonetic": "[ˈstrʌktʃə]",
+      "meaning": "n.结构",
+      "frequency": 8
+    },
+    {
+      "rank": 93,
+      "word": "theory",
+      "phonetic": "[ˈθɪəri]",
+      "meaning": "n. 理论",
+      "frequency": 8
+    },
+    {
+      "rank": 94,
+      "word": "variety",
+      "phonetic": "[vəˈraɪəti]",
+      "meaning": "n. 多样性, 种类",
+      "frequency": 8
+    },
+    {
+      "rank": 95,
+      "word": "available",
+      "phonetic": "[əˈveɪləbl]",
+      "meaning": "adj. 可用的, 可得到的, 有空的",
+      "frequency": 7
+    },
+    {
+      "rank": 96,
+      "word": "boredom",
+      "phonetic": "[ˈbɔːdəm]",
+      "meaning": "n. 无聊",
+      "frequency": 7
+    },
+    {
+      "rank": 97,
+      "word": "charity",
+      "phonetic": "[ˈtʃærəti]",
+      "meaning": "n. 慈善团体",
+      "frequency": 7
+    },
+    {
+      "rank": 98,
+      "word": "combine",
+      "phonetic": "[kəmˈbaɪn]",
+      "meaning": "vt. 联合, 结合",
+      "frequency": 7
+    },
+    {
+      "rank": 99,
+      "word": "confused",
+      "phonetic": "[kənˈfjuːzd]",
+      "meaning": "adj. 糊涂的, 迷惑的",
+      "frequency": 7
+    },
+    {
+      "rank": 100,
+      "word": "escape",
+      "phonetic": "[ɪˈskeɪp]",
+      "meaning": "vi. 逃脱, 逃走",
+      "frequency": 7
+    },
+    {
+      "rank": 101,
+      "word": "exchange",
+      "phonetic": "[ɪksˈtʃeɪndʒ]",
+      "meaning": "n./vt. 外汇, 兑换, 交换, 交流",
+      "frequency": 7
+    },
+    {
+      "rank": 102,
+      "word": "expand",
+      "phonetic": "[ɪkˈspænd]",
+      "meaning": "v. 扩大, 扩展",
+      "frequency": 7
+    },
+    {
+      "rank": 103,
+      "word": "expression",
+      "phonetic": "[ɪkˈspreʃn]",
+      "meaning": "n. 词语, 表示, 表达",
+      "frequency": 7
+    },
+    {
+      "rank": 104,
+      "word": "increasingly",
+      "phonetic": "[ɪnˈkriːsɪŋli]",
+      "meaning": "adv. 越来越多地, 不断增加地",
+      "frequency": 7
+    },
+    {
+      "rank": 105,
+      "word": "loneliness",
+      "phonetic": "[ˈləʊnlinəs]",
+      "meaning": "n. 孤独, 寂寞",
+      "frequency": 7
+    },
+    {
+      "rank": 106,
+      "word": "movement",
+      "phonetic": "[ˈmuːvmənt]",
+      "meaning": "n. 运动, 动作, 活动",
+      "frequency": 7
+    },
+    {
+      "rank": 107,
+      "word": "observe",
+      "phonetic": "[əbˈzɜːv]",
+      "meaning": "v. 观察, 遵守, 庆祝",
+      "frequency": 7
+    },
+    {
+      "rank": 108,
+      "word": "option",
+      "phonetic": "[ˈɒpʃn]",
+      "meaning": "n. 选择",
+      "frequency": 7
+    },
+    {
+      "rank": 109,
+      "word": "particular",
+      "phonetic": "[pəˈtɪkjələ]",
+      "meaning": "adj. 特别的, 讲究的, 挑剔的",
+      "frequency": 7
+    },
+    {
+      "rank": 110,
+      "word": "reaction",
+      "phonetic": "[ri(ː)ˈækʃən]",
+      "meaning": "n. 反应, 化学反应",
+      "frequency": 7
+    },
+    {
+      "rank": 111,
+      "word": "charge",
+      "phonetic": "[tʃɑːdʒ]",
+      "meaning": "vt. 收费, 管理, 充电, 冲刺, 控告",
+      "frequency": 6
+    },
+    {
+      "rank": 112,
+      "word": "competence",
+      "phonetic": "[ˈkɒmpɪtəns]",
+      "meaning": "n. 能力",
+      "frequency": 6
+    },
+    {
+      "rank": 113,
+      "word": "concentrate",
+      "phonetic": "[ˈkɒnsəntreɪt]",
+      "meaning": "v. 集中",
+      "frequency": 6
+    },
+    {
+      "rank": 114,
+      "word": "consume",
+      "phonetic": "[kənˈsjuːm]",
+      "meaning": "vt. 消耗, 消费",
+      "frequency": 6
+    },
+    {
+      "rank": 115,
+      "word": "critical",
+      "phonetic": "[ˈkrɪtɪkl]",
+      "meaning": "adj. 关键性的，批评的",
+      "frequency": 6
+    },
+    {
+      "rank": 116,
+      "word": "decrease",
+      "phonetic": "[dɪˈkriːs]",
+      "meaning": "v./n. 减少, 降低",
+      "frequency": 6
+    },
+    {
+      "rank": 117,
+      "word": "ecology",
+      "phonetic": "[iˈkɒlədʒi]",
+      "meaning": "n. 生态",
+      "frequency": 6
+    },
+    {
+      "rank": 118,
+      "word": "enrich",
+      "phonetic": "[ɪnˈrɪtʃ]",
+      "meaning": "n./vt. 使丰富",
+      "frequency": 6
+    },
+    {
+      "rank": 119,
+      "word": "evaluate",
+      "phonetic": "[ɪˈvæljueɪt]",
+      "meaning": "vt. 评价, 评估",
+      "frequency": 6
+    },
+    {
+      "rank": 120,
+      "word": "exhibit",
+      "phonetic": "[ɪɡˈzɪbɪt]",
+      "meaning": "n./vt. 展品, 展览; 表现, 显出",
+      "frequency": 6
+    },
+    {
+      "rank": 121,
+      "word": "extracurricular",
+      "phonetic": "[ˌekstrəkəˈrɪkjələ]",
+      "meaning": "adj. 课外的",
+      "frequency": 6
+    },
+    {
+      "rank": 122,
+      "word": "independent",
+      "phonetic": "[ˌɪndɪˈpendənt]",
+      "meaning": "adj. 独立的, 不相关的",
+      "frequency": 6
+    },
+    {
+      "rank": 123,
+      "word": "interact",
+      "phonetic": "[ˌɪntərˈækt]",
+      "meaning": "vi. 互动, 相互作用",
+      "frequency": 6
+    },
+    {
+      "rank": 124,
+      "word": "layer",
+      "phonetic": "[ˈleɪə(r)]",
+      "meaning": "n./v. (分) 层次",
+      "frequency": 6
+    },
+    {
+      "rank": 125,
+      "word": "major",
+      "phonetic": "[ˈmeɪdʒə]",
+      "meaning": "n./adj./vi.主修，主修科目；主要的",
+      "frequency": 6
+    },
+    {
+      "rank": 126,
+      "word": "pattern",
+      "phonetic": "[ˈpætən]",
+      "meaning": "n.图案，样式，模式，榜样",
+      "frequency": 6
+    },
+    {
+      "rank": 127,
+      "word": "popularity",
+      "phonetic": "[ˌpɒpjuˈlærəti]",
+      "meaning": "n.受欢迎，普及",
+      "frequency": 6
+    },
+    {
+      "rank": 128,
+      "word": "practical",
+      "phonetic": "[ˈpræktɪkəl]",
+      "meaning": "adj.实用的，实际的",
+      "frequency": 6
+    },
+    {
+      "rank": 129,
+      "word": "priority",
+      "phonetic": "[praɪˈɒrəti]",
+      "meaning": "n.优先事项，优先(权)",
+      "frequency": 6
+    },
+    {
+      "rank": 130,
+      "word": "privacy",
+      "phonetic": "[ˈpraɪvəsi]",
+      "meaning": "n.隐私",
+      "frequency": 6
+    },
+    {
+      "rank": 131,
+      "word": "productive",
+      "phonetic": "[prəˈdʌktɪv]",
+      "meaning": "adj.多产的",
+      "frequency": 6
+    },
+    {
+      "rank": 132,
+      "word": "routine",
+      "phonetic": "[ruːˈtiːn]",
+      "meaning": "n.常规",
+      "frequency": 6
+    },
+    {
+      "rank": 133,
+      "word": "sacrifice",
+      "phonetic": "[ˈsækrɪfaɪs]",
+      "meaning": "n./vt.牺牲，祭祀，祭品",
+      "frequency": 6
+    },
+    {
+      "rank": 134,
+      "word": "socialize",
+      "phonetic": "[ˈsəʊʃəlaɪz]",
+      "meaning": "vt. (和他人) 交往，交际",
+      "frequency": 6
+    },
+    {
+      "rank": 135,
+      "word": "storage",
+      "phonetic": "[ˈstɔːrɪdʒ]",
+      "meaning": "n.贮藏，仓库",
+      "frequency": 6
+    },
+    {
+      "rank": 136,
+      "word": "struggle",
+      "phonetic": "[ˈstrʌɡl]",
+      "meaning": "n./v.挣扎",
+      "frequency": 6
+    },
+    {
+      "rank": 137,
+      "word": "switch",
+      "phonetic": "[swɪtʃ]",
+      "meaning": "n./v.开关，转变",
+      "frequency": 6
+    },
+    {
+      "rank": 138,
+      "word": "trash",
+      "phonetic": "[træʃ]",
+      "meaning": "n.垃圾",
+      "frequency": 6
+    },
+    {
+      "rank": 139,
+      "word": "trick",
+      "phonetic": "[trɪk]",
+      "meaning": "n./vt.诡计，把戏，诀窍；欺骗",
+      "frequency": 6
+    },
+    {
+      "rank": 140,
+      "word": "trustworthy",
+      "phonetic": "[ˈtrʌstwɜːði]",
+      "meaning": "adj.值得信任的，可靠的",
+      "frequency": 6
+    },
+    {
+      "rank": 141,
+      "word": "virtual",
+      "phonetic": "[ˈvɜːtʃuəl]",
+      "meaning": "adj.虚拟的",
+      "frequency": 6
+    },
+    {
+      "rank": 142,
+      "word": "access",
+      "phonetic": "[ˈækses]",
+      "meaning": "n./v.通道、路径，机会",
+      "frequency": 5
+    },
+    {
+      "rank": 143,
+      "word": "adapt",
+      "phonetic": "[əˈdæpt]",
+      "meaning": "vt.改编，适应",
+      "frequency": 5
+    },
+    {
+      "rank": 144,
+      "word": "attack",
+      "phonetic": "[əˈtæk]",
+      "meaning": "n./vt.攻击",
+      "frequency": 5
+    },
+    {
+      "rank": 145,
+      "word": "carbon",
+      "phonetic": "[ˈkɑːbən]",
+      "meaning": "n.碳",
+      "frequency": 5
+    },
+    {
+      "rank": 146,
+      "word": "damage",
+      "phonetic": "[ˈdæmɪdʒ]",
+      "meaning": "n./vt.损失，损害",
+      "frequency": 5
+    },
+    {
+      "rank": 147,
+      "word": "display",
+      "phonetic": "[disˈpleɪ]",
+      "meaning": "vt./n.陈列，展出",
+      "frequency": 5
+    },
+    {
+      "rank": 148,
+      "word": "distract",
+      "phonetic": "[diˈstrækt]",
+      "meaning": "vt.使分心",
+      "frequency": 5
+    },
+    {
+      "rank": 149,
+      "word": "equipment",
+      "phonetic": "[ɪˈkwɪpmənt]",
+      "meaning": "n.装备，器材",
+      "frequency": 5
+    },
+    {
+      "rank": 150,
+      "word": "external",
+      "phonetic": "[ɪkˈstɜːnəl]",
+      "meaning": "adj.外部的",
+      "frequency": 5
+    },
+    {
+      "rank": 151,
+      "word": "feedback",
+      "phonetic": "[ˈfiːdbæk]",
+      "meaning": "n.反馈",
+      "frequency": 5
+    },
+    {
+      "rank": 152,
+      "word": "freedom",
+      "phonetic": "[ˈfriːdəm]",
+      "meaning": "n.自由",
+      "frequency": 5
+    },
+    {
+      "rank": 153,
+      "word": "indicator",
+      "phonetic": "[ˈɪndɪkeɪtə(r)]",
+      "meaning": "n.指示信号，标志，迹象，指示器",
+      "frequency": 5
+    },
+    {
+      "rank": 154,
+      "word": "intake",
+      "phonetic": "[ˈinteɪk]",
+      "meaning": "n.吸收；吸入",
+      "frequency": 5
+    },
+    {
+      "rank": 155,
+      "word": "invitation",
+      "phonetic": "[ɪnvɪ'teɪʃən]",
+      "meaning": "n. 邀请，招待",
+      "frequency": 5
+    },
+    {
+      "rank": 156,
+      "word": "lifestyle",
+      "phonetic": "['laɪfstaɪl]",
+      "meaning": "n. 生活方式",
+      "frequency": 5
+    },
+    {
+      "rank": 157,
+      "word": "management",
+      "phonetic": "['mænɪdʒmənt]",
+      "meaning": "n. 管理",
+      "frequency": 5
+    },
+    {
+      "rank": 158,
+      "word": "metal",
+      "phonetic": "['metl]",
+      "meaning": "n. 金属",
+      "frequency": 5
+    },
+    {
+      "rank": 159,
+      "word": "mindful",
+      "phonetic": "['maɪndfl]",
+      "meaning": "adj. 留心的，注意的",
+      "frequency": 5
+    },
+    {
+      "rank": 160,
+      "word": "principle",
+      "phonetic": "['prɪnsəpl]",
+      "meaning": "n. 道德原则，行为准则，法则",
+      "frequency": 5
+    },
+    {
+      "rank": 161,
+      "word": "react",
+      "phonetic": "[ri'ækt]",
+      "meaning": "vi. 反应",
+      "frequency": 5
+    },
+    {
+      "rank": 162,
+      "word": "reasonable",
+      "phonetic": "['riːznəbl]",
+      "meaning": "adj. 有道理的，合理的",
+      "frequency": 5
+    },
+    {
+      "rank": 163,
+      "word": "release",
+      "phonetic": "[rɪ'liːs]",
+      "meaning": "n./v. 释放，发行，发布",
+      "frequency": 5
+    },
+    {
+      "rank": 164,
+      "word": "stare",
+      "phonetic": "[steə]",
+      "meaning": "n./v. 凝视，注视",
+      "frequency": 5
+    },
+    {
+      "rank": 165,
+      "word": "strategy",
+      "phonetic": "['strætədʒi]",
+      "meaning": "n. 战略，策略",
+      "frequency": 5
+    },
+    {
+      "rank": 166,
+      "word": "transport",
+      "phonetic": "['trænspɔːt]",
+      "meaning": "n./vt. 运送，运输",
+      "frequency": 5
+    },
+    {
+      "rank": 167,
+      "word": "trend",
+      "phonetic": "[trend]",
+      "meaning": "n. 趋势，潮流",
+      "frequency": 5
+    },
+    {
+      "rank": 168,
+      "word": "virus",
+      "phonetic": "['vaɪrəs]",
+      "meaning": "n. 病毒",
+      "frequency": 5
+    },
+    {
+      "rank": 169,
+      "word": "abuse",
+      "phonetic": "[ə'bjuːs]",
+      "meaning": "vt. 滥用",
+      "frequency": 4
+    },
+    {
+      "rank": 170,
+      "word": "adventure",
+      "phonetic": "[əd'ventʃə]",
+      "meaning": "n. 冒险(活动)",
+      "frequency": 4
+    },
+    {
+      "rank": 171,
+      "word": "ancestor",
+      "phonetic": "['ænsestə]",
+      "meaning": "n. 祖先",
+      "frequency": 4
+    },
+    {
+      "rank": 172,
+      "word": "artificial",
+      "phonetic": "[ˌɑːtɪ'fɪʃl]",
+      "meaning": "adj. 人造的，假的",
+      "frequency": 4
+    },
+    {
+      "rank": 173,
+      "word": "assess",
+      "phonetic": "[ə'ses]",
+      "meaning": "v. 评估",
+      "frequency": 4
+    },
+    {
+      "rank": 174,
+      "word": "assumption",
+      "phonetic": "[ə'sʌmpʃn]",
+      "meaning": "n. 假定，承担",
+      "frequency": 4
+    },
+    {
+      "rank": 175,
+      "word": "audience",
+      "phonetic": "['ɔːdiəns]",
+      "meaning": "n. 听众，观众",
+      "frequency": 4
+    },
+    {
+      "rank": 176,
+      "word": "balanced",
+      "phonetic": "['bælənst]",
+      "meaning": "adj. 平衡的",
+      "frequency": 4
+    },
+    {
+      "rank": 177,
+      "word": "bargain",
+      "phonetic": "['bɑːɡɪn]",
+      "meaning": "n./vt. 交易，便宜货；讨价还价",
+      "frequency": 4
+    },
+    {
+      "rank": 178,
+      "word": "battery",
+      "phonetic": "['bætəri]",
+      "meaning": "n. 电池",
+      "frequency": 4
+    },
+    {
+      "rank": 179,
+      "word": "bias",
+      "phonetic": "['baɪəs]",
+      "meaning": "n./vt. 偏见，成见，偏好，偏爱",
+      "frequency": 4
+    },
+    {
+      "rank": 180,
+      "word": "capsule",
+      "phonetic": "['kæpsjuːl]",
+      "meaning": "n. 胶囊，密封舱",
+      "frequency": 4
+    },
+    {
+      "rank": 181,
+      "word": "characteristic",
+      "phonetic": "[ˌkærəktə'rɪstɪk]",
+      "meaning": "n./adj. 特性；特有的，典型的",
+      "frequency": 4
+    },
+    {
+      "rank": 182,
+      "word": "comment",
+      "phonetic": "['kɒment]",
+      "meaning": "n./vi. 评论",
+      "frequency": 4
+    },
+    {
+      "rank": 183,
+      "word": "concept",
+      "phonetic": "['kɒnsept]",
+      "meaning": "n. 概念",
+      "frequency": 4
+    },
+    {
+      "rank": 184,
+      "word": "contain",
+      "phonetic": "[kən'teɪn]",
+      "meaning": "vt. 包含，容纳",
+      "frequency": 4
+    },
+    {
+      "rank": 185,
+      "word": "decade",
+      "phonetic": "['dekeɪd]",
+      "meaning": "n. 十年，十年期",
+      "frequency": 4
+    },
+    {
+      "rank": 186,
+      "word": "depression",
+      "phonetic": "[di'preʃn]",
+      "meaning": "n. 抑郁，沮丧",
+      "frequency": 4
+    },
+    {
+      "rank": 187,
+      "word": "ecosystem",
+      "phonetic": "['i:kəʊsɪstəm]",
+      "meaning": "n. 生态系统",
+      "frequency": 4
+    },
+    {
+      "rank": 188,
+      "word": "elementary",
+      "phonetic": "[ˌeli'mentəri]",
+      "meaning": "adj. 基本的，初级的",
+      "frequency": 4
+    },
+    {
+      "rank": 189,
+      "word": "extreme",
+      "phonetic": "[ik'stri:m]",
+      "meaning": "n./adj. 极端；极端的，末端的，尽头的",
+      "frequency": 4
+    },
+    {
+      "rank": 190,
+      "word": "familiar",
+      "phonetic": "[fə'mɪliə]",
+      "meaning": "adj. 熟悉的",
+      "frequency": 4
+    },
+    {
+      "rank": 191,
+      "word": "fitness",
+      "phonetic": "[fɪtnis]",
+      "meaning": "n. 适合，健康",
+      "frequency": 4
+    },
+    {
+      "rank": 192,
+      "word": "historical",
+      "phonetic": "[his'tɒrɪkəl]",
+      "meaning": "adj. 历史(上)的",
+      "frequency": 4
+    },
+    {
+      "rank": 193,
+      "word": "ingredient",
+      "phonetic": "[in'ɡri:diənt]",
+      "meaning": "n. 组成部分，(烹调的)原料",
+      "frequency": 4
+    },
+    {
+      "rank": 194,
+      "word": "insight",
+      "phonetic": "['insaɪt]",
+      "meaning": "n. 洞察力，领悟",
+      "frequency": 4
+    },
+    {
+      "rank": 195,
+      "word": "laptop",
+      "phonetic": "['læpˌtɒp]",
+      "meaning": "n. 笔记本电脑",
+      "frequency": 4
+    },
+    {
+      "rank": 218,
+      "word": "treatment",
+      "phonetic": "[ˈtriːtmənt]",
+      "meaning": "n.对待，治疗",
+      "frequency": 4
+    },
+    {
+      "rank": 219,
+      "word": "volume",
+      "phonetic": "[ˈvɒljuːm]",
+      "meaning": "n.卷，册，体积，容量，大量，音量",
+      "frequency": 4
+    },
+    {
+      "rank": 220,
+      "word": "widespread",
+      "phonetic": "[ˈwaɪdspred]",
+      "meaning": "adj.分布广泛的，普遍的",
+      "frequency": 4
+    },
+    {
+      "rank": 221,
+      "word": "absolute",
+      "phonetic": "[ˈæbsəluːt]",
+      "meaning": "adj.绝对的，完全的",
+      "frequency": 3
+    },
+    {
+      "rank": 222,
+      "word": "admit",
+      "phonetic": "[ədˈmɪt]",
+      "meaning": "v.承认，准许...进入，录取",
+      "frequency": 3
+    },
+    {
+      "rank": 223,
+      "word": "aggression",
+      "phonetic": "[əˈɡreʃən]",
+      "meaning": "n.进攻；侵略；侵犯",
+      "frequency": 3
+    },
+    {
+      "rank": 224,
+      "word": "awesome",
+      "phonetic": "[ˈɔːsəm]",
+      "meaning": "adj.可怕的，令人敬畏的，极好的",
+      "frequency": 3
+    },
+    {
+      "rank": 225,
+      "word": "bake",
+      "phonetic": "[beɪk]",
+      "meaning": "v./n.烘焙，烤",
+      "frequency": 3
+    },
+    {
+      "rank": 226,
+      "word": "blame",
+      "phonetic": "[bleɪm]",
+      "meaning": "n./vt.(坏事或错事的)责任；责备，归咎于",
+      "frequency": 3
+    },
+    {
+      "rank": 227,
+      "word": "border",
+      "phonetic": "[ˈbɔːdə]",
+      "meaning": "n./v.边界，边境；接壤",
+      "frequency": 3
+    },
+    {
+      "rank": 228,
+      "word": "bother",
+      "phonetic": "[ˈbɒðə]",
+      "meaning": "v.打扰，使烦恼，费心",
+      "frequency": 3
+    },
+    {
+      "rank": 229,
+      "word": "civilization",
+      "phonetic": "[ˌsɪvəlaɪˈzeɪʃən]",
+      "meaning": "n.文明",
+      "frequency": 3
+    },
+    {
+      "rank": 230,
+      "word": "colleague",
+      "phonetic": "[ˈkɒliːɡ]",
+      "meaning": "n.同事",
+      "frequency": 3
+    },
+    {
+      "rank": 231,
+      "word": "complex",
+      "phonetic": "[ˈkɒmpleks]",
+      "meaning": "adj.复杂的",
+      "frequency": 3
+    },
+    {
+      "rank": 232,
+      "word": "concern",
+      "phonetic": "[kənˈsɜːn]",
+      "meaning": "n./vt.关心；与...有关",
+      "frequency": 3
+    },
+    {
+      "rank": 233,
+      "word": "conserve",
+      "phonetic": "[kənˈsɜːv]",
+      "meaning": "vt.保存，节约",
+      "frequency": 3
+    },
+    {
+      "rank": 234,
+      "word": "contribute",
+      "phonetic": "[kənˈtrɪbjuːt]",
+      "meaning": "vt.捐献，贡献，是...的原因",
+      "frequency": 3
+    },
+    {
+      "rank": 235,
+      "word": "credit",
+      "phonetic": "[ˈkredɪt]",
+      "meaning": "n./v.信誉，学分，赞扬；归功于",
+      "frequency": 3
+    },
+    {
+      "rank": 236,
+      "word": "crime",
+      "phonetic": "[kraɪm]",
+      "meaning": "n.犯罪，罪行",
+      "frequency": 3
+    },
+    {
+      "rank": 237,
+      "word": "criticism",
+      "phonetic": "[ˈkrɪtɪsɪzəm]",
+      "meaning": "n.批评，评论",
+      "frequency": 3
+    },
+    {
+      "rank": 238,
+      "word": "deadline",
+      "phonetic": "[ˈdedlaɪn]",
+      "meaning": "n.截止日期",
+      "frequency": 3
+    },
+    {
+      "rank": 239,
+      "word": "degrade",
+      "phonetic": "[dɪˈɡreɪd]",
+      "meaning": "vt.贬低，使恶化，分解",
+      "frequency": 3
+    },
+    {
+      "rank": 240,
+      "word": "delivery",
+      "phonetic": "[dɪˈlɪvəri]",
+      "meaning": "n.传送；递送",
+      "frequency": 3
+    },
+    {
+      "rank": 241,
+      "word": "demand",
+      "phonetic": "[dɪˈmɑːnd]",
+      "meaning": "n./vt.(强烈)要求",
+      "frequency": 3
+    },
+    {
+      "rank": 242,
+      "word": "dessert",
+      "phonetic": "[dɪˈzɜːt]",
+      "meaning": "n.甜食，点心",
+      "frequency": 3
+    },
+    {
+      "rank": 243,
+      "word": "discomfort",
+      "phonetic": "[disˈkʌmfət]",
+      "meaning": "n./vt.不舒服；不适",
+      "frequency": 3
+    },
+    {
+      "rank": 244,
+      "word": "discourage",
+      "phonetic": "[disˈkʌridʒ]",
+      "meaning": "vt.使泄气，使沮丧，劝阻",
+      "frequency": 3
+    },
+    {
+      "rank": 245,
+      "word": "economic",
+      "phonetic": "[iːkəˈnɒmɪk]",
+      "meaning": "adj.经济的，经济学的",
+      "frequency": 3
+    },
+    {
+      "rank": 246,
+      "word": "emergency",
+      "phonetic": "[iˈmɜːdʒənsi]",
+      "meaning": "n.紧急情况",
+      "frequency": 3
+    },
+    {
+      "rank": 247,
+      "word": "endanger",
+      "phonetic": "[inˈdeindʒə]",
+      "meaning": "vt.危害，使受到危险",
+      "frequency": 3
+    },
+    {
+      "rank": 248,
+      "word": "entertain",
+      "phonetic": "[ˌentəˈteɪn]",
+      "meaning": "v.使...娱乐，招待",
+      "frequency": 3
+    },
+    {
+      "rank": 249,
+      "word": "exception",
+      "phonetic": "[ɪkˈsepʃən]",
+      "meaning": "n. 例外，例外的人、事",
+      "frequency": 3
+    },
+    {
+      "rank": 250,
+      "word": "extraordinary",
+      "phonetic": "[ɪkˈstrɔːdnri]",
+      "meaning": "adj. 非凡的，不平常的",
+      "frequency": 3
+    },
+    {
+      "rank": 251,
+      "word": "financial",
+      "phonetic": "[faɪˈnænʃl]",
+      "meaning": "adj. 财政的，金融的",
+      "frequency": 3
+    },
+    {
+      "rank": 252,
+      "word": "flexible",
+      "phonetic": "[ˈfleksəbl]",
+      "meaning": "adj. 柔韧的，易弯曲的，灵活的",
+      "frequency": 3
+    },
+    {
+      "rank": 253,
+      "word": "grateful",
+      "phonetic": "[ˈɡreɪtfl]",
+      "meaning": "adj. 感谢的",
+      "frequency": 3
+    },
+    {
+      "rank": 254,
+      "word": "greenhouse",
+      "phonetic": "[ˈɡriːnhaus]",
+      "meaning": "n. 温室",
+      "frequency": 3
+    },
+    {
+      "rank": 255,
+      "word": "handle",
+      "phonetic": "[ˈhændl]",
+      "meaning": "n./v. 柄，把手；拿，处理，操纵，驾驭",
+      "frequency": 3
+    },
+    {
+      "rank": 256,
+      "word": "healthcare",
+      "phonetic": "[ˈhelθkeə]",
+      "meaning": "n. 健康护理",
+      "frequency": 3
+    },
+    {
+      "rank": 257,
+      "word": "humanity",
+      "phonetic": "[hjuːˈmænəti]",
+      "meaning": "n. 人类，人性；人文学科",
+      "frequency": 3
+    },
+    {
+      "rank": 258,
+      "word": "import",
+      "phonetic": "[ˈɪmpɔːt]",
+      "meaning": "n./v. 进口，输入",
+      "frequency": 3
+    },
+    {
+      "rank": 259,
+      "word": "income",
+      "phonetic": "[ˈɪnkʌm]",
+      "meaning": "n. 收入",
+      "frequency": 3
+    },
+    {
+      "rank": 260,
+      "word": "inherit",
+      "phonetic": "[ɪnˈherɪt]",
+      "meaning": "vt. 继承，经遗传获得",
+      "frequency": 3
+    },
+    {
+      "rank": 261,
+      "word": "innovation",
+      "phonetic": "[ˌɪnəˈveɪʃn]",
+      "meaning": "n. 创新",
+      "frequency": 3
+    },
+    {
+      "rank": 262,
+      "word": "install",
+      "phonetic": "[ɪnˈstɔːl]",
+      "meaning": "vt. 安装；设置",
+      "frequency": 3
+    },
+    {
+      "rank": 263,
+      "word": "interpersonal",
+      "phonetic": "[ˌɪntəˈpɜːsənl]",
+      "meaning": "adj. 人际的",
+      "frequency": 3
+    },
+    {
+      "rank": 264,
+      "word": "lantern",
+      "phonetic": "[ˈlæntən]",
+      "meaning": "n. 灯笼",
+      "frequency": 3
+    },
+    {
+      "rank": 265,
+      "word": "length",
+      "phonetic": "[leŋθ]",
+      "meaning": "n. 长度",
+      "frequency": 3
+    },
+    {
+      "rank": 266,
+      "word": "location",
+      "phonetic": "[lə(u)ˈkeɪʃ(ə)n]",
+      "meaning": "n. 位置",
+      "frequency": 3
+    },
+    {
+      "rank": 267,
+      "word": "logical",
+      "phonetic": "[ˈlɒdʒɪkl]",
+      "meaning": "adj. 符合逻辑的",
+      "frequency": 3
+    },
+    {
+      "rank": 268,
+      "word": "male",
+      "phonetic": "[meɪl]",
+      "meaning": "adj. 男性的；雄性的",
+      "frequency": 3
+    },
+    {
+      "rank": 269,
+      "word": "multiple",
+      "phonetic": "[ˈmʌltɪpl]",
+      "meaning": "n./adj. 倍数；多的",
+      "frequency": 3
+    },
+    {
+      "rank": 270,
+      "word": "nationwide",
+      "phonetic": "[ˌneɪʃnˈwaɪd]",
+      "meaning": "adj. 全国性的",
+      "frequency": 3
+    },
+    {
+      "rank": 271,
+      "word": "native",
+      "phonetic": "[ˈneɪtɪv]",
+      "meaning": "adj./n. 当地的；本地人",
+      "frequency": 3
+    },
+    {
+      "rank": 272,
+      "word": "noticeable",
+      "phonetic": "[ˈnəʊtɪsəbl]",
+      "meaning": "adj. 显著的；显而易见的",
+      "frequency": 3
+    },
+    {
+      "rank": 273,
+      "word": "occasional",
+      "phonetic": "[əˈkeɪʒənl]",
+      "meaning": "adj. 偶尔的",
+      "frequency": 3
+    },
+    {
+      "rank": 274,
+      "word": "outgoing",
+      "phonetic": "[ˈaʊtɡəʊɪŋ]",
+      "meaning": "adj. 开朗的",
+      "frequency": 3
+    },
+    {
+      "rank": 275,
+      "word": "overlook",
+      "phonetic": "[ˌəʊvəˈlʊk]",
+      "meaning": "v./n. 忽略；俯视",
+      "frequency": 3
+    },
+    {
+      "rank": 276,
+      "word": "pack",
+      "phonetic": "[pæk]",
+      "meaning": "n./v. 包裹；包装，打包",
+      "frequency": 3
+    },
+    {
+      "rank": 277,
+      "word": "passive",
+      "phonetic": "[ˈpæsɪv]",
+      "meaning": "adj. 消极的，被动的",
+      "frequency": 3
+    },
+    {
+      "rank": 278,
+      "word": "poetry",
+      "phonetic": "[ˈpəʊɪtri]",
+      "meaning": "n. 诗篇，诗歌",
+      "frequency": 3
+    },
+    {
+      "rank": 279,
+      "word": "pollutant",
+      "phonetic": "[pəˈluːtənt]",
+      "meaning": "n. 污染物",
+      "frequency": 3
+    },
+    {
+      "rank": 280,
+      "word": "preserve",
+      "phonetic": "[prɪ'zɜːv]",
+      "meaning": "n./vt. 腌菜，泡菜，果酱；保存，保护",
+      "frequency": 3
+    },
+    {
+      "rank": 281,
+      "word": "professional",
+      "phonetic": "[prə'feʃənəl]",
+      "meaning": "adj./n. 专业的，职业的，专业人员",
+      "frequency": 3
+    },
+    {
+      "rank": 282,
+      "word": "pure",
+      "phonetic": "[pjʊə(r)]",
+      "meaning": "adj. 纯的，纯粹的，纯洁的",
+      "frequency": 3
+    },
+    {
+      "rank": 283,
+      "word": "realistic",
+      "phonetic": "[rɪə'lɪstɪk]",
+      "meaning": "adj. 现实的，实际的",
+      "frequency": 3
+    },
+    {
+      "rank": 284,
+      "word": "relaxing",
+      "phonetic": "[rɪ'læksɪŋ]",
+      "meaning": "adj. 轻松的，放松的",
+      "frequency": 3
+    },
+    {
+      "rank": 285,
+      "word": "religious",
+      "phonetic": "[rɪ'lɪdʒəs]",
+      "meaning": "adj. 宗教的，虔诚的",
+      "frequency": 3
+    },
+    {
+      "rank": 286,
+      "word": "reserve",
+      "phonetic": "[rɪ'zɜːv]",
+      "meaning": "n./vt. 保护区；保护，预定",
+      "frequency": 3
+    },
+    {
+      "rank": 287,
+      "word": "reusable",
+      "phonetic": "[riː'juːzəbl]",
+      "meaning": "adj. 可重复使用的",
+      "frequency": 3
+    },
+    {
+      "rank": 288,
+      "word": "risky",
+      "phonetic": "['rɪski]",
+      "meaning": "adj. 有风险的",
+      "frequency": 3
+    },
+    {
+      "rank": 289,
+      "word": "roll",
+      "phonetic": "[rəʊl]",
+      "meaning": "n./v. 卷形物，面包圈；滚动",
+      "frequency": 3
+    },
+    {
+      "rank": 290,
+      "word": "satisfying",
+      "phonetic": "['sætɪsfaɪɪŋ]",
+      "meaning": "adj. 令人满意（或满足）的",
+      "frequency": 3
+    },
+    {
+      "rank": 291,
+      "word": "scan",
+      "phonetic": "[skæn]",
+      "meaning": "n./v. 扫描，浏览",
+      "frequency": 3
+    },
+    {
+      "rank": 292,
+      "word": "scared",
+      "phonetic": "[skeəd]",
+      "meaning": "adj. 感到害怕的",
+      "frequency": 3
+    },
+    {
+      "rank": 293,
+      "word": "scene",
+      "phonetic": "[siːn]",
+      "meaning": "n. 景色，场景，现场",
+      "frequency": 3
+    },
+    {
+      "rank": 294,
+      "word": "sculpture",
+      "phonetic": "['skʌlptʃə]",
+      "meaning": "n. 雕刻",
+      "frequency": 3
+    },
+    {
+      "rank": 295,
+      "word": "stable",
+      "phonetic": "['steɪbəl]",
+      "meaning": "n./adj. 马厩；稳固的，稳定的，沉稳的",
+      "frequency": 3
+    },
+    {
+      "rank": 296,
+      "word": "strength",
+      "phonetic": "[streŋθ]",
+      "meaning": "n. 力气，毅力，优势",
+      "frequency": 3
+    },
+    {
+      "rank": 297,
+      "word": "threat",
+      "phonetic": "['θret]",
+      "meaning": "n. 威胁，征兆",
+      "frequency": 3
+    },
+    {
+      "rank": 298,
+      "word": "thrill",
+      "phonetic": "[θrɪl]",
+      "meaning": "n./v. 兴奋，激动，使非常兴奋",
+      "frequency": 3
+    },
+    {
+      "rank": 299,
+      "word": "tiredness",
+      "phonetic": "['taɪə(r)dnɪs]",
+      "meaning": "n. 疲劳",
+      "frequency": 3
+    },
+    {
+      "rank": 300,
+      "word": "tiring",
+      "phonetic": "['taɪərɪŋ]",
+      "meaning": "adj. 令人困倦的；使人疲劳的",
+      "frequency": 3
+    },
+    {
+      "rank": 301,
+      "word": "update",
+      "phonetic": "[ˌʌp'deɪt]",
+      "meaning": "v./n. 更新",
+      "frequency": 3
+    },
+    {
+      "rank": 302,
+      "word": "version",
+      "phonetic": "['vɜːʃən]",
+      "meaning": "n. 版本",
+      "frequency": 3
+    },
+    {
+      "rank": 303,
+      "word": "wander",
+      "phonetic": "['wɒndə]",
+      "meaning": "n./vi. 闲逛，漫游，漫步",
+      "frequency": 3
+    },
+    {
+      "rank": 304,
+      "word": "weaken",
+      "phonetic": "['wiːkən]",
+      "meaning": "v. (使)虚弱，削弱；动摇",
+      "frequency": 3
+    },
+    {
+      "rank": 305,
+      "word": "whale",
+      "phonetic": "[weɪl]",
+      "meaning": "n. 鲸鱼",
+      "frequency": 3
+    },
+    {
+      "rank": 306,
+      "word": "willpower",
+      "phonetic": "['wɪlpaʊə(r)]",
+      "meaning": "n. 意志力",
+      "frequency": 3
+    },
+    {
+      "rank": 307,
+      "word": "wrap",
+      "phonetic": "[ræp]",
+      "meaning": "vt. 包，裹",
+      "frequency": 3
+    },
+    {
+      "rank": 308,
+      "word": "achievable",
+      "phonetic": "[ə'tʃiːvəbl]",
+      "meaning": "adj. 可实现的",
+      "frequency": 2
+    },
+    {
+      "rank": 309,
+      "word": "addiction",
+      "phonetic": "[ə'dɪkʃn]",
+      "meaning": "n. 着迷，嗜好",
+      "frequency": 2
+    },
+    {
+      "rank": 310,
+      "word": "admiration",
+      "phonetic": "[ˌædmə'reɪʃən]",
+      "meaning": "n. 赞赏，钦佩",
+      "frequency": 2
+    },
+    {
+      "rank": 311,
+      "word": "advance",
+      "phonetic": "[əd'vɑ:ns][əd'væns]",
+      "meaning": "n./v. 前进，进步，提前",
+      "frequency": 2
+    },
+    {
+      "rank": 312,
+      "word": "affordable",
+      "phonetic": "[ə'fɔ:dəbl]",
+      "meaning": "adj. 负担得起的",
+      "frequency": 2
+    },
+    {
+      "rank": 313,
+      "word": "analysis",
+      "phonetic": "[ə'næləsis]",
+      "meaning": "n. 分析",
+      "frequency": 2
+    },
+    {
+      "rank": 314,
+      "word": "appeal",
+      "phonetic": "[ə'pi:l]",
+      "meaning": "n./vi. 呼吁，上诉，吸引",
+      "frequency": 2
+    },
+    {
+      "rank": 315,
+      "word": "application",
+      "phonetic": "[ˌæpli'keiʃ(ə)n]",
+      "meaning": "n. 应用，申请",
+      "frequency": 2
+    },
+    {
+      "rank": 316,
+      "word": "approach",
+      "phonetic": "[ə'prəutʃ]",
+      "meaning": "n./v. 方法，途径；靠近",
+      "frequency": 2
+    },
+    {
+      "rank": 317,
+      "word": "appropriate",
+      "phonetic": "[ə'prəuprieit]",
+      "meaning": "adj. 恰当的",
+      "frequency": 2
+    },
+    {
+      "rank": 318,
+      "word": "architecture",
+      "phonetic": "['ɑ:kitektʃə]",
+      "meaning": "n. 建筑学(业)",
+      "frequency": 2
+    },
+    {
+      "rank": 319,
+      "word": "artwork",
+      "phonetic": "['ɑ:twɜ:k]",
+      "meaning": "n. 艺术作品",
+      "frequency": 2
+    },
+    {
+      "rank": 320,
+      "word": "assignment",
+      "phonetic": "[ə'sainmənt]",
+      "meaning": "n. 任务，作业",
+      "frequency": 2
+    },
+    {
+      "rank": 321,
+      "word": "associated",
+      "phonetic": "[ə'səuʃieitid]",
+      "meaning": "adj. 关联的",
+      "frequency": 2
+    },
+    {
+      "rank": 322,
+      "word": "award",
+      "phonetic": "[ə'wɔ:d]",
+      "meaning": "n. 奖，奖品",
+      "frequency": 2
+    },
+    {
+      "rank": 323,
+      "word": "breakthrough",
+      "phonetic": "['breikθru:]",
+      "meaning": "n. 突破",
+      "frequency": 2
+    },
+    {
+      "rank": 324,
+      "word": "budget",
+      "phonetic": "['bʌdʒit]",
+      "meaning": "n. 预算",
+      "frequency": 2
+    },
+    {
+      "rank": 325,
+      "word": "calculation",
+      "phonetic": "[ˌkælkju'leiʃn]",
+      "meaning": "n. 计算，估算",
+      "frequency": 2
+    },
+    {
+      "rank": 326,
+      "word": "capable",
+      "phonetic": "['keipəbl]",
+      "meaning": "adj. 有能力的",
+      "frequency": 2
+    },
+    {
+      "rank": 327,
+      "word": "category",
+      "phonetic": "['kætigəri]",
+      "meaning": "n. 种类，类别",
+      "frequency": 2
+    },
+    {
+      "rank": 328,
+      "word": "channel",
+      "phonetic": "['tʃænəl]",
+      "meaning": "n. 频道，渠道，途径，海峡",
+      "frequency": 2
+    },
+    {
+      "rank": 329,
+      "word": "classic",
+      "phonetic": "['klæsik]",
+      "meaning": "n./adj. 名著，经典著作；经典的，典型的",
+      "frequency": 2
+    },
+    {
+      "rank": 330,
+      "word": "clinical",
+      "phonetic": "['klinikl]",
+      "meaning": "adj. 临床的，临床诊断的",
+      "frequency": 2
+    },
+    {
+      "rank": 331,
+      "word": "command",
+      "phonetic": "[kə'mɑ:nd]",
+      "meaning": "n./v. 命令，指挥",
+      "frequency": 2
+    },
+    {
+      "rank": 332,
+      "word": "companion",
+      "phonetic": "[kəm'pæniən]",
+      "meaning": "n. 同伴，伴侣",
+      "frequency": 2
+    },
+    {
+      "rank": 333,
+      "word": "comparison",
+      "phonetic": "[kəm'pærisən]",
+      "meaning": "n. 比较",
+      "frequency": 2
+    },
+    {
+      "rank": 334,
+      "word": "compromise",
+      "phonetic": "['kɔmprəmaiz]",
+      "meaning": "n./v. 妥协，折衷",
+      "frequency": 2
+    },
+    {
+      "rank": 335,
+      "word": "conference",
+      "phonetic": "['kɔnfərəns]",
+      "meaning": "n. 会议",
+      "frequency": 2
+    },
+    {
+      "rank": 336,
+      "word": "consequence",
+      "phonetic": "['kɔnsikwəns]",
+      "meaning": "n. 后果",
+      "frequency": 2
+    },
+    {
+      "rank": 337,
+      "word": "considerate",
+      "phonetic": "[kən'sidərit]",
+      "meaning": "adj. 体贴的",
+      "frequency": 2
+    },
+    {
+      "rank": 338,
+      "word": "constant",
+      "phonetic": "['kɔnstənt]",
+      "meaning": "adj. 不变的，恒定的",
+      "frequency": 2
+    },
+    {
+      "rank": 339,
+      "word": "cruel",
+      "phonetic": "['kru:əl]",
+      "meaning": "adj. 残酷的，残忍的",
+      "frequency": 2
+    },
+    {
+      "rank": 340,
+      "word": "curiosity",
+      "phonetic": "[ˌkjuəri'ɔsiti]",
+      "meaning": "n. 好奇心",
+      "frequency": 2
+    },
+    {
+      "rank": 341,
+      "word": "curriculum",
+      "phonetic": "[kə'rikjuləm]",
+      "meaning": "n. 课程",
+      "frequency": 2
+    },
+    {
+      "rank": 342,
+      "word": "defense",
+      "phonetic": "[di'fens]",
+      "meaning": "n.防御, 保卫",
+      "frequency": 2
+    },
+    {
+      "rank": 343,
+      "word": "department",
+      "phonetic": "[di'pɑ:tmənt]",
+      "meaning": "n.部, 部门, 系",
+      "frequency": 2
+    },
+    {
+      "rank": 344,
+      "word": "dependable",
+      "phonetic": "[di'pendəbl]",
+      "meaning": "adj.可信赖的; 可靠的",
+      "frequency": 2
+    },
+    {
+      "rank": 345,
+      "word": "determination",
+      "phonetic": "[di,tɜ:mi'neiʃn]",
+      "meaning": "n.决心, 决定",
+      "frequency": 2
+    },
+    {
+      "rank": 346,
+      "word": "dilemma",
+      "phonetic": "[di'lemə]",
+      "meaning": "n.(进退两难的)困境",
+      "frequency": 2
+    },
+    {
+      "rank": 347,
+      "word": "dishonest",
+      "phonetic": "[dis'onist]",
+      "meaning": "adj.不诚实的; 骗人的; 欺骗性的",
+      "frequency": 2
+    },
+    {
+      "rank": 348,
+      "word": "dispose",
+      "phonetic": "[dis'pəuz]",
+      "meaning": "v.安排, 布置, 去除, 处理",
+      "frequency": 2
+    },
+    {
+      "rank": 349,
+      "word": "distribute",
+      "phonetic": "[di'stribju:t]",
+      "meaning": "vt.分发, 分配",
+      "frequency": 2
+    },
+    {
+      "rank": 350,
+      "word": "disturb",
+      "phonetic": "[di'stə:b]",
+      "meaning": "vt.打扰, 妨碍",
+      "frequency": 2
+    },
+    {
+      "rank": 351,
+      "word": "embrace",
+      "phonetic": "[im'breis]",
+      "meaning": "n./vt.拥抱; 包括, 欣然接受, 乐意采纳",
+      "frequency": 2
+    },
+    {
+      "rank": 352,
+      "word": "encounter",
+      "phonetic": "[in'kauntə(r)]",
+      "meaning": "n./v.遭遇, 偶遇",
+      "frequency": 2
+    },
+    {
+      "rank": 353,
+      "word": "encouragement",
+      "phonetic": "[in'kʌridʒmənt]",
+      "meaning": "n.鼓励, 激励",
+      "frequency": 2
+    },
+    {
+      "rank": 354,
+      "word": "enhance",
+      "phonetic": "[in'hɑ:ns]",
+      "meaning": "vt.提高, 增加, 加强",
+      "frequency": 2
+    },
+    {
+      "rank": 355,
+      "word": "ensure",
+      "phonetic": "[in'ʃuə]",
+      "meaning": "vt.确保, 保证",
+      "frequency": 2
+    },
+    {
+      "rank": 356,
+      "word": "evolution",
+      "phonetic": "[i:və'lu:ʃən]",
+      "meaning": "n.进化",
+      "frequency": 2
+    },
+    {
+      "rank": 357,
+      "word": "float",
+      "phonetic": "[fləut]",
+      "meaning": "v.浮, 漂浮",
+      "frequency": 2
+    },
+    {
+      "rank": 358,
+      "word": "fluid",
+      "phonetic": "['flu:id]",
+      "meaning": "n./adj.液体",
+      "frequency": 2
+    },
+    {
+      "rank": 359,
+      "word": "format",
+      "phonetic": "['fɔ:mæt]",
+      "meaning": "n.格式",
+      "frequency": 2
+    },
+    {
+      "rank": 360,
+      "word": "fortunate",
+      "phonetic": "['fɔ:tʃənət]",
+      "meaning": "adj.幸运的",
+      "frequency": 2
+    },
+    {
+      "rank": 361,
+      "word": "foundation",
+      "phonetic": "[faun'deiʃən]",
+      "meaning": "n.地基, 基础",
+      "frequency": 2
+    },
+    {
+      "rank": 362,
+      "word": "fragile",
+      "phonetic": "['frædʒail]",
+      "meaning": "adj.易损坏的",
+      "frequency": 2
+    },
+    {
+      "rank": 363,
+      "word": "frightened",
+      "phonetic": "['fraitnd]",
+      "meaning": "adj.害怕的, 受惊吓的",
+      "frequency": 2
+    },
+    {
+      "rank": 364,
+      "word": "furniture",
+      "phonetic": "['fɜ:nitʃə(r)]",
+      "meaning": "n.家具",
+      "frequency": 2
+    },
+    {
+      "rank": 365,
+      "word": "generous",
+      "phonetic": "['dʒenərəs]",
+      "meaning": "adj.慷慨的, 丰富的",
+      "frequency": 2
+    },
+    {
+      "rank": 366,
+      "word": "gesture",
+      "phonetic": "['dʒestʃə]",
+      "meaning": "n./v.姿势, 手势, 姿态; 作手势",
+      "frequency": 2
+    },
+    {
+      "rank": 367,
+      "word": "graduate",
+      "phonetic": "['ɡrædʒueit]",
+      "meaning": "n./vi.毕业生; 毕业",
+      "frequency": 2
+    },
+    {
+      "rank": 368,
+      "word": "grain",
+      "phonetic": "[ɡrein]",
+      "meaning": "n.谷物, 谷粒",
+      "frequency": 2
+    },
+    {
+      "rank": 369,
+      "word": "grand",
+      "phonetic": "[ɡrænd]",
+      "meaning": "adj.宏伟的, 壮丽的",
+      "frequency": 2
+    },
+    {
+      "rank": 370,
+      "word": "guidance",
+      "phonetic": "['ɡaidəns]",
+      "meaning": "n.指导, 领导",
+      "frequency": 2
+    },
+    {
+      "rank": 371,
+      "word": "identify",
+      "phonetic": "[ai'dentifai]",
+      "meaning": "vt.认出, 识别",
+      "frequency": 2
+    },
+    {
+      "rank": 372,
+      "word": "ignore",
+      "phonetic": "[iɡ'nɔ:(r)]",
+      "meaning": "vt.不理会, 忽视",
+      "frequency": 2
+    },
+    {
+      "rank": 405,
+      "word": "plate",
+      "phonetic": "[pleit]",
+      "meaning": "n.盘子，碟，薄板",
+      "frequency": 2
+    },
+    {
+      "rank": 406,
+      "word": "poisonous",
+      "phonetic": "[ˈpɔizənəs]",
+      "meaning": "vt./adj.使中毒，毒害；有毒的",
+      "frequency": 2
+    },
+    {
+      "rank": 407,
+      "word": "precious",
+      "phonetic": "[ˈpreʃəs]",
+      "meaning": "adj.珍贵的",
+      "frequency": 2
+    },
+    {
+      "rank": 408,
+      "word": "promote",
+      "phonetic": "[prəuˈməut]",
+      "meaning": "vt.促进，晋升，促销",
+      "frequency": 2
+    },
+    {
+      "rank": 409,
+      "word": "rebuild",
+      "phonetic": "[ˌri:ˈbild]",
+      "meaning": "vt.重建",
+      "frequency": 2
+    },
+    {
+      "rank": 410,
+      "word": "recreate",
+      "phonetic": "[ˌri:kriˈeit]",
+      "meaning": "vt.再现；再创造",
+      "frequency": 2
+    },
+    {
+      "rank": 411,
+      "word": "reflect",
+      "phonetic": "[riˈflekt]",
+      "meaning": "vt.反射，反映，反思",
+      "frequency": 2
+    },
+    {
+      "rank": 412,
+      "word": "relation",
+      "phonetic": "[riˈleiʃn]",
+      "meaning": "n.关系",
+      "frequency": 2
+    },
+    {
+      "rank": 413,
+      "word": "relevant",
+      "phonetic": "[ˈreləvənt]",
+      "meaning": "adj.相关的",
+      "frequency": 2
+    },
+    {
+      "rank": 414,
+      "word": "relief",
+      "phonetic": "[riˈli:f]",
+      "meaning": "n.减轻，宽慰，轻松，解脱",
+      "frequency": 2
+    },
+    {
+      "rank": 415,
+      "word": "resistant",
+      "phonetic": "[riˈzistənt]",
+      "meaning": "adj.有抵抗力的，抵抗的；顽固的",
+      "frequency": 2
+    },
+    {
+      "rank": 416,
+      "word": "route",
+      "phonetic": "[ru:t]",
+      "meaning": "n.路线",
+      "frequency": 2
+    },
+    {
+      "rank": 417,
+      "word": "sample",
+      "phonetic": "[ˈsɑ:mp(ə)l]",
+      "meaning": "n.样本，例子",
+      "frequency": 2
+    },
+    {
+      "rank": 418,
+      "word": "selfish",
+      "phonetic": "[ˈselfiʃ]",
+      "meaning": "adj.自私的",
+      "frequency": 2
+    },
+    {
+      "rank": 419,
+      "word": "slip",
+      "phonetic": "[slip]",
+      "meaning": "n./vi.滑倒，滑落",
+      "frequency": 2
+    },
+    {
+      "rank": 420,
+      "word": "snack",
+      "phonetic": "[snæk]",
+      "meaning": "n./vi.小吃；点心",
+      "frequency": 2
+    },
+    {
+      "rank": 421,
+      "word": "solar",
+      "phonetic": "[ˈsəulə(r)]",
+      "meaning": "adj.太阳的，太阳能的",
+      "frequency": 2
+    },
+    {
+      "rank": 422,
+      "word": "spiritual",
+      "phonetic": "[ˈspiritʃuəl]",
+      "meaning": "adj.精神上的，心灵的",
+      "frequency": 2
+    },
+    {
+      "rank": 423,
+      "word": "stimulate",
+      "phonetic": "[ˈstimjuleit]",
+      "meaning": "vt.刺激，激发",
+      "frequency": 2
+    },
+    {
+      "rank": 424,
+      "word": "summarize",
+      "phonetic": "[ˈsʌməraiz]",
+      "meaning": "vt.总结",
+      "frequency": 2
+    },
+    {
+      "rank": 425,
+      "word": "talented",
+      "phonetic": "[ˈtæləntid]",
+      "meaning": "adj.有才能的，有才干的",
+      "frequency": 2
+    },
+    {
+      "rank": 426,
+      "word": "tease",
+      "phonetic": "[ti:z]",
+      "meaning": "v.取笑，逗弄",
+      "frequency": 2
+    },
+    {
+      "rank": 427,
+      "word": "tension",
+      "phonetic": "[ˈtenʃ(ə)n]",
+      "meaning": "n. (情况、心情) 紧张",
+      "frequency": 2
+    },
+    {
+      "rank": 428,
+      "word": "thoughtful",
+      "phonetic": "[ˈθɔ:tfəl]",
+      "meaning": "adj.深思熟虑的，体贴的",
+      "frequency": 2
+    },
+    {
+      "rank": 429,
+      "word": "tongue",
+      "phonetic": "[tʌŋ]",
+      "meaning": "n.舌头，语言",
+      "frequency": 2
+    },
+    {
+      "rank": 430,
+      "word": "tough",
+      "phonetic": "[tʌf]",
+      "meaning": "adj.艰难的，严厉的，坚强的",
+      "frequency": 2
+    },
+    {
+      "rank": 431,
+      "word": "trial",
+      "phonetic": "[ˈtraiəl]",
+      "meaning": "n.审判，试用",
+      "frequency": 2
+    },
+    {
+      "rank": 432,
+      "word": "tricky",
+      "phonetic": "[ˈtriki]",
+      "meaning": "adj.难办的；难对付的，狡猾的；诡计多端的",
+      "frequency": 2
+    },
+    {
+      "rank": 433,
+      "word": "trigger",
+      "phonetic": "[ˈtriɡə]",
+      "meaning": "n/v.扳机，起因；引起",
+      "frequency": 2
+    },
+    {
+      "rank": 434,
+      "word": "undertake",
+      "phonetic": "[ˌʌndəˈteik]",
+      "meaning": "vt.承担，着手做，同意",
+      "frequency": 2
+    },
+    {
+      "rank": 435,
+      "word": "universe",
+      "phonetic": "[ˈju:nivə:s]",
+      "meaning": "n.宇宙，全世界",
+      "frequency": 2
+    }
+  ]
+}

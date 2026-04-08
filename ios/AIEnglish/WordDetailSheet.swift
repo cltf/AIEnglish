@@ -21,7 +21,7 @@ struct WordDetailSheet: View {
         switch context {
         case .list: return "词库"
         case .notebook: return "生词本"
-        case .result: return "扫描"
+        case .result: return "阅读"
         }
     }
 
@@ -229,28 +229,25 @@ struct WordDetailSheet: View {
     }
 
     private var notebookSection: some View {
-        let saved = notebook.contains(word)
+        let n = notebook.count(for: word)
         return Button {
-            if !saved {
-                notebook.add(word)
-            }
+            notebook.add(word)
         } label: {
             HStack(spacing: 10) {
-                Image(systemName: saved ? "checkmark.circle.fill" : "plus.circle.fill")
+                Image(systemName: "plus.circle.fill")
                     .font(.title3)
-                Text(saved ? "已在生词本" : "加入生词本")
+                Text(n == 0 ? "加入生词本" : "已记 \(n) 次 · 再记一次")
                     .font(.headline)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
         }
         .buttonStyle(.plain)
-        .foregroundStyle(saved ? Color.secondary : Color.white)
+        .foregroundStyle(Color.white)
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(saved ? Color(.tertiarySystemFill) : Color.accentColor)
+                .fill(Color.accentColor)
         )
-        .disabled(saved)
     }
 
     // MARK: - Chrome

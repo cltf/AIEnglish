@@ -20,6 +20,18 @@
 
 真机调试时 `127.0.0.1` 指向手机本身，需将代理部署到局域网可达地址，或后续改为可配置 `EMBEDDED_AI_BASE`。
 
+## 作文离线音频
+
+App 优先使用离线 WAV：`audio/essays/<sample-id>.wav`。
+
+先在仓库根目录批量生成：
+
+```bash
+python3 web/scripts/build_essay_audio.py
+```
+
+然后重新编译 iOS / Android，离线音频会随资源打包进应用。
+
 ## 权限
 
 已声明相机、相册说明文案；首次使用系统会弹窗授权。
