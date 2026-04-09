@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -39,6 +40,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -53,11 +55,14 @@ import androidx.compose.material.icons.outlined.Article
 import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material.icons.outlined.BarChart
 import androidx.compose.material.icons.outlined.Book
+import androidx.compose.material.icons.outlined.Calculate
+import androidx.compose.material.icons.outlined.Functions
 import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.EditNote
 import androidx.compose.material.icons.outlined.NetworkCheck
+import androidx.compose.material.icons.outlined.EmojiEvents
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PhotoLibrary
 import androidx.compose.material.icons.outlined.Tag
@@ -97,6 +102,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -106,6 +112,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
@@ -118,6 +128,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import androidx.core.content.FileProvider
@@ -140,6 +152,7 @@ import com.cltf.aienglish.data.DaofaPastExamItem
 import com.cltf.aienglish.data.DaofaPastExamsFile
 import com.cltf.aienglish.data.DaofaPastExamsRepository
 import com.cltf.aienglish.data.ChineseZhongkaoRepository
+import com.cltf.aienglish.data.MathZhongkaoRepository
 import com.cltf.aienglish.domain.ParagraphGist
 import com.cltf.aienglish.domain.ReadingAnalysis
 import com.cltf.aienglish.ui.components.AppGroupedBackground
@@ -174,11 +187,13 @@ fun MainScreen(vm: AppViewModel) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val hideTopBar = LocalConfiguration.current.smallestScreenWidthDp >= 600
 
-    val topTitles = listOf("语文", "英语", "道法", "我的")
-    val bottomLabels = listOf("语文", "英语", "道法", "我的")
+    val topTitles = listOf("语文", "数学", "英语", "物理", "道法", "我的")
+    val bottomLabels = listOf("语文", "数学", "英语", "物理", "道法", "我的")
     val tabIcons = listOf(
         Icons.Outlined.Article,
+        Icons.Outlined.Functions,
         Icons.Outlined.Book,
+        Icons.Outlined.Calculate,
         Icons.Outlined.Description,
         Icons.Outlined.Person
     )
@@ -225,9 +240,11 @@ fun MainScreen(vm: AppViewModel) {
         ) {
             when (tab) {
                 0 -> ChineseHubTab(vm)
-                1 -> EnglishHubTab(vm) { w, src -> sheetRequest = WordSheetRequest(w, src) }
-                2 -> DaofaTab()
-                3 -> ProfileTab(vm) { sheetRequest = WordSheetRequest(it, WordSheetSource.NOTEBOOK) }
+                1 -> MathHubTab()
+                2 -> EnglishHubTab(vm) { w, src -> sheetRequest = WordSheetRequest(w, src) }
+                3 -> PhysicsHubTab()
+                4 -> DaofaTab()
+                5 -> ProfileTab(vm) { sheetRequest = WordSheetRequest(it, WordSheetSource.NOTEBOOK) }
             }
         }
     }
@@ -1089,7 +1106,8 @@ private fun ParagraphGistBlock(g: ParagraphGist, baseFontSp: Float) {
 
 @Composable
 private fun EnglishHubTab(vm: AppViewModel, onOpenWord: (String, WordSheetSource) -> Unit) {
-    var sub by remember { mutableIntStateOf(0) }
+    // 0=试卷结构 1=词库 … 默认词库
+    var sub by remember { mutableIntStateOf(1) }
     Column(Modifier.fillMaxSize()) {
         FlowRow(
             Modifier
@@ -1098,7 +1116,15 @@ private fun EnglishHubTab(vm: AppViewModel, onOpenWord: (String, WordSheetSource
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            listOf("词库" to 0, "英语阅读" to 1, "阅读高频" to 2, "阅读技巧" to 3, "21天688" to 4, "英语作文" to 5).forEach { (label, idx) ->
+            listOf(
+                "试卷结构" to 0,
+                "词库" to 1,
+                "英语阅读" to 2,
+                "阅读高频" to 3,
+                "阅读技巧" to 4,
+                "21天688" to 5,
+                "英语作文" to 6
+            ).forEach { (label, idx) ->
                 FilterChip(
                     selected = sub == idx,
                     onClick = { sub = idx },
@@ -1108,12 +1134,13 @@ private fun EnglishHubTab(vm: AppViewModel, onOpenWord: (String, WordSheetSource
         }
         Box(Modifier.weight(1f)) {
             when (sub) {
-                0 -> VocabularyTab(vm) { onOpenWord(it, WordSheetSource.VOCABULARY) }
-                1 -> ScanTab(vm) { onOpenWord(it, WordSheetSource.SCAN) }
-                2 -> ReadingHighFreqTab(vm)
-                3 -> ReadingSkillsTab()
-                4 -> Mc688Tab(vm)
-                5 -> EssayTab(vm, fixedSubject = "english")
+                0 -> EnglishStructureTab()
+                1 -> VocabularyTab(vm) { onOpenWord(it, WordSheetSource.VOCABULARY) }
+                2 -> ScanTab(vm) { onOpenWord(it, WordSheetSource.SCAN) }
+                3 -> ReadingHighFreqTab(vm)
+                4 -> ReadingSkillsTab()
+                5 -> Mc688Tab(vm)
+                6 -> EssayTab(vm, fixedSubject = "english")
             }
         }
     }
@@ -1630,7 +1657,12 @@ private fun ReadingHighFreqRow(
     }
 }
 
-private data class DaofaSection(val title: String, val body: String)
+private data class DaofaSection(
+    val title: String,
+    val body: String,
+    /** Android assets 相对路径，如 math2025/page01.png */
+    val imageAssetPaths: List<String> = emptyList()
+)
 
 /** 按「📚 / 📊」标题拆成多块（主观题年份与命题总结等）。 */
 private fun parseDaofaReference(text: String): List<DaofaSection> {
@@ -1660,9 +1692,7 @@ private fun parseDaofaReference(text: String): List<DaofaSection> {
 @Composable
 private fun DaofaTab() {
     val context = LocalContext.current
-    var structureText by remember { mutableStateOf<String?>(null) }
     var referenceText by remember { mutableStateOf<String?>(null) }
-    var structureErr by remember { mutableStateOf<String?>(null) }
     var referenceErr by remember { mutableStateOf<String?>(null) }
     var pastFile by remember { mutableStateOf<DaofaPastExamsFile?>(null) }
     var pastErr by remember { mutableStateOf<String?>(null) }
@@ -1672,13 +1702,6 @@ private fun DaofaTab() {
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-            try {
-                structureText = context.assets.open("daofa_structure.txt").use { ins ->
-                    String(ins.readBytes(), StandardCharsets.UTF_8)
-                }
-            } catch (e: Exception) {
-                structureErr = e.message ?: e.toString()
-            }
             try {
                 referenceText = context.assets.open("daofa_reference.txt").use { ins ->
                     String(ins.readBytes(), StandardCharsets.UTF_8)
@@ -1698,18 +1721,7 @@ private fun DaofaTab() {
         referenceText?.let { parseDaofaReference(it) } ?: emptyList()
     }
 
-    if (structureText == null && referenceText == null && structureErr != null && referenceErr != null) {
-        Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-            Text(
-                "道法内容加载失败。\n${structureErr ?: ""}\n${referenceErr ?: ""}",
-                color = AppColors.TextSecondary,
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-        return
-    }
-
-    if (structureText == null && referenceText == null && structureErr == null && referenceErr == null) {
+    if (referenceText == null && referenceErr == null) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }
@@ -1738,43 +1750,7 @@ private fun DaofaTab() {
         }
         Box(Modifier.weight(1f)) {
             when (sub) {
-                0 -> {
-                    val err = structureErr
-                    val txt = structureText
-                    when {
-                        err != null && txt == null -> Box(
-                            Modifier
-                                .fillMaxSize()
-                                .padding(24.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("试卷结构：$err", color = AppColors.TextSecondary, style = MaterialTheme.typography.bodyMedium)
-                        }
-                        txt != null -> Column(
-                            Modifier
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState())
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            Text(
-                                "北京中考道法 · 试卷结构",
-                                color = AppColors.TextSecondary,
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(bottom = 4.dp)
-                            )
-                            Text(
-                                txt,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = AppColors.TextPrimary,
-                                lineHeight = 22.sp
-                            )
-                        }
-                        else -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                        }
-                    }
-                }
+                0 -> DaofaStructureTab()
                 1 -> when (val d = detail) {
                     null -> {
                         if (referenceErr != null && referenceText == null) {
@@ -1963,14 +1939,29 @@ private fun DaofaDetailPane(section: DaofaSection, onBack: () -> Unit, barTitle:
             )
             AppSectionCard(elevated = true) {
                 Column(Modifier.padding(14.dp)) {
-                    Text("正文", fontWeight = FontWeight.SemiBold, color = AppColors.TextSecondary, style = MaterialTheme.typography.labelMedium)
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        section.body.trim(),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = AppColors.TextPrimary,
-                        lineHeight = 24.sp
-                    )
+                    if (section.body.isNotBlank()) {
+                        Text("正文", fontWeight = FontWeight.SemiBold, color = AppColors.TextSecondary, style = MaterialTheme.typography.labelMedium)
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            section.body.trim(),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = AppColors.TextPrimary,
+                            lineHeight = 24.sp
+                        )
+                    }
+                    if (section.imageAssetPaths.isNotEmpty()) {
+                        if (section.body.isNotBlank()) {
+                            Spacer(Modifier.height(12.dp))
+                        }
+                        Text(
+                            "试卷图（点击放大，双指可缩放）",
+                            fontWeight = FontWeight.SemiBold,
+                            color = AppColors.TextSecondary,
+                            style = MaterialTheme.typography.labelMedium
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        ExamImagesFromAssets(section.imageAssetPaths)
+                    }
                 }
             }
         }
@@ -1979,7 +1970,8 @@ private fun DaofaDetailPane(section: DaofaSection, onBack: () -> Unit, barTitle:
 
 @Composable
 private fun ChineseHubTab(vm: AppViewModel) {
-    var sub by remember { mutableIntStateOf(0) }
+    // 0=试卷结构 1=作文 2=中考真题；默认作文
+    var sub by remember { mutableIntStateOf(1) }
     Column(Modifier.fillMaxSize()) {
         FlowRow(
             Modifier
@@ -1988,7 +1980,7 @@ private fun ChineseHubTab(vm: AppViewModel) {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            listOf("作文" to 0, "中考真题" to 1).forEach { (label, idx) ->
+            listOf("试卷结构" to 0, "作文" to 1, "中考真题" to 2).forEach { (label, idx) ->
                 FilterChip(
                     selected = sub == idx,
                     onClick = { sub = idx },
@@ -1998,10 +1990,279 @@ private fun ChineseHubTab(vm: AppViewModel) {
         }
         Box(Modifier.weight(1f)) {
             when (sub) {
-                0 -> EssayTab(vm, fixedSubject = "chinese")
-                1 -> ChineseZhongkaoTab()
+                0 -> ChineseStructureTab()
+                1 -> EssayTab(vm, fixedSubject = "chinese")
+                2 -> ChineseZhongkaoTab()
             }
         }
+    }
+}
+
+@Composable
+private fun MathHubTab() {
+    var sub by remember { mutableIntStateOf(0) }
+    Column(Modifier.fillMaxSize()) {
+        FlowRow(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            listOf("试卷结构" to 0, "历年真题" to 1, "备考要点" to 2).forEach { (label, idx) ->
+                FilterChip(
+                    selected = sub == idx,
+                    onClick = { sub = idx },
+                    label = { Text(label) }
+                )
+            }
+        }
+        Box(Modifier.weight(1f)) {
+            when (sub) {
+                0 -> MathTab()
+                1 -> MathZhongkaoTab()
+                2 -> Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "更多数学内容敬请期待。",
+                        color = AppColors.TextSecondary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PhysicsHubTab() {
+    var sub by remember { mutableIntStateOf(0) }
+    Column(Modifier.fillMaxSize()) {
+        FlowRow(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            listOf("试卷结构" to 0, "备考要点" to 1).forEach { (label, idx) ->
+                FilterChip(
+                    selected = sub == idx,
+                    onClick = { sub = idx },
+                    label = { Text(label) }
+                )
+            }
+        }
+        Box(Modifier.weight(1f)) {
+            when (sub) {
+                0 -> PhysicsTab()
+                1 -> Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "更多物理内容敬请期待。",
+                        color = AppColors.TextSecondary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MathZhongkaoTab() {
+    val context = LocalContext.current
+    var file by remember { mutableStateOf<DaofaPastExamsFile?>(null) }
+    var err by remember { mutableStateOf<String?>(null) }
+    var detail by remember { mutableStateOf<DaofaPastExamItem?>(null) }
+
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            try {
+                file = MathZhongkaoRepository.load(context)
+            } catch (e: Exception) {
+                err = e.message ?: e.toString()
+            }
+        }
+    }
+
+    val items = file?.items ?: emptyList()
+    when (val d = detail) {
+        null -> {
+            when {
+                err != null && file == null -> Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "历年真题：$err",
+                        color = AppColors.TextSecondary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                file == null && err == null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+                items.isEmpty() -> Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "暂无历年真题数据。",
+                        color = AppColors.TextSecondary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                else -> LazyColumn(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    item {
+                        Text(
+                            file?.label?.takeIf { it.isNotBlank() }
+                                ?: "按条目浏览，点击查看全文。",
+                            color = AppColors.TextSecondary,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                    }
+                    items(items, key = { it.id.ifEmpty { it.title } }) { item ->
+                        AppSectionCard(elevated = true, modifier = Modifier.fillMaxWidth()) {
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .clickable { detail = item }
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    item.title,
+                                    modifier = Modifier.weight(1f),
+                                    fontWeight = FontWeight.Medium,
+                                    color = AppColors.TextPrimary,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                                Text("›", color = AppColors.TextHint, fontSize = 20.sp)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else -> DaofaDetailPane(
+            section = DaofaSection(
+                d.title,
+                d.body,
+                d.images.orEmpty()
+            ),
+            barTitle = "历年真题",
+            onBack = { detail = null }
+        )
+    }
+}
+
+@Composable
+private fun ExamImagesFromAssets(
+    paths: List<String>,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        paths.forEach { rel ->
+            key(rel) {
+                SingleExamAssetImage(rel = rel, modifier = Modifier.fillMaxWidth())
+            }
+        }
+    }
+}
+
+@Composable
+private fun MathExamZoomDialog(bitmap: android.graphics.Bitmap, onDismiss: () -> Unit) {
+    var scale by remember { mutableFloatStateOf(1f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(Color(0xEE000000))
+        ) {
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(12.dp)
+            ) {
+                Text("关闭", color = Color.White)
+            }
+            Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 8.dp, vertical = 48.dp)
+                    .graphicsLayer(
+                        scaleX = scale,
+                        scaleY = scale,
+                        translationX = offset.x,
+                        translationY = offset.y
+                    )
+                    .pointerInput(Unit) {
+                        detectTransformGestures { _, pan, zoom, _ ->
+                            scale = (scale * zoom).coerceIn(1f, 5f)
+                            offset += pan
+                        }
+                    },
+                contentScale = ContentScale.Fit
+            )
+        }
+    }
+}
+
+@Composable
+private fun SingleExamAssetImage(rel: String, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    var bitmap by remember(rel) { mutableStateOf<android.graphics.Bitmap?>(null) }
+    LaunchedEffect(rel) {
+        bitmap = withContext(Dispatchers.IO) {
+            try {
+                context.assets.open(rel).use { BitmapFactory.decodeStream(it) }
+            } catch (_: Exception) {
+                null
+            }
+        }
+    }
+    var zoomBitmap by remember(rel) { mutableStateOf<android.graphics.Bitmap?>(null) }
+    val b = bitmap
+    if (b != null) {
+        Image(
+            bitmap = b.asImageBitmap(),
+            contentDescription = null,
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable { zoomBitmap = b },
+            contentScale = ContentScale.FillWidth
+        )
+        Spacer(Modifier.height(12.dp))
+    }
+    zoomBitmap?.let { zb ->
+        MathExamZoomDialog(bitmap = zb, onDismiss = { zoomBitmap = null })
     }
 }
 
@@ -2577,8 +2838,29 @@ private fun formatDurationMs(ms: Int): String {
 @Composable
 private fun ProfileTab(vm: AppViewModel, onWordClick: (String) -> Unit) {
     var confirmClear by remember { mutableStateOf(false) }
+    var showPeSports by remember { mutableStateOf(false) }
     val font = fontScaleSp(vm.fontScaleKey)
     val nbTotalAdds = vm.notebookEntries.sumOf { it.second }
+    if (showPeSports) {
+        Column(Modifier.fillMaxSize()) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { showPeSports = false }) {
+                    Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "返回")
+                }
+                Text("中考体育", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, color = AppColors.TextPrimary)
+            }
+            HorizontalDivider(color = AppColors.Divider.copy(alpha = 0.5f))
+            Box(Modifier.weight(1f)) {
+                PeSportsStructureTab()
+            }
+        }
+        return
+    }
     Column(
         Modifier
             .fillMaxSize()
@@ -2586,6 +2868,22 @@ private fun ProfileTab(vm: AppViewModel, onWordClick: (String) -> Unit) {
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
+        AppSectionCard(elevated = true) {
+            Column(Modifier.padding(16.dp)) {
+                SectionHeader(
+                    Icons.Outlined.EmojiEvents,
+                    "中考体育",
+                    "2025 年北京中考体育考试内容与说明"
+                )
+                Spacer(Modifier.height(12.dp))
+                PrimaryFullWidthButton(
+                    text = "查看体育考试说明",
+                    enabled = true,
+                    loading = false,
+                    onClick = { showPeSports = true }
+                )
+            }
+        }
         AppSectionCard(elevated = true) {
             Column(Modifier.padding(16.dp)) {
                 SectionHeader(
@@ -2649,7 +2947,38 @@ private fun ProfileTab(vm: AppViewModel, onWordClick: (String) -> Unit) {
 
 @Composable
 private fun WordDetailSheetContent(word: String, source: WordSheetSource, vm: AppViewModel, onDismiss: () -> Unit) {
-    val rec = vm.vocabularyRepository.recordFor(word)
+    val context = LocalContext.current
+    var tts by remember { mutableStateOf<TextToSpeech?>(null) }
+    var ttsReady by remember { mutableStateOf(false) }
+    DisposableEffect(context) {
+        val appContext = context.applicationContext
+        lateinit var engine: TextToSpeech
+        engine = TextToSpeech(appContext) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val lr = engine.setLanguage(Locale.US)
+                if (lr == TextToSpeech.LANG_MISSING_DATA || lr == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    engine.setLanguage(Locale.ENGLISH)
+                }
+                ttsReady = true
+            }
+        }
+        tts = engine
+        onDispose {
+            ttsReady = false
+            engine.stop()
+            engine.shutdown()
+            tts = null
+        }
+    }
+    fun speakWord() {
+        val engine = tts ?: return
+        if (!ttsReady) return
+        val w = word.lowercase()
+        val uttId = "detail_${w}_${System.nanoTime()}"
+        engine.speak(w, TextToSpeech.QUEUE_FLUSH, null, uttId)
+    }
+
+    val rec = vm.resolvedWordRecord(word)
     var exampleEn by remember { mutableStateOf("") }
     var exampleZh by remember { mutableStateOf("") }
     var loadingEx by remember { mutableStateOf(false) }
@@ -2721,19 +3050,41 @@ private fun WordDetailSheetContent(word: String, source: WordSheetSource, vm: Ap
                         Text(sourceLabel, Modifier.padding(horizontal = 10.dp, vertical = 5.dp), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold, color = AppColors.TextSecondary)
                     }
                 }
-                rec?.phonetic?.trim()?.takeIf { it.isNotEmpty() }?.let { ph ->
-                    Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(12.dp))
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val ph = rec?.phonetic?.trim().orEmpty()
                     Row(
                         Modifier
-                            .fillMaxWidth()
+                            .weight(1f)
                             .clip(RoundedCornerShape(12.dp))
                             .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                             .padding(horizontal = 12.dp, vertical = 10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(Icons.Outlined.TextFormat, null, Modifier.size(18.dp), tint = AppColors.TextHint)
-                        Text(ph, style = MaterialTheme.typography.bodyLarge, color = AppColors.TextSecondary)
+                        Icon(Icons.Outlined.TextFormat, contentDescription = null, modifier = Modifier.size(18.dp), tint = AppColors.TextHint)
+                        Column(Modifier.weight(1f)) {
+                            Text("音标", style = MaterialTheme.typography.labelSmall, color = AppColors.TextHint)
+                            Text(
+                                if (ph.isNotEmpty()) ph else "—",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = if (ph.isNotEmpty()) AppColors.TextSecondary else AppColors.TextHint
+                            )
+                        }
+                    }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("读音", style = MaterialTheme.typography.labelSmall, color = AppColors.TextSecondary)
+                        IconButton(onClick = { speakWord() }, enabled = ttsReady) {
+                            Icon(
+                                Icons.AutoMirrored.Outlined.VolumeUp,
+                                contentDescription = "朗读单词",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
                     }
                 }
                 rec?.type?.let { t ->

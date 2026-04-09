@@ -6,29 +6,48 @@ struct MainTabView: View {
     @StateObject private var notebook = NotebookStore()
     @AppStorage("aienglish_font") private var fontScale: String = "standard"
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @State private var selectedTab = 0
+
+    private let tabs: [(icon: String, title: String)] = [
+        ("doc.text", "语文"),
+        ("sum", "数学"),
+        ("book", "英语"),
+        ("function", "物理"),
+        ("list.clipboard", "道法"),
+        ("person", "我的"),
+    ]
 
     var body: some View {
         ZStack {
-            TabView {
-                ChineseHubView()
-                    .tabItem { Label("语文", systemImage: "doc.text") }
+            VStack(spacing: 0) {
+                Group {
+                    switch selectedTab {
+                    case 0:
+                        ChineseHubView()
+                    case 1:
+                        MathHubView()
+                    case 2:
+                        EnglishHubView()
+                            .environmentObject(vocabulary)
+                            .environmentObject(notebook)
+                    case 3:
+                        PhysicsHubView()
+                    case 4:
+                        DaofaTabView()
+                    case 5:
+                        ProfileTabView()
+                            .environmentObject(vocabulary)
+                            .environmentObject(notebook)
+                    default:
+                        ChineseHubView()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .environment(\.horizontalSizeClass, tabBarHorizontalSizeClass)
+                .environment(\.fontScale, FontScale(rawValue: fontScale) ?? .standard)
 
-                EnglishHubView()
-                    .environmentObject(vocabulary)
-                    .environmentObject(notebook)
-                    .tabItem { Label("英语", systemImage: "book") }
-
-                DaofaTabView()
-                    .tabItem { Label("道法", systemImage: "list.clipboard") }
-
-                ProfileTabView()
-                    .environmentObject(vocabulary)
-                    .environmentObject(notebook)
-                    .tabItem { Label("我的", systemImage: "person") }
+                customBottomBar
             }
-            /// iPad（尤其 iPadOS 18+）默认会把主导航放在顶部/侧边；对 TabView 使用 compact 横屏尺寸类可恢复底部标签栏。
-            .environment(\.horizontalSizeClass, tabBarHorizontalSizeClass)
-            .environment(\.fontScale, FontScale(rawValue: fontScale) ?? .standard)
 
             if let msg = notebook.toastMessage {
                 VStack {
@@ -40,12 +59,42 @@ struct MainTabView: View {
                         .padding(.vertical, 12)
                         .background(Color.black.opacity(0.82))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(.bottom, 96)
+                        .padding(.bottom, 72)
                 }
                 .transition(.opacity)
                 .animation(.easeInOut(duration: 0.2), value: notebook.toastMessage)
                 .allowsHitTesting(false)
             }
+        }
+    }
+
+    private var customBottomBar: some View {
+        VStack(spacing: 0) {
+            Divider()
+            HStack(spacing: 0) {
+                ForEach(Array(tabs.enumerated()), id: \.offset) { index, tab in
+                    Button {
+                        selectedTab = index
+                    } label: {
+                        VStack(spacing: 3) {
+                            Image(systemName: tab.icon)
+                                .font(.system(size: 20))
+                            Text(tab.title)
+                                .font(.system(size: 10, weight: selectedTab == index ? .semibold : .regular))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                        .contentShape(Rectangle())
+                        .foregroundStyle(selectedTab == index ? Color.accentColor : Color.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(tab.title)
+                }
+            }
+            .padding(.bottom, 2)
+            .background(Color(.systemBackground))
         }
     }
 

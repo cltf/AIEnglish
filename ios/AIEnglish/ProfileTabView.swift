@@ -11,6 +11,18 @@ struct ProfileTabView: View {
         NavigationStack {
             List {
                 Section {
+                    NavigationLink {
+                        PeSportsStructureTabView()
+                    } label: {
+                        Label("中考体育", systemImage: "figure.run")
+                    }
+                } header: {
+                    Text("考试资讯")
+                } footer: {
+                    Text("2025 年北京中考体育考试内容与说明")
+                }
+
+                Section {
                     if notebook.entries.isEmpty {
                         Text("生词本为空")
                             .foregroundStyle(.secondary)

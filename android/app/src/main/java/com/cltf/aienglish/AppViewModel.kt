@@ -8,9 +8,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.cltf.aienglish.data.DefinitionItem
 import com.cltf.aienglish.data.EssayExam
 import com.cltf.aienglish.data.EssayRepository
+import com.cltf.aienglish.data.Mc688Entry
+import com.cltf.aienglish.data.Mc688Repository
 import com.cltf.aienglish.data.NotebookRepository
+import com.cltf.aienglish.data.ReadingHighFreqEntry
+import com.cltf.aienglish.data.ReadingHighFreqRepository
 import com.cltf.aienglish.data.ReadingRepository
 import com.cltf.aienglish.data.ReadingSubject
 import com.cltf.aienglish.data.VocabularyRepository
@@ -20,9 +25,12 @@ import com.cltf.aienglish.domain.ReadingAnalysisEngine
 import com.cltf.aienglish.domain.ScanTextAnalyzer
 import com.cltf.aienglish.network.AiRepository
 import com.cltf.aienglish.network.DictionaryRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.jvm.Volatile
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -63,6 +71,14 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     var notebookEntries by mutableStateOf<List<Pair<String, Int>>>(emptyList())
         private set
 
+    /** 阅读高频词：小写 → 条目（用于单词详情补全音标/释义） */
+    @Volatile
+    private var readingHighFreqByWord: Map<String, ReadingHighFreqEntry> = emptyMap()
+
+    /** 688 词表：小写 → 条目 */
+    @Volatile
+    private var mc688ByWord: Map<String, Mc688Entry> = emptyMap()
+
     var fontScaleKey by mutableStateOf("standard")
 
     var scanBitmap by mutableStateOf<Bitmap?>(null)
@@ -98,6 +114,16 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 }
             )
             readingLoaded = true
+            withContext(Dispatchers.IO) {
+                runCatching {
+                    val hf = ReadingHighFreqRepository.load(getApplication())
+                    readingHighFreqByWord = hf.entries.associateBy { it.word.lowercase() }
+                }
+                runCatching {
+                    val mc = Mc688Repository.load(getApplication())
+                    mc688ByWord = mc.entries.associateBy { it.word.lowercase() }
+                }
+            }
         }
         notebookEntries = notebookRepository.loadEntriesSorted()
         val prefs = getApplication<Application>().getSharedPreferences("aienglish_prefs", 0)
@@ -222,5 +248,46 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         if (t.isEmpty()) return 100
         val u = unknownWordsForOcr()
         return ScanTextAnalyzer.accuracyPercent(t, u.size)
+    }
+
+    /**
+     * 合并主词库、阅读高频、688 词表，供详情页展示音标与释义（生词本中可能仅有非词库来源的词）。
+     */
+    fun resolvedWordRecord(word: String): WordRecord? {
+        val key = word.lowercase()
+        val base = vocabularyRepository.recordFor(word)
+        val hf = readingHighFreqByWord[key]
+        val mc = mc688ByWord[key]
+        if (base != null) {
+            val phonetic = base.phonetic.trim().ifEmpty { hf?.phonetic?.trim().orEmpty() }
+            val defs = when {
+                base.definitions.isNotEmpty() -> base.definitions
+                hf != null -> listOf(DefinitionItem("", hf.meaning))
+                mc != null -> listOf(DefinitionItem("", mc.meaning))
+                else -> emptyList()
+            }
+            return base.copy(phonetic = phonetic, definitions = defs.ifEmpty { base.definitions })
+        }
+        if (hf != null) {
+            return WordRecord(
+                word = hf.word,
+                phonetic = hf.phonetic,
+                type = "",
+                definitions = listOf(DefinitionItem("", hf.meaning)),
+                example = null,
+                exampleZh = null
+            )
+        }
+        if (mc != null) {
+            return WordRecord(
+                word = mc.word,
+                phonetic = "",
+                type = "",
+                definitions = listOf(DefinitionItem("", mc.meaning)),
+                example = null,
+                exampleZh = null
+            )
+        }
+        return null
     }
 }

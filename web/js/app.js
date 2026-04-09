@@ -1,7 +1,8 @@
 import {
   initVocabulary,
+  initSupplementalWordData,
   getVocabularySet,
-  getWordRecord,
+  getResolvedWordRecord,
   resolveInVocabulary,
   listWordsForHome,
   getWordCount,
@@ -12,6 +13,8 @@ const STORAGE_ESSAY_SUBJECT = "aienglish_essay_subject";
 const STORAGE_ENGLISH_SUB = "aienglish_english_sub";
 const STORAGE_DAOF_SUB = "aienglish_daofa_sub";
 const STORAGE_CHINESE_SUB = "aienglish_chinese_sub";
+const STORAGE_MATH_SUB = "aienglish_math_sub";
+const STORAGE_PHYSICS_SUB = "aienglish_physics_sub";
 const STORAGE_READING_SUBJECT = "aienglish_reading_subject";
 const STORAGE_FONT = "aienglish_font";
 const STORAGE_AI_MODEL = "aienglish_ai_model";
@@ -544,17 +547,29 @@ function applyFontClass() {
 
 const TAB_HEADER_TITLES = {
   chinese: "语文",
+  math: "数学",
   english: "英语",
+  physics: "物理",
   daofa: "道法",
   profile: "我的",
+  "pe-sports": "中考体育",
 };
 
 function getEnglishSub() {
   try {
     const v = localStorage.getItem(STORAGE_ENGLISH_SUB);
-    return v === "vocab" || v === "scan" || v === "essay" || v === "readinghf" || v === "readingskills" || v === "mc688"
-      ? v
-      : "vocab";
+    if (
+      v === "structure" ||
+      v === "vocab" ||
+      v === "scan" ||
+      v === "essay" ||
+      v === "readinghf" ||
+      v === "readingskills" ||
+      v === "mc688"
+    ) {
+      return v;
+    }
+    return "vocab";
   } catch (_) {
     return "vocab";
   }
@@ -673,19 +688,26 @@ function speakEnglishWord(word) {
   setTimeout(once, 400);
 }
 
-/** @param {"vocab"|"scan"|"readinghf"|"readingskills"|"mc688"|"essay"} sub */
+/** @param {"structure"|"vocab"|"scan"|"readinghf"|"readingskills"|"mc688"|"essay"} sub */
 function showEnglishSub(sub) {
-  const s =
-    sub === "scan" || sub === "essay" || sub === "readinghf" || sub === "readingskills" || sub === "mc688"
-      ? sub
-      : "vocab";
+  let s = "vocab";
+  if (sub === "structure") s = "structure";
+  else if (sub === "scan") s = "scan";
+  else if (sub === "essay") s = "essay";
+  else if (sub === "readinghf") s = "readinghf";
+  else if (sub === "readingskills") s = "readingskills";
+  else if (sub === "mc688") s = "mc688";
+  else if (sub === "vocab") s = "vocab";
   setEnglishSub(s);
-  document.querySelectorAll(".english-pane").forEach((pane) => {
+  document.querySelectorAll("#panel-english [data-english-pane]").forEach((pane) => {
     pane.classList.toggle("active", pane.dataset.englishPane === s);
   });
-  document.querySelectorAll("[data-english-sub]").forEach((btn) => {
+  document.querySelectorAll("#panel-english [data-english-sub]").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.englishSub === s);
   });
+  if (s === "structure") {
+    loadEnglishStructureTab();
+  }
   if (s === "essay") {
     setEssaySubject("english");
     renderEssayList("en");
@@ -944,7 +966,7 @@ function showDaofaSub(sub) {
   document.querySelectorAll("#panel-daofa [data-daofa-pane]").forEach((pane) => {
     pane.classList.toggle("active", pane.dataset.daofaPane === s);
   });
-  document.querySelectorAll("[data-daofa-sub]").forEach((btn) => {
+  document.querySelectorAll("#panel-daofa [data-daofa-sub]").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.daofaSub === s);
   });
   if (s === "subjective") {
@@ -952,6 +974,9 @@ function showDaofaSub(sub) {
   }
   if (s === "past") {
     renderDaofaPastList();
+  }
+  if (s === "structure") {
+    loadDaofaStructureTab();
   }
 }
 
@@ -988,18 +1013,482 @@ let daofaPastItemsCache = [];
 /** @type {string} */
 let daofaPastLabel = "";
 
+function renderPhysicsBlock(block) {
+  const wrap = document.createElement("div");
+  wrap.className = "physics-block";
+  const t = block.type;
+  if (t === "table") {
+    wrap.appendChild(renderPhysicsTable(block.headers || [], block.rows || []));
+    return wrap;
+  }
+  if (t === "subheading") {
+    wrap.classList.add("physics-subheading");
+    wrap.textContent = block.text || "";
+    return wrap;
+  }
+  if (t === "label") {
+    wrap.classList.add("physics-label");
+    wrap.textContent = block.text || "";
+    return wrap;
+  }
+  if (t === "bullets") {
+    wrap.classList.add("physics-bullets");
+    const ul = document.createElement("ul");
+    for (const line of block.items || []) {
+      const li = document.createElement("li");
+      li.textContent = line;
+      ul.appendChild(li);
+    }
+    wrap.appendChild(ul);
+    return wrap;
+  }
+  if (t === "keyValues") {
+    wrap.classList.add("physics-kv");
+    for (const pair of block.pairs || []) {
+      if (!pair || pair.length < 2) continue;
+      const row = document.createElement("div");
+      row.className = "physics-kv-row";
+      const k = document.createElement("span");
+      k.className = "physics-kv-key";
+      k.textContent = pair[0];
+      const v = document.createElement("span");
+      v.className = "physics-kv-val";
+      v.textContent = pair[1];
+      row.append(k, v);
+      wrap.appendChild(row);
+    }
+    return wrap;
+  }
+  if (t === "subsection") {
+    wrap.classList.add("physics-subsection");
+    const h = document.createElement("h4");
+    h.textContent = block.title || "";
+    wrap.appendChild(h);
+    return wrap;
+  }
+  if (t === "callout") {
+    wrap.classList.add("physics-callout");
+    const ul = document.createElement("ul");
+    for (const line of block.items || []) {
+      const li = document.createElement("li");
+      li.textContent = line;
+      ul.appendChild(li);
+    }
+    wrap.appendChild(ul);
+    return wrap;
+  }
+  if (block.text) {
+    wrap.classList.add("physics-plain");
+    wrap.textContent = block.text;
+  }
+  return wrap;
+}
+
+function renderPhysicsTable(headers, rows) {
+  const table = document.createElement("table");
+  table.className = "physics-table";
+  const thead = document.createElement("thead");
+  const trh = document.createElement("tr");
+  for (const h of headers) {
+    const th = document.createElement("th");
+    th.textContent = h;
+    trh.appendChild(th);
+  }
+  thead.appendChild(trh);
+  table.appendChild(thead);
+  const tbody = document.createElement("tbody");
+  const n = headers.length;
+  for (const row of rows) {
+    const tr = document.createElement("tr");
+    for (let i = 0; i < n; i++) {
+      const td = document.createElement("td");
+      td.textContent = row[i] != null ? String(row[i]) : "";
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  return table;
+}
+
+function renderExamStructure(data, root) {
+  if (!root) return;
+  root.innerHTML = "";
+  const hero = document.createElement("div");
+  hero.className = "physics-hero card settings-block";
+  let html = `<h2 class="physics-title">${escapeHtml(data.title || "")}</h2>`;
+  if (data.subtitle) html += `<p class="physics-subtitle">${escapeHtml(data.subtitle)}</p>`;
+  if (data.badge) html += `<p class="physics-badge">${escapeHtml(data.badge)}</p>`;
+  hero.innerHTML = html;
+  root.appendChild(hero);
+  for (const sec of data.sections || []) {
+    const card = document.createElement("section");
+    card.className = "physics-section-card card settings-block";
+    const h3 = document.createElement("h3");
+    h3.className = "physics-section-title";
+    h3.textContent = sec.title || "";
+    card.appendChild(h3);
+    const body = document.createElement("div");
+    body.className = "physics-section-body";
+    for (const block of sec.blocks || []) {
+      body.appendChild(renderPhysicsBlock(block));
+    }
+    card.appendChild(body);
+    root.appendChild(card);
+  }
+}
+
+function renderPhysicsStructure(data) {
+  renderExamStructure(data, $("physics-root"));
+}
+
+function loadPhysicsTab() {
+  const root = $("physics-root");
+  if (!root || root.dataset.loaded === "1") return;
+  const status = $("physics-structure-status");
+  fetch("data/physics_beijing_structure.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      if (status) status.remove();
+      renderExamStructure(data, root);
+      root.dataset.loaded = "1";
+    })
+    .catch((e) => {
+      if (status) status.textContent = `加载失败：${e.message || e}`;
+    });
+}
+
+function loadMathTab() {
+  const root = $("math-root");
+  if (!root || root.dataset.loaded === "1") return;
+  const status = $("math-structure-status");
+  fetch("data/math_beijing_structure.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      if (status) status.remove();
+      renderExamStructure(data, root);
+      root.dataset.loaded = "1";
+    })
+    .catch((e) => {
+      if (status) status.textContent = `加载失败：${e.message || e}`;
+    });
+}
+
+function loadChineseStructureTab() {
+  const root = $("chinese-structure-root");
+  if (!root || root.dataset.loaded === "1") return;
+  const status = $("chinese-structure-status");
+  fetch("data/chinese_beijing_structure.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      if (status) status.remove();
+      renderExamStructure(data, root);
+      root.dataset.loaded = "1";
+    })
+    .catch((e) => {
+      if (status) status.textContent = `加载失败：${e.message || e}`;
+    });
+}
+
+function getMathSub() {
+  try {
+    const v = localStorage.getItem(STORAGE_MATH_SUB);
+    if (v === "extra") return "extra";
+    if (v === "past") return "past";
+    return "structure";
+  } catch (_) {
+    return "structure";
+  }
+}
+
+function setMathSub(v) {
+  try {
+    const s = v === "extra" ? "extra" : v === "past" ? "past" : "structure";
+    localStorage.setItem(STORAGE_MATH_SUB, s);
+  } catch (_) {}
+}
+
+/** @param {"structure"|"past"|"extra"} sub */
+function showMathSub(sub) {
+  const s = sub === "extra" ? "extra" : sub === "past" ? "past" : "structure";
+  setMathSub(s);
+  closeMathZhongkaoDetail();
+  document.querySelectorAll("#panel-math [data-math-pane]").forEach((pane) => {
+    pane.classList.toggle("active", pane.dataset.mathPane === s);
+  });
+  document.querySelectorAll("#panel-math [data-math-sub]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.mathSub === s);
+  });
+  if (s === "structure") {
+    loadMathTab();
+  }
+  if (s === "past") {
+    renderMathZhongkaoList();
+  }
+}
+
+function loadMathTabNav() {
+  showMathSub(getMathSub());
+  if (mathZkReady) return;
+  fetch("data/math_zhongkao.json")
+    .then((r) => (r.ok ? r.json() : Promise.resolve({ items: [] })))
+    .catch(() => ({ items: [] }))
+    .then((data) => {
+      mathZkReady = true;
+      const items = data && Array.isArray(data.items) ? data.items : [];
+      mathZkItemsCache = items.map((it) => ({
+        title: it.title || "",
+        body: it.body || "",
+        images: Array.isArray(it.images) ? it.images.filter((x) => typeof x === "string") : [],
+      }));
+      mathZkLabel = (data && data.label) || "";
+      renderMathZhongkaoList();
+    });
+}
+
+function renderMathZhongkaoList() {
+  const listEl = $("math-zk-stack-list");
+  if (!listEl) return;
+  const sections = mathZkItemsCache;
+  if (!sections.length) {
+    listEl.innerHTML =
+      "<p class=\"muted\">" +
+      (mathZkReady ? "暂无历年真题数据。" : "加载中…") +
+      "</p>";
+    return;
+  }
+  const hint =
+    mathZkLabel && String(mathZkLabel).trim()
+      ? `<p class="hint muted">${escapeHtml(String(mathZkLabel).trim())}</p>`
+      : `<p class="hint muted">按条目浏览，点击查看全文。</p>`;
+  const parts = [];
+  for (let idx = 0; idx < sections.length; idx++) {
+    const sec = sections[idx];
+    parts.push(
+      `<div class="essay-row-card">` +
+        `<button type="button" class="essay-row-btn math-zk-open-btn" data-math-zk-idx="${String(idx)}">` +
+          `<span class="essay-row-title">${escapeHtml(sec.title)}</span><span class="muted essay-row-chevron" aria-hidden="true">›</span>` +
+        `</button>` +
+      `</div>`
+    );
+  }
+  listEl.innerHTML = hint + parts.join("");
+  listEl.querySelectorAll(".math-zk-open-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idx = parseInt(btn.dataset.mathZkIdx || "0", 10);
+      openMathZhongkaoDetail(idx);
+    });
+  });
+}
+
+function mathZkDataUrl(assetPath) {
+  const p = String(assetPath || "").trim();
+  if (!p) return "";
+  if (p.startsWith("data/") || p.startsWith("/") || /^https?:\/\//i.test(p)) return p;
+  return "data/" + p.replace(/^\/+/, "");
+}
+
+function openMathZhongkaoDetail(idx) {
+  const sec = mathZkItemsCache[idx];
+  if (!sec) return;
+  const listEl = $("math-zk-stack-list");
+  const detailEl = $("math-zk-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.add("hidden");
+  detailEl.classList.remove("hidden");
+  const bodyHtml = escapeHtml(sec.body).replace(/\n/g, "<br />");
+  const imgs = Array.isArray(sec.images) ? sec.images : [];
+  const imgsHtml =
+    imgs.length > 0
+      ? `<div class="math-exam-images">` +
+        imgs
+          .map((p) => {
+            const src = mathZkDataUrl(p);
+            if (!src) return "";
+            return `<figure class="math-exam-figure"><img src="${escapeAttr(src)}" alt="" loading="lazy" decoding="async" /></figure>`;
+          })
+          .join("") +
+        `</div>`
+      : "";
+  const hasBody = sec.body && String(sec.body).trim();
+  const textBlock = hasBody
+    ? `<h3 class="essay-block-label">正文</h3><p class="essay-body-text">${bodyHtml}</p>`
+    : "";
+  const imgBlock =
+    imgs.length > 0
+      ? `<h3 class="essay-block-label">试卷图（点击放大）</h3>${imgsHtml}`
+      : "";
+  detailEl.innerHTML =
+    `<div class="essay-detail-panel">` +
+    `<button type="button" class="btn-secondary essay-detail-back">← 返回</button>` +
+    `<h2 class="section-title essay-detail-sample-title">${escapeHtml(sec.title)}</h2>` +
+    `<div class="card settings-block mt-8">` +
+    textBlock +
+    imgBlock +
+    `</div></div>`;
+  detailEl.querySelector(".essay-detail-back")?.addEventListener("click", closeMathZhongkaoDetail);
+  detailEl.querySelectorAll(".math-exam-images img").forEach((img) => {
+    img.addEventListener("click", () => openMathExamLightbox(img.getAttribute("src") || ""));
+  });
+}
+
+function openMathExamLightbox(src) {
+  const s = String(src || "").trim();
+  if (!s) return;
+  const box = $("math-exam-lightbox");
+  const el = $("math-exam-lightbox-img");
+  if (!box || !el) return;
+  el.src = s;
+  el.style.transform = "";
+  box.classList.remove("hidden");
+  try {
+    document.body.style.overflow = "hidden";
+  } catch (_) {}
+}
+
+function closeMathExamLightbox() {
+  const box = $("math-exam-lightbox");
+  const el = $("math-exam-lightbox-img");
+  if (box) box.classList.add("hidden");
+  if (el) el.removeAttribute("src");
+  try {
+    document.body.style.overflow = "";
+  } catch (_) {}
+}
+
+function initMathExamLightbox() {
+  const box = $("math-exam-lightbox");
+  const btn = box?.querySelector(".math-exam-lightbox-close");
+  const img = $("math-exam-lightbox-img");
+  if (!box || !img) return;
+  btn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    closeMathExamLightbox();
+  });
+  box.addEventListener("click", (e) => {
+    if (e.target === box) closeMathExamLightbox();
+  });
+  img.addEventListener("click", (e) => e.stopPropagation());
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && box && !box.classList.contains("hidden")) {
+      closeMathExamLightbox();
+    }
+  });
+}
+
+function closeMathZhongkaoDetail() {
+  closeMathExamLightbox();
+  const listEl = $("math-zk-stack-list");
+  const detailEl = $("math-zk-stack-detail");
+  if (!listEl || !detailEl) return;
+  listEl.classList.remove("hidden");
+  detailEl.classList.add("hidden");
+  detailEl.innerHTML = "";
+}
+
+function getPhysicsSub() {
+  try {
+    const v = localStorage.getItem(STORAGE_PHYSICS_SUB);
+    return v === "extra" ? "extra" : "structure";
+  } catch (_) {
+    return "structure";
+  }
+}
+
+function setPhysicsSub(v) {
+  try {
+    localStorage.setItem(STORAGE_PHYSICS_SUB, v === "extra" ? "extra" : "structure");
+  } catch (_) {}
+}
+
+/** @param {"structure"|"extra"} sub */
+function showPhysicsSub(sub) {
+  const s = sub === "extra" ? "extra" : "structure";
+  setPhysicsSub(s);
+  document.querySelectorAll("#panel-physics [data-physics-pane]").forEach((pane) => {
+    pane.classList.toggle("active", pane.dataset.physicsPane === s);
+  });
+  document.querySelectorAll("#panel-physics [data-physics-sub]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.physicsSub === s);
+  });
+  if (s === "structure") {
+    loadPhysicsTab();
+  }
+}
+
+function loadPeSportsTab() {
+  const root = $("pe-sports-root");
+  if (!root || root.dataset.loaded === "1") return;
+  const status = $("pe-sports-status");
+  fetch("data/pe_beijing_structure.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      if (status) status.remove();
+      renderExamStructure(data, root);
+      root.dataset.loaded = "1";
+    })
+    .catch((e) => {
+      if (status) status.textContent = `加载失败：${e.message || e}`;
+    });
+}
+
+function loadEnglishStructureTab() {
+  const root = $("english-structure-root");
+  if (!root || root.dataset.loaded === "1") return;
+  const status = $("english-structure-status");
+  fetch("data/english_beijing_structure.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      if (status) status.remove();
+      renderExamStructure(data, root);
+      root.dataset.loaded = "1";
+    })
+    .catch((e) => {
+      if (status) status.textContent = `加载失败：${e.message || e}`;
+    });
+}
+
+function loadDaofaStructureTab() {
+  const root = $("daofa-structure-root");
+  if (!root || root.dataset.loaded === "1") return;
+  const status = $("daofa-structure-status");
+  fetch("data/daofa_beijing_structure.json")
+    .then((r) => {
+      if (!r.ok) throw new Error(String(r.status));
+      return r.json();
+    })
+    .then((data) => {
+      if (status) status.remove();
+      renderExamStructure(data, root);
+      root.dataset.loaded = "1";
+    })
+    .catch((e) => {
+      if (status) status.textContent = `加载失败：${e.message || e}`;
+    });
+}
+
 function loadDaofaTab() {
   if (daofaDataReady) {
     showDaofaSub(getDaofaSub());
     return;
   }
-  const stStatus = $("daofa-structure-status");
-  const stPre = $("daofa-structure-content");
+  loadDaofaStructureTab();
   Promise.all([
-    fetch("data/daofa_structure.txt").then((r) => {
-      if (!r.ok) throw new Error(String(r.status));
-      return r.text();
-    }),
     fetch("data/daofa_reference.txt").then((r) => {
       if (!r.ok) throw new Error(String(r.status));
       return r.text();
@@ -1008,13 +1497,8 @@ function loadDaofaTab() {
       .then((r) => (r.ok ? r.json() : Promise.resolve({ items: [] })))
       .catch(() => ({ items: [] })),
   ])
-    .then(([structureT, refT, pastJson]) => {
+    .then(([refT, pastJson]) => {
       daofaDataReady = true;
-      if (stPre) {
-        stPre.textContent = structureT;
-        stPre.hidden = false;
-      }
-      if (stStatus) stStatus.hidden = true;
       daofaSectionsCache = parseDaofaSections(refT);
       const items = pastJson && Array.isArray(pastJson.items) ? pastJson.items : [];
       daofaPastItemsCache = items.map((it) => ({
@@ -1027,10 +1511,13 @@ function loadDaofaTab() {
       showDaofaSub(getDaofaSub());
     })
     .catch(() => {
-      if (stStatus) {
-        stStatus.textContent =
-          "加载失败，请确认存在 data/daofa_structure.txt 与 data/daofa_reference.txt";
-      }
+      daofaDataReady = true;
+      daofaSectionsCache = [];
+      daofaPastItemsCache = [];
+      daofaPastLabel = "";
+      renderDaofaList();
+      renderDaofaPastList();
+      showDaofaSub(getDaofaSub());
     });
 }
 
@@ -1158,10 +1645,18 @@ let chineseZkItemsCache = [];
 /** @type {string} */
 let chineseZkLabel = "";
 
+let mathZkReady = false;
+/** @type {{ title: string, body: string, images: string[] }[]} */
+let mathZkItemsCache = [];
+/** @type {string} */
+let mathZkLabel = "";
+
 function getChineseSub() {
   try {
     const v = localStorage.getItem(STORAGE_CHINESE_SUB);
-    return v === "zhongkao" ? "zhongkao" : "essay";
+    if (v === "zhongkao") return "zhongkao";
+    if (v === "structure") return "structure";
+    return "essay";
   } catch (_) {
     return "essay";
   }
@@ -1173,15 +1668,17 @@ function setChineseSub(v) {
   } catch (_) {}
 }
 
-/** @param {"essay"|"zhongkao"} sub */
+/** @param {"essay"|"zhongkao"|"structure"} sub */
 function showChineseSub(sub) {
-  const s = sub === "zhongkao" ? "zhongkao" : "essay";
+  let s = "essay";
+  if (sub === "zhongkao") s = "zhongkao";
+  else if (sub === "structure") s = "structure";
   setChineseSub(s);
   closeChineseZhongkaoDetail();
   document.querySelectorAll("#panel-chinese [data-chinese-pane]").forEach((pane) => {
     pane.classList.toggle("active", pane.dataset.chinesePane === s);
   });
-  document.querySelectorAll("[data-chinese-sub]").forEach((btn) => {
+  document.querySelectorAll("#panel-chinese [data-chinese-sub]").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.chineseSub === s);
   });
   if (s === "essay") {
@@ -1189,6 +1686,9 @@ function showChineseSub(sub) {
   }
   if (s === "zhongkao") {
     renderChineseZhongkaoList();
+  }
+  if (s === "structure") {
+    loadChineseStructureTab();
   }
 }
 
@@ -1284,6 +1784,9 @@ function showTab(name) {
   if (name !== "chinese") {
     closeChineseZhongkaoDetail();
   }
+  if (name !== "math") {
+    closeMathZhongkaoDetail();
+  }
   if (name !== "daofa") {
     closeDaofaDetail();
     closeDaofaPastDetail();
@@ -1294,7 +1797,7 @@ function showTab(name) {
   document.querySelectorAll(".nav-item").forEach((n) => {
     n.classList.toggle("active", n.dataset.tab === name);
   });
-  $("bottom-nav").classList.toggle("hidden", name === "result");
+  $("bottom-nav").classList.toggle("hidden", name === "result" || name === "pe-sports");
   $("btn-result-back").classList.toggle("hidden", name !== "result");
   if (name === "result") {
     $("app-title").textContent = "识别结果";
@@ -1310,8 +1813,17 @@ function showTab(name) {
     closeEssayDetail("cn");
     showEnglishSub(getEnglishSub());
   }
+  if (name === "math") {
+    loadMathTabNav();
+  }
+  if (name === "physics") {
+    showPhysicsSub(getPhysicsSub());
+  }
   if (name === "daofa") {
     loadDaofaTab();
+  }
+  if (name === "pe-sports") {
+    loadPeSportsTab();
   }
 }
 
@@ -1588,15 +2100,12 @@ function renderNotebook() {
 function openWordModal(word, context) {
   const w = word.toLowerCase();
   $("modal-word-title").textContent = w;
-  const rec = getWordRecord(w);
+  const rec = getResolvedWordRecord(w);
   const ph = (rec?.phonetic || "").trim();
   const phEl = $("modal-phonetic");
-  if (ph) {
-    phEl.textContent = ph;
-    phEl.classList.remove("hidden");
-  } else {
-    phEl.textContent = "";
-    phEl.classList.add("hidden");
+  if (phEl) {
+    phEl.textContent = ph || "—";
+    phEl.classList.toggle("phonetic-empty", !ph);
   }
   const defBox = $("modal-definitions");
   defBox.innerHTML = "";
@@ -1824,21 +2333,36 @@ function wireEvents() {
     btn.addEventListener("click", () => showTab(btn.dataset.tab || "chinese"));
   });
 
-  document.querySelectorAll("[data-english-sub]").forEach((btn) => {
+  $("btn-open-pe-sports")?.addEventListener("click", () => showTab("pe-sports"));
+  $("btn-pe-sports-back")?.addEventListener("click", () => showTab("profile"));
+
+  document.querySelectorAll("#panel-english [data-english-sub]").forEach((btn) => {
     btn.addEventListener("click", () => {
       showEnglishSub(/** @type {HTMLElement} */ (btn).dataset.englishSub || "vocab");
     });
   });
 
-  document.querySelectorAll("[data-daofa-sub]").forEach((btn) => {
+  document.querySelectorAll("#panel-daofa [data-daofa-sub]").forEach((btn) => {
     btn.addEventListener("click", () => {
       showDaofaSub(/** @type {HTMLElement} */ (btn).dataset.daofaSub || "structure");
     });
   });
 
-  document.querySelectorAll("[data-chinese-sub]").forEach((btn) => {
+  document.querySelectorAll("#panel-chinese [data-chinese-sub]").forEach((btn) => {
     btn.addEventListener("click", () => {
       showChineseSub(/** @type {HTMLElement} */ (btn).dataset.chineseSub || "essay");
+    });
+  });
+
+  document.querySelectorAll("#panel-math [data-math-sub]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showMathSub(/** @type {HTMLElement} */ (btn).dataset.mathSub || "structure");
+    });
+  });
+
+  document.querySelectorAll("#panel-physics [data-physics-sub]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showPhysicsSub(/** @type {HTMLElement} */ (btn).dataset.physicsSub || "structure");
     });
   });
 
@@ -1925,6 +2449,15 @@ function wireEvents() {
     if (e.target === $("modal-overlay")) closeWordModal();
   });
 
+  $("modal-speak")?.addEventListener("click", () => {
+    const w = $("modal-word-title")?.textContent?.trim();
+    if (!w || typeof speechSynthesis === "undefined") return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(w);
+    u.lang = "en-US";
+    speechSynthesis.speak(u);
+  });
+
   $("modal-add-notebook").addEventListener("click", () => {
     const w = $("modal-word-title").textContent.trim().toLowerCase();
     if (!w) return;
@@ -1979,6 +2512,7 @@ function wireEvents() {
     }
   });
 
+  initMathExamLightbox();
 }
 
 function getEssaySubject() {
@@ -2356,12 +2890,24 @@ function closeEssayDetail(suffix) {
   }
 }
 
-function boot() {
+async function boot() {
   const raw = window.VOCABULARY_DATA;
   if (!raw) {
     console.error("VOCABULARY_DATA missing");
   }
   initVocabulary(raw || { words: [] });
+  try {
+    const [hfRes, mcRes] = await Promise.all([
+      fetch("data/reading_high_freq.json"),
+      fetch("data/mc688_21day.json"),
+    ]);
+    const hfJson = hfRes.ok ? await hfRes.json() : { entries: [] };
+    const mcJson = mcRes.ok ? await mcRes.json() : { entries: [] };
+    initSupplementalWordData(hfJson.entries || [], mcJson.entries || []);
+  } catch (e) {
+    console.warn("supplemental vocabulary", e);
+    initSupplementalWordData([], []);
+  }
   applyFontClass();
   loadAiSettings();
   wireEvents();
@@ -2373,4 +2919,4 @@ function boot() {
   showTab("chinese");
 }
 
-boot();
+void boot();

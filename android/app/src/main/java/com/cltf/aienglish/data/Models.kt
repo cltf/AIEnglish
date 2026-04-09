@@ -125,5 +125,31 @@ data class DaofaPastExamsFile(
 data class DaofaPastExamItem(
     val id: String = "",
     val title: String = "",
-    val body: String = ""
+    val body: String = "",
+    /** 相对路径：如 math2025/page01.png（Android assets / Web data 根下） */
+    val images: List<String>? = null
+)
+
+/** 北京中考各科试卷结构 JSON（physics、math、chinese、daofa、english 等 *_beijing_structure.json） */
+data class PhysicsStructureFile(
+    val version: Int? = null,
+    val title: String = "",
+    val subtitle: String? = null,
+    val badge: String? = null,
+    val sections: List<PhysicsSection> = emptyList()
+)
+
+data class PhysicsSection(
+    val title: String = "",
+    val blocks: List<PhysicsBlock> = emptyList()
+)
+
+data class PhysicsBlock(
+    val type: String = "",
+    val text: String? = null,
+    val title: String? = null,
+    val headers: List<String>? = null,
+    val rows: List<List<String>>? = null,
+    val items: List<String>? = null,
+    val pairs: List<List<String>>? = null
 )

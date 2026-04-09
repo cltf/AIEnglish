@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftUI
 
 enum WordDetailContext {
@@ -11,11 +12,14 @@ struct WordDetailSheet: View {
     @EnvironmentObject private var notebook: NotebookStore
     @Environment(\.dismiss) private var dismiss
     @Environment(\.fontScale) private var fontScale
+    @StateObject private var speaker = WordDetailSpeaker()
     @State private var exampleEn = ""
     @State private var exampleZh = ""
     @State private var loadingEx = false
 
-    private var record: WordRecord? { vocabulary.record(for: word) }
+    private var record: WordRecord? {
+        WordDetailMerged.mergedRecord(base: vocabulary.record(for: word), word: word)
+    }
 
     private var contextLabel: String {
         switch context {
@@ -93,14 +97,20 @@ struct WordDetailSheet: View {
                     )
             }
 
-            if let ph = record?.phonetic.trimmingCharacters(in: .whitespacesAndNewlines), !ph.isEmpty {
-                HStack(spacing: 8) {
-                    Image(systemName: "textformat")
-                        .font(.caption.weight(.semibold))
+            HStack(alignment: .center, spacing: 12) {
+                let ph = record?.phonetic.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("音标")
+                        .font(.caption2.weight(.semibold))
                         .foregroundStyle(.tertiary)
-                    Text(ph)
-                        .font(.system(size: fontScale.size + 1, design: .rounded))
-                        .foregroundStyle(.secondary)
+                    HStack(spacing: 8) {
+                        Image(systemName: "textformat")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.tertiary)
+                        Text(ph.isEmpty ? "—" : ph)
+                            .font(.system(size: fontScale.size + 1, design: .rounded))
+                            .foregroundStyle(ph.isEmpty ? .tertiary : .secondary)
+                    }
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 10)
@@ -109,6 +119,22 @@ struct WordDetailSheet: View {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .fill(Color(.secondarySystemGroupedBackground))
                 )
+
+                VStack(spacing: 4) {
+                    Text("读音")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    Button {
+                        speaker.speak(word.lowercased())
+                    } label: {
+                        Image(systemName: "speaker.wave.2.fill")
+                            .font(.title2)
+                            .foregroundStyle(Color.accentColor)
+                            .frame(width: 44, height: 44)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("朗读单词")
+                }
             }
 
             if let badge = typeBadge {
@@ -288,5 +314,120 @@ struct WordDetailSheet: View {
         } else {
             exampleEn = "暂无例句（可检查网络后重试）"
         }
+    }
+}
+
+// MARK: - 合并主词库 + 阅读高频 + 688（生词本详情可显示音标/释义）
+
+private enum WordDetailMerged {
+    private static var hfByWord: [String: HFRow] = [:]
+    private static var mcByWord: [String: MCRow] = [:]
+    private static var loaded = false
+    private static let lock = NSLock()
+
+    private struct HFRow: Decodable {
+        let word: String
+        let phonetic: String
+        let meaning: String
+    }
+
+    private struct HFFile: Decodable {
+        let entries: [HFRow]
+    }
+
+    private struct MCRow: Decodable {
+        let word: String
+        let meaning: String
+    }
+
+    private struct MCFile: Decodable {
+        let entries: [MCRow]
+    }
+
+    private static func loadIfNeeded() {
+        lock.lock()
+        defer { lock.unlock() }
+        if loaded { return }
+        loaded = true
+        if let url = Bundle.main.url(forResource: "reading_high_freq", withExtension: "json"),
+           let data = try? Data(contentsOf: url),
+           let file = try? JSONDecoder().decode(HFFile.self, from: data) {
+            for e in file.entries {
+                hfByWord[e.word.lowercased()] = e
+            }
+        }
+        if let url = Bundle.main.url(forResource: "mc688_21day", withExtension: "json"),
+           let data = try? Data(contentsOf: url),
+           let file = try? JSONDecoder().decode(MCFile.self, from: data) {
+            for e in file.entries {
+                mcByWord[e.word.lowercased()] = e
+            }
+        }
+    }
+
+    /// - Parameter base: 主词库记录，在调用方（MainActor）上通过 `vocabulary.record(for:)` 取得。
+    static func mergedRecord(base: WordRecord?, word: String) -> WordRecord? {
+        loadIfNeeded()
+        let key = word.lowercased()
+        let hf = hfByWord[key]
+        let mc = mcByWord[key]
+
+        if let b = base {
+            let phonetic = b.phonetic.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                ? (hf?.phonetic ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+                : b.phonetic
+            let defs: [DefinitionItem]
+            if !b.definitions.isEmpty {
+                defs = b.definitions
+            } else if let h = hf {
+                defs = [DefinitionItem(partOfSpeech: "", meaning: h.meaning)]
+            } else if let m = mc {
+                defs = [DefinitionItem(partOfSpeech: "", meaning: m.meaning)]
+            } else {
+                defs = []
+            }
+            return WordRecord(
+                word: b.word,
+                phonetic: phonetic,
+                type: b.type,
+                definitions: defs,
+                example: b.example,
+                exampleZh: b.exampleZh
+            )
+        }
+        if let h = hf {
+            return WordRecord(
+                word: h.word,
+                phonetic: h.phonetic,
+                type: "",
+                definitions: [DefinitionItem(partOfSpeech: "", meaning: h.meaning)],
+                example: nil,
+                exampleZh: nil
+            )
+        }
+        if let m = mc {
+            return WordRecord(
+                word: m.word,
+                phonetic: "",
+                type: "",
+                definitions: [DefinitionItem(partOfSpeech: "", meaning: m.meaning)],
+                example: nil,
+                exampleZh: nil
+            )
+        }
+        return nil
+    }
+}
+
+private final class WordDetailSpeaker: ObservableObject {
+    private let synth = AVSpeechSynthesizer()
+
+    func speak(_ word: String) {
+        let session = AVAudioSession.sharedInstance()
+        try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
+        try? session.setActive(true)
+        let u = AVSpeechUtterance(string: word)
+        u.voice = AVSpeechSynthesisVoice(language: "en-US")
+        synth.speak(u)
     }
 }

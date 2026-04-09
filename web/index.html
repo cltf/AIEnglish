@@ -22,6 +22,7 @@
     <main class="main">
       <section id="panel-chinese" class="panel active">
         <div class="english-subnav chinese-subnav" role="tablist" aria-label="语文分区">
+          <button type="button" class="english-sub-btn" data-chinese-sub="structure" role="tab">试卷结构</button>
           <button type="button" class="english-sub-btn active" data-chinese-sub="essay" role="tab">作文</button>
           <button type="button" class="english-sub-btn" data-chinese-sub="zhongkao" role="tab">中考真题</button>
         </div>
@@ -34,16 +35,51 @@
           <div id="chinese-zk-stack-list" class="essay-stack"></div>
           <div id="chinese-zk-stack-detail" class="essay-stack hidden"></div>
         </div>
+        <div id="chinese-pane-structure" class="english-pane" data-chinese-pane="structure">
+          <div id="chinese-structure-root" class="physics-root">
+            <p id="chinese-structure-status" class="muted small physics-status">加载中…</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-math" class="panel">
+        <div class="english-subnav math-subnav" role="tablist" aria-label="数学分区">
+          <button type="button" class="english-sub-btn active" data-math-sub="structure" role="tab">试卷结构</button>
+          <button type="button" class="english-sub-btn" data-math-sub="past" role="tab">历年真题</button>
+          <button type="button" class="english-sub-btn" data-math-sub="extra" role="tab">备考要点</button>
+        </div>
+        <div id="math-pane-structure" class="english-pane active" data-math-pane="structure">
+          <div id="math-root" class="physics-root">
+            <p id="math-structure-status" class="muted small physics-status">加载中…</p>
+          </div>
+        </div>
+        <div id="math-pane-past" class="english-pane" data-math-pane="past">
+          <div id="math-zk-stack-list" class="essay-stack"></div>
+          <div id="math-zk-stack-detail" class="essay-stack hidden"></div>
+          <div id="math-exam-lightbox" class="math-exam-lightbox hidden" role="dialog" aria-modal="true" aria-label="试卷大图">
+            <button type="button" class="math-exam-lightbox-close" aria-label="关闭">×</button>
+            <img id="math-exam-lightbox-img" class="math-exam-lightbox-img" alt="" />
+          </div>
+        </div>
+        <div id="math-pane-extra" class="english-pane" data-math-pane="extra">
+          <p class="hint muted">更多数学内容敬请期待。</p>
+        </div>
       </section>
 
       <section id="panel-english" class="panel">
         <div class="english-subnav" role="tablist" aria-label="英语分区">
+          <button type="button" class="english-sub-btn" data-english-sub="structure" role="tab">试卷结构</button>
           <button type="button" class="english-sub-btn active" data-english-sub="vocab" role="tab">词库</button>
           <button type="button" class="english-sub-btn" data-english-sub="scan" role="tab">英语阅读</button>
           <button type="button" class="english-sub-btn" data-english-sub="readinghf" role="tab">阅读高频</button>
           <button type="button" class="english-sub-btn" data-english-sub="readingskills" role="tab">阅读技巧</button>
           <button type="button" class="english-sub-btn" data-english-sub="mc688" role="tab">21天688</button>
           <button type="button" class="english-sub-btn" data-english-sub="essay" role="tab">英语作文</button>
+        </div>
+        <div id="english-pane-structure" class="english-pane" data-english-pane="structure">
+          <div id="english-structure-root" class="physics-root">
+            <p id="english-structure-status" class="muted small physics-status">加载中…</p>
+          </div>
         </div>
         <div id="english-pane-vocab" class="english-pane active" data-english-pane="vocab">
           <div class="search-row">
@@ -112,6 +148,21 @@
         </div>
       </section>
 
+      <section id="panel-physics" class="panel">
+        <div class="english-subnav physics-subnav" role="tablist" aria-label="物理分区">
+          <button type="button" class="english-sub-btn active" data-physics-sub="structure" role="tab">试卷结构</button>
+          <button type="button" class="english-sub-btn" data-physics-sub="extra" role="tab">备考要点</button>
+        </div>
+        <div id="physics-pane-structure" class="english-pane active" data-physics-pane="structure">
+          <div id="physics-root" class="physics-root">
+            <p id="physics-structure-status" class="muted small physics-status">加载中…</p>
+          </div>
+        </div>
+        <div id="physics-pane-extra" class="english-pane" data-physics-pane="extra">
+          <p class="hint muted">更多物理内容敬请期待。</p>
+        </div>
+      </section>
+
       <section id="panel-daofa" class="panel">
         <div class="english-subnav daofa-subnav" role="tablist" aria-label="道法分区">
           <button type="button" class="english-sub-btn active" data-daofa-sub="structure" role="tab">试卷结构</button>
@@ -119,9 +170,8 @@
           <button type="button" class="english-sub-btn" data-daofa-sub="past" role="tab">历年中考题</button>
         </div>
         <div id="daofa-pane-structure" class="english-pane active" data-daofa-pane="structure">
-          <div class="card settings-block daofa-card">
-            <p id="daofa-structure-status" class="muted small">加载中…</p>
-            <pre id="daofa-structure-content" class="daofa-pre" hidden></pre>
+          <div id="daofa-structure-root" class="physics-root">
+            <p id="daofa-structure-status" class="muted small physics-status">加载中…</p>
           </div>
         </div>
         <div id="daofa-pane-subjective" class="english-pane" data-daofa-pane="subjective">
@@ -135,7 +185,21 @@
         </div>
       </section>
 
+      <section id="panel-pe-sports" class="panel">
+        <div class="card settings-block">
+          <button type="button" class="btn-secondary" id="btn-pe-sports-back">← 返回我的</button>
+        </div>
+        <div id="pe-sports-root" class="physics-root">
+          <p id="pe-sports-status" class="muted small physics-status">加载中…</p>
+        </div>
+      </section>
+
       <section id="panel-profile" class="panel">
+        <div class="card settings-block">
+          <h2 class="section-title">中考体育</h2>
+          <p class="muted small">2025 年北京中考体育考试内容与说明</p>
+          <button type="button" class="btn-primary full-width mt-8" id="btn-open-pe-sports">查看体育考试说明</button>
+        </div>
         <div class="card settings-block">
           <h2 class="section-title">缓存</h2>
           <button type="button" class="btn-secondary full-width" id="btn-clear-cache">清理缓存</button>
@@ -188,9 +252,17 @@
         <span class="nav-icon" aria-hidden="true">📜</span>
         <span>语文</span>
       </button>
+      <button type="button" class="nav-item" data-tab="math">
+        <span class="nav-icon" aria-hidden="true">🔢</span>
+        <span>数学</span>
+      </button>
       <button type="button" class="nav-item" data-tab="english">
         <span class="nav-icon" aria-hidden="true">📚</span>
         <span>英语</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="physics">
+        <span class="nav-icon" aria-hidden="true">⚛️</span>
+        <span>物理</span>
       </button>
       <button type="button" class="nav-item" data-tab="daofa">
         <span class="nav-icon" aria-hidden="true">📋</span>
@@ -209,7 +281,16 @@
         <h2 id="modal-word-title" class="modal-word"></h2>
         <button type="button" class="icon-btn" id="modal-close" aria-label="关闭">×</button>
       </div>
-      <p id="modal-phonetic" class="phonetic"></p>
+      <div class="modal-word-meta">
+        <div class="modal-phonetic-wrap">
+          <span class="modal-meta-label">音标</span>
+          <p id="modal-phonetic" class="phonetic"></p>
+        </div>
+        <div class="modal-speak-wrap">
+          <span class="modal-meta-label">读音</span>
+          <button type="button" class="btn-secondary modal-speak-btn" id="modal-speak" aria-label="朗读单词">🔊</button>
+        </div>
+      </div>
       <div id="modal-definitions" class="definitions"></div>
       <div id="modal-example-wrap" class="modal-example-wrap">
         <div class="example-label">例句</div>

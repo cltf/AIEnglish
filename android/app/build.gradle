@@ -81,7 +81,64 @@ def copyChineseZhongkao = tasks.register('copyChineseZhongkao', Copy) {
     onlyIf { src.exists() }
 }
 
-tasks.named('preBuild').configure { dependsOn copyVocabulary, copyEssays, copyReading, copyEssayAudio, copyDaofaText, copyDaofaStructure, copyReadingHighFreq, copyMc688, copyReadingSkills, copyDaofaPastExams, copyChineseZhongkao }
+def copyMathZhongkao = tasks.register('copyMathZhongkao', Copy) {
+    def src = rootProject.file('../web/data/math_zhongkao.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyMathExamImages = tasks.register('copyMathExamImages', Copy) {
+    def srcDir = rootProject.file('../web/data/math2025')
+    from srcDir
+    into layout.projectDirectory.dir('src/main/assets/math2025')
+    include '**/*'
+    onlyIf { srcDir.exists() }
+}
+
+def copyPhysicsStructure = tasks.register('copyPhysicsStructure', Copy) {
+    def src = rootProject.file('../web/data/physics_beijing_structure.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyMathStructure = tasks.register('copyMathStructure', Copy) {
+    def src = rootProject.file('../web/data/math_beijing_structure.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyChineseStructure = tasks.register('copyChineseStructure', Copy) {
+    def src = rootProject.file('../web/data/chinese_beijing_structure.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyDaofaBeijingStructure = tasks.register('copyDaofaBeijingStructure', Copy) {
+    def src = rootProject.file('../web/data/daofa_beijing_structure.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyEnglishStructure = tasks.register('copyEnglishStructure', Copy) {
+    def src = rootProject.file('../web/data/english_beijing_structure.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyPeSportsStructure = tasks.register('copyPeSportsStructure', Copy) {
+    def src = rootProject.file('../web/data/pe_beijing_structure.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+tasks.named('preBuild').configure { dependsOn copyVocabulary, copyEssays, copyReading, copyEssayAudio, copyDaofaText, copyDaofaStructure, copyReadingHighFreq, copyMc688, copyReadingSkills, copyDaofaPastExams, copyChineseZhongkao, copyMathZhongkao, copyMathExamImages, copyPhysicsStructure, copyMathStructure, copyChineseStructure, copyDaofaBeijingStructure, copyEnglishStructure, copyPeSportsStructure }
 
 android {
     namespace 'com.cltf.aienglish'

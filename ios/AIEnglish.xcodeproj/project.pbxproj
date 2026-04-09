@@ -45,6 +45,22 @@
 		E10100000000000000000027 /* ChineseHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000027 /* ChineseHubView.swift */; };
 		E10100000000000000000028 /* ChineseZhongkaoTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000028 /* ChineseZhongkaoTabView.swift */; };
 		E10100000000000000000029 /* chinese_zhongkao.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000029 /* chinese_zhongkao.json */; };
+		E1010000000000000000002A /* PhysicsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000002A /* PhysicsTabView.swift */; };
+		E1010000000000000000002B /* physics_beijing_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000002B /* physics_beijing_structure.json */; };
+		E1010000000000000000002C /* MathTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000002C /* MathTabView.swift */; };
+		E1010000000000000000002D /* math_beijing_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000002D /* math_beijing_structure.json */; };
+		E1010000000000000000002E /* ChineseStructureTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000002E /* ChineseStructureTabView.swift */; };
+		E1010000000000000000002F /* chinese_beijing_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000002F /* chinese_beijing_structure.json */; };
+		E10100000000000000000030 /* MathPhysicsHubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000030 /* MathPhysicsHubViews.swift */; };
+		E10100000000000000000038 /* MathZhongkaoTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000038 /* MathZhongkaoTabView.swift */; };
+		E10100000000000000000039 /* math_zhongkao.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000039 /* math_zhongkao.json */; };
+		E10100000000000000000032 /* DaofaStructureTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000032 /* DaofaStructureTabView.swift */; };
+		E10100000000000000000033 /* daofa_beijing_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000033 /* daofa_beijing_structure.json */; };
+		E10100000000000000000034 /* EnglishStructureTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000034 /* EnglishStructureTabView.swift */; };
+		E10100000000000000000035 /* english_beijing_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000035 /* english_beijing_structure.json */; };
+		E10100000000000000000036 /* PeSportsStructureTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000036 /* PeSportsStructureTabView.swift */; };
+		E10100000000000000000037 /* pe_beijing_structure.json in Resources */ = {isa = PBXBuildFile; fileRef = E20100000000000000000037 /* pe_beijing_structure.json */; };
+		E1010000000000000000003B /* math2025 in Resources */ = {isa = PBXBuildFile; fileRef = E2010000000000000000003B /* math2025 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +100,22 @@
 		E20100000000000000000027 /* ChineseHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseHubView.swift; sourceTree = "<group>"; };
 		E20100000000000000000028 /* ChineseZhongkaoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseZhongkaoTabView.swift; sourceTree = "<group>"; };
 		E20100000000000000000029 /* chinese_zhongkao.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = chinese_zhongkao.json; path = ../web/data/chinese_zhongkao.json; sourceTree = SOURCE_ROOT; };
+		E2010000000000000000002A /* PhysicsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsTabView.swift; sourceTree = "<group>"; };
+		E2010000000000000000002B /* physics_beijing_structure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = physics_beijing_structure.json; path = ../web/data/physics_beijing_structure.json; sourceTree = SOURCE_ROOT; };
+		E2010000000000000000002C /* MathTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathTabView.swift; sourceTree = "<group>"; };
+		E2010000000000000000002D /* math_beijing_structure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = math_beijing_structure.json; path = ../web/data/math_beijing_structure.json; sourceTree = SOURCE_ROOT; };
+		E2010000000000000000002E /* ChineseStructureTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseStructureTabView.swift; sourceTree = "<group>"; };
+		E2010000000000000000002F /* chinese_beijing_structure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = chinese_beijing_structure.json; path = ../web/data/chinese_beijing_structure.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000030 /* MathPhysicsHubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathPhysicsHubViews.swift; sourceTree = "<group>"; };
+		E20100000000000000000038 /* MathZhongkaoTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathZhongkaoTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000039 /* math_zhongkao.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = math_zhongkao.json; path = ../web/data/math_zhongkao.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000032 /* DaofaStructureTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaofaStructureTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000033 /* daofa_beijing_structure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = daofa_beijing_structure.json; path = ../web/data/daofa_beijing_structure.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000034 /* EnglishStructureTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishStructureTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000035 /* english_beijing_structure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = english_beijing_structure.json; path = ../web/data/english_beijing_structure.json; sourceTree = SOURCE_ROOT; };
+		E20100000000000000000036 /* PeSportsStructureTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeSportsStructureTabView.swift; sourceTree = "<group>"; };
+		E20100000000000000000037 /* pe_beijing_structure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = pe_beijing_structure.json; path = ../web/data/pe_beijing_structure.json; sourceTree = SOURCE_ROOT; };
+		E2010000000000000000003B /* math2025 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = math2025; path = ../web/data/math2025; sourceTree = SOURCE_ROOT; };
 		E20100000000000000000010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E20100000000000000000011 /* vocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = vocabulary.json; path = ../web/data/vocabulary.json; sourceTree = SOURCE_ROOT; };
 		E20100000000000000000012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -130,6 +162,8 @@
 				E20100000000000000000014 /* EssayModels.swift */,
 				E20100000000000000000015 /* EssayDetailView.swift */,
 				E2010000000000000000000F /* ProfileTabView.swift */,
+				E20100000000000000000036 /* PeSportsStructureTabView.swift */,
+				E20100000000000000000037 /* pe_beijing_structure.json */,
 				E20100000000000000000010 /* Assets.xcassets */,
 				E20100000000000000000011 /* vocabulary.json */,
 				E20100000000000000000016 /* essays.json */,
@@ -146,10 +180,24 @@
 				E20100000000000000000025 /* ReadingSkillsTabView.swift */,
 				E20100000000000000000026 /* daofa_past_exams.json */,
 				E20100000000000000000029 /* chinese_zhongkao.json */,
+				E2010000000000000000002B /* physics_beijing_structure.json */,
+				E2010000000000000000002D /* math_beijing_structure.json */,
+				E20100000000000000000039 /* math_zhongkao.json */,
+				E2010000000000000000003B /* math2025 */,
+				E20100000000000000000038 /* MathZhongkaoTabView.swift */,
+				E2010000000000000000002F /* chinese_beijing_structure.json */,
 				E20100000000000000000027 /* ChineseHubView.swift */,
+				E2010000000000000000002C /* MathTabView.swift */,
+				E2010000000000000000002E /* ChineseStructureTabView.swift */,
 				E20100000000000000000028 /* ChineseZhongkaoTabView.swift */,
 				E2010000000000000000001D /* EnglishHubView.swift */,
+				E20100000000000000000034 /* EnglishStructureTabView.swift */,
+				E20100000000000000000035 /* english_beijing_structure.json */,
 				E2010000000000000000001E /* DaofaTabView.swift */,
+				E20100000000000000000032 /* DaofaStructureTabView.swift */,
+				E20100000000000000000033 /* daofa_beijing_structure.json */,
+				E2010000000000000000002A /* PhysicsTabView.swift */,
+				E20100000000000000000030 /* MathPhysicsHubViews.swift */,
 				E20100000000000000000012 /* Info.plist */,
 			);
 			path = AIEnglish;
@@ -234,6 +282,14 @@
 				E10100000000000000000024 /* reading_skills_zhongkao.json in Resources */,
 				E10100000000000000000026 /* daofa_past_exams.json in Resources */,
 				E10100000000000000000029 /* chinese_zhongkao.json in Resources */,
+				E1010000000000000000002B /* physics_beijing_structure.json in Resources */,
+				E1010000000000000000002D /* math_beijing_structure.json in Resources */,
+				E10100000000000000000039 /* math_zhongkao.json in Resources */,
+				E1010000000000000000002F /* chinese_beijing_structure.json in Resources */,
+				E10100000000000000000033 /* daofa_beijing_structure.json in Resources */,
+				E10100000000000000000035 /* english_beijing_structure.json in Resources */,
+				E10100000000000000000037 /* pe_beijing_structure.json in Resources */,
+				E1010000000000000000003B /* math2025 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,13 +319,21 @@
 				E10100000000000000000017 /* EssayDetailView.swift in Sources */,
 				E10100000000000000000019 /* ReadingModels.swift in Sources */,
 				E1010000000000000000000F /* ProfileTabView.swift in Sources */,
+				E10100000000000000000036 /* PeSportsStructureTabView.swift in Sources */,
 				E1010000000000000000001D /* EnglishHubView.swift in Sources */,
+				E10100000000000000000034 /* EnglishStructureTabView.swift in Sources */,
 				E1010000000000000000001E /* DaofaTabView.swift in Sources */,
+				E10100000000000000000032 /* DaofaStructureTabView.swift in Sources */,
+				E1010000000000000000002A /* PhysicsTabView.swift in Sources */,
+				E1010000000000000000002C /* MathTabView.swift in Sources */,
 				E10100000000000000000021 /* ReadingHighFreqTabView.swift in Sources */,
 				E10100000000000000000023 /* Mc688TabView.swift in Sources */,
 				E10100000000000000000025 /* ReadingSkillsTabView.swift in Sources */,
 				E10100000000000000000027 /* ChineseHubView.swift in Sources */,
 				E10100000000000000000028 /* ChineseZhongkaoTabView.swift in Sources */,
+				E1010000000000000000002E /* ChineseStructureTabView.swift in Sources */,
+				E10100000000000000000030 /* MathPhysicsHubViews.swift in Sources */,
+				E10100000000000000000038 /* MathZhongkaoTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

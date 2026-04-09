@@ -28,13 +28,13 @@ struct DaofaTabView: View {
 
     @Environment(\.fontScale) private var fontScale
     @State private var sub: Sub = .structure
-    @State private var structureText = ""
     @State private var sections: [DaofaSection] = []
     @State private var detail: DaofaSection?
     @State private var pastItems: [DaofaPastExamItem] = []
     @State private var pastLabel: String = ""
     @State private var pastDetail: DaofaPastExamItem?
     @State private var loadError: String?
+    @State private var dataReady = false
 
     var body: some View {
         NavigationStack {
@@ -54,34 +54,32 @@ struct DaofaTabView: View {
                 }
 
                 Group {
-                    if let err = loadError, structureText.isEmpty, sections.isEmpty {
-                        Text(err)
-                            .foregroundStyle(.secondary)
-                            .padding()
-                    } else if structureText.isEmpty && sections.isEmpty {
+                    if !dataReady {
                         ProgressView("加载中…")
                     } else {
                         switch sub {
                         case .structure:
-                            ScrollView {
-                                Text(structureText)
-                                    .font(.system(size: fontScale.size))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .textSelection(.enabled)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 8)
-                            }
+                            DaofaStructureTabView()
                         case .subjective:
                             if let d = detail {
                                 DaofaSubjectDetailView(section: d, barTitle: "道法主观题", onBack: { detail = nil })
                             } else {
                                 VStack(alignment: .leading, spacing: 0) {
-                                    Text("按板块浏览，点击条目查看全文（与英语作文相同版式）。")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                        .padding(.horizontal, 16)
-                                        .padding(.top, 8)
-                                        .padding(.bottom, 4)
+                                    if let err = loadError, sections.isEmpty {
+                                        Text(err)
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                            .padding(.horizontal, 16)
+                                            .padding(.top, 8)
+                                            .padding(.bottom, 4)
+                                    } else {
+                                        Text("按板块浏览，点击条目查看全文（与英语作文相同版式）。")
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                            .padding(.horizontal, 16)
+                                            .padding(.top, 8)
+                                            .padding(.bottom, 4)
+                                    }
                                     List {
                                         ForEach(sections) { sec in
                                             Button {
@@ -169,13 +167,12 @@ struct DaofaTabView: View {
     }
 
     private func load() async {
-        guard let urlS = Bundle.main.url(forResource: "daofa_structure", withExtension: "txt"),
-              let urlR = Bundle.main.url(forResource: "daofa_reference", withExtension: "txt") else {
-            loadError = "缺少 daofa_structure.txt 或 daofa_reference.txt"
+        defer { dataReady = true }
+        guard let urlR = Bundle.main.url(forResource: "daofa_reference", withExtension: "txt") else {
+            loadError = "缺少 daofa_reference.txt"
             return
         }
         do {
-            structureText = try String(contentsOf: urlS, encoding: .utf8)
             let ref = try String(contentsOf: urlR, encoding: .utf8)
             sections = parseDaofaReference(ref)
             if let urlP = Bundle.main.url(forResource: "daofa_past_exams", withExtension: "json") {

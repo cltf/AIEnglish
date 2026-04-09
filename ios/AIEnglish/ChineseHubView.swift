@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// 语文 Tab：作文 + 中考真题
+/// 语文 Tab：试卷结构 + 作文 + 中考真题
 struct ChineseHubView: View {
     private enum Sub: Hashable {
+        case structure
         case essay
         case zhongkao
     }
@@ -12,6 +13,7 @@ struct ChineseHubView: View {
     var body: some View {
         VStack(spacing: 0) {
             Picker("", selection: $sub) {
+                Text("试卷结构").tag(Sub.structure)
                 Text("作文").tag(Sub.essay)
                 Text("中考真题").tag(Sub.zhongkao)
             }
@@ -22,6 +24,8 @@ struct ChineseHubView: View {
 
             Group {
                 switch sub {
+                case .structure:
+                    ChineseStructureTabView()
                 case .essay:
                     EssayTabView(fixedSubject: "chinese")
                 case .zhongkao:

@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// 英语 Tab：词库、英语阅读（识图）、英语作文。
+/// 英语 Tab：试卷结构 + 词库、阅读、作文等
 struct EnglishHubView: View {
     private enum Sub: String, CaseIterable {
+        case structure
         case vocab
         case scan
         case readinghf
@@ -18,6 +19,7 @@ struct EnglishHubView: View {
     var body: some View {
         VStack(spacing: 0) {
             Picker("", selection: $sub) {
+                Text("试卷结构").tag(Sub.structure)
                 Text("词库").tag(Sub.vocab)
                 Text("英语阅读").tag(Sub.scan)
                 Text("阅读高频").tag(Sub.readinghf)
@@ -32,6 +34,8 @@ struct EnglishHubView: View {
 
             Group {
                 switch sub {
+                case .structure:
+                    EnglishStructureTabView()
                 case .vocab:
                     VocabularyTabView()
                         .environmentObject(vocabulary)
