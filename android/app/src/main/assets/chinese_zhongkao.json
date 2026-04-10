@@ -1,7 +1,28 @@
 {
-  "version": 1,
-  "label": "中考真题",
+  "version": 2,
+  "label": "语文中考真题（含 2025 全卷图片与历年整合文本）",
   "items": [
+    {
+      "id": "bj2025_chinese_readme",
+      "title": "说明",
+      "body": "本套为 2025 北京中考语文试题卷截图，共 9 页。点击「2025 北京中考语文 · 全卷试题」可逐页浏览，点击图片可放大查看。"
+    },
+    {
+      "id": "bj2025_chinese_pages",
+      "title": "2025 北京中考语文 · 全卷试题",
+      "body": "基础运用、古诗文阅读、现代文阅读与作文，按页向下浏览。点击图片可全屏放大。",
+      "images": [
+        "chinese2025/page01.png",
+        "chinese2025/page02.png",
+        "chinese2025/page03.png",
+        "chinese2025/page04.png",
+        "chinese2025/page05.png",
+        "chinese2025/page06.png",
+        "chinese2025/page07.png",
+        "chinese2025/page08.png",
+        "chinese2025/page09.png"
+      ]
+    },
     {
       "id": "cn2025_overview",
       "title": "📋 2025年北京市中考语文（阅读题部分）",

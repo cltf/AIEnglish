@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E60100000000000000000001"
-               BuildableName = "AIEnglish.app"
-               BlueprintName = "AIEnglish"
-               ReferencedContainer = "container:AIEnglish.xcodeproj">
+               BuildableName = "AIZhongkao.app"
+               BlueprintName = "AIZhongkao"
+               ReferencedContainer = "container:AIZhongkao.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E60100000000000000000001"
-            BuildableName = "AIEnglish.app"
-            BlueprintName = "AIEnglish"
-            ReferencedContainer = "container:AIEnglish.xcodeproj">
+            BuildableName = "AIZhongkao.app"
+            BlueprintName = "AIZhongkao"
+            ReferencedContainer = "container:AIZhongkao.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E60100000000000000000001"
-            BuildableName = "AIEnglish.app"
-            BlueprintName = "AIEnglish"
-            ReferencedContainer = "container:AIEnglish.xcodeproj">
+            BuildableName = "AIZhongkao.app"
+            BlueprintName = "AIZhongkao"
+            ReferencedContainer = "container:AIZhongkao.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -7,6 +7,11 @@ let wordByKey = new Map();
 /** @type {Set<string>} */
 let vocabularySet = new Set();
 
+/** @type {Map<string, { word: string, phonetic?: string, meaning: string }>} */
+let readingHfByKey = new Map();
+/** @type {Map<string, { word: string, meaning: string }>} */
+let mc688ByKey = new Map();
+
 /**
  * @param {unknown} raw
  */
@@ -32,6 +37,67 @@ export function getVocabularySet() {
  */
 export function getWordRecord(word) {
   return wordByKey.get(word.toLowerCase()) ?? null;
+}
+
+/**
+ * @param {{ word: string, phonetic?: string, meaning: string }[]} readingEntries
+ * @param {{ word: string, meaning: string }[]} mcEntries
+ */
+export function initSupplementalWordData(readingEntries, mcEntries) {
+  readingHfByKey = new Map();
+  for (const e of readingEntries || []) {
+    if (e && e.word) readingHfByKey.set(e.word.toLowerCase(), e);
+  }
+  mc688ByKey = new Map();
+  for (const e of mcEntries || []) {
+    if (e && e.word) mc688ByKey.set(e.word.toLowerCase(), e);
+  }
+}
+
+/**
+ * 合并主词库、阅读高频、688，用于详情弹层（生词本等）。
+ * @param {string} word
+ * @returns {WordRecord | null}
+ */
+export function getResolvedWordRecord(word) {
+  const w = word.toLowerCase();
+  const base = getWordRecord(word);
+  const hf = readingHfByKey.get(w);
+  const mc = mc688ByKey.get(w);
+  if (base) {
+    const phonetic = (base.phonetic || "").trim() || (hf?.phonetic || "").trim() || "";
+    let definitions = base.definitions?.length ? base.definitions : [];
+    if (!definitions.length) {
+      if (hf?.meaning) definitions = [{ partOfSpeech: "", meaning: hf.meaning }];
+      else if (mc?.meaning) definitions = [{ partOfSpeech: "", meaning: mc.meaning }];
+    }
+    return {
+      ...base,
+      phonetic,
+      definitions,
+    };
+  }
+  if (hf) {
+    return {
+      word: hf.word,
+      phonetic: (hf.phonetic || "").trim(),
+      type: "",
+      definitions: [{ partOfSpeech: "", meaning: hf.meaning }],
+      example: undefined,
+      exampleZh: undefined,
+    };
+  }
+  if (mc) {
+    return {
+      word: mc.word,
+      phonetic: "",
+      type: "",
+      definitions: [{ partOfSpeech: "", meaning: mc.meaning }],
+      example: undefined,
+      exampleZh: undefined,
+    };
+  }
+  return null;
 }
 
 /**

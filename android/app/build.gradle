@@ -81,6 +81,14 @@ def copyChineseZhongkao = tasks.register('copyChineseZhongkao', Copy) {
     onlyIf { src.exists() }
 }
 
+def copyChineseExamImages = tasks.register('copyChineseExamImages', Copy) {
+    def srcDir = rootProject.file('../web/data/chinese2025')
+    from srcDir
+    into layout.projectDirectory.dir('src/main/assets/chinese2025')
+    include '**/*'
+    onlyIf { srcDir.exists() }
+}
+
 def copyMathZhongkao = tasks.register('copyMathZhongkao', Copy) {
     def src = rootProject.file('../web/data/math_zhongkao.json')
     from src
@@ -92,6 +100,21 @@ def copyMathExamImages = tasks.register('copyMathExamImages', Copy) {
     def srcDir = rootProject.file('../web/data/math2025')
     from srcDir
     into layout.projectDirectory.dir('src/main/assets/math2025')
+    include '**/*'
+    onlyIf { srcDir.exists() }
+}
+
+def copyPhysicsZhongkao = tasks.register('copyPhysicsZhongkao', Copy) {
+    def src = rootProject.file('../web/data/physics_zhongkao.json')
+    from src
+    into layout.projectDirectory.dir('src/main/assets')
+    onlyIf { src.exists() }
+}
+
+def copyPhysicsExamImages = tasks.register('copyPhysicsExamImages', Copy) {
+    def srcDir = rootProject.file('../web/data/physics2025')
+    from srcDir
+    into layout.projectDirectory.dir('src/main/assets/physics2025')
     include '**/*'
     onlyIf { srcDir.exists() }
 }
@@ -138,7 +161,7 @@ def copyPeSportsStructure = tasks.register('copyPeSportsStructure', Copy) {
     onlyIf { src.exists() }
 }
 
-tasks.named('preBuild').configure { dependsOn copyVocabulary, copyEssays, copyReading, copyEssayAudio, copyDaofaText, copyDaofaStructure, copyReadingHighFreq, copyMc688, copyReadingSkills, copyDaofaPastExams, copyChineseZhongkao, copyMathZhongkao, copyMathExamImages, copyPhysicsStructure, copyMathStructure, copyChineseStructure, copyDaofaBeijingStructure, copyEnglishStructure, copyPeSportsStructure }
+tasks.named('preBuild').configure { dependsOn copyVocabulary, copyEssays, copyReading, copyEssayAudio, copyDaofaText, copyDaofaStructure, copyReadingHighFreq, copyMc688, copyReadingSkills, copyDaofaPastExams, copyChineseZhongkao, copyChineseExamImages, copyMathZhongkao, copyMathExamImages, copyPhysicsZhongkao, copyPhysicsExamImages, copyPhysicsStructure, copyMathStructure, copyChineseStructure, copyDaofaBeijingStructure, copyEnglishStructure, copyPeSportsStructure }
 
 android {
     namespace 'com.cltf.aienglish'

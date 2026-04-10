@@ -1,8 +1,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showSplash = true
+
     var body: some View {
-        MainTabView()
+        ZStack {
+            MainTabView()
+
+            if showSplash {
+                SplashScreenView(showSplash: $showSplash)
+                    .transition(.opacity)
+                    .zIndex(1)
+            }
+        }
     }
 }
 

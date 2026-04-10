@@ -14,7 +14,6 @@ const STORAGE_ENGLISH_SUB = "aienglish_english_sub";
 const STORAGE_DAOF_SUB = "aienglish_daofa_sub";
 const STORAGE_CHINESE_SUB = "aienglish_chinese_sub";
 const STORAGE_MATH_SUB = "aienglish_math_sub";
-const STORAGE_PHYSICS_SUB = "aienglish_physics_sub";
 const STORAGE_READING_SUBJECT = "aienglish_reading_subject";
 const STORAGE_FONT = "aienglish_font";
 const STORAGE_AI_MODEL = "aienglish_ai_model";
@@ -1202,8 +1201,8 @@ function loadChineseStructureTab() {
 function getMathSub() {
   try {
     const v = localStorage.getItem(STORAGE_MATH_SUB);
-    if (v === "extra") return "extra";
     if (v === "past") return "past";
+    if (v === "extra") return "structure";
     return "structure";
   } catch (_) {
     return "structure";
@@ -1212,14 +1211,14 @@ function getMathSub() {
 
 function setMathSub(v) {
   try {
-    const s = v === "extra" ? "extra" : v === "past" ? "past" : "structure";
+    const s = v === "past" ? "past" : "structure";
     localStorage.setItem(STORAGE_MATH_SUB, s);
   } catch (_) {}
 }
 
-/** @param {"structure"|"past"|"extra"} sub */
+/** @param {"structure"|"past"} sub */
 function showMathSub(sub) {
-  const s = sub === "extra" ? "extra" : sub === "past" ? "past" : "structure";
+  const s = sub === "past" ? "past" : "structure";
   setMathSub(s);
   closeMathZhongkaoDetail();
   document.querySelectorAll("#panel-math [data-math-pane]").forEach((pane) => {
@@ -1393,36 +1392,6 @@ function closeMathZhongkaoDetail() {
   listEl.classList.remove("hidden");
   detailEl.classList.add("hidden");
   detailEl.innerHTML = "";
-}
-
-function getPhysicsSub() {
-  try {
-    const v = localStorage.getItem(STORAGE_PHYSICS_SUB);
-    return v === "extra" ? "extra" : "structure";
-  } catch (_) {
-    return "structure";
-  }
-}
-
-function setPhysicsSub(v) {
-  try {
-    localStorage.setItem(STORAGE_PHYSICS_SUB, v === "extra" ? "extra" : "structure");
-  } catch (_) {}
-}
-
-/** @param {"structure"|"extra"} sub */
-function showPhysicsSub(sub) {
-  const s = sub === "extra" ? "extra" : "structure";
-  setPhysicsSub(s);
-  document.querySelectorAll("#panel-physics [data-physics-pane]").forEach((pane) => {
-    pane.classList.toggle("active", pane.dataset.physicsPane === s);
-  });
-  document.querySelectorAll("#panel-physics [data-physics-sub]").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.physicsSub === s);
-  });
-  if (s === "structure") {
-    loadPhysicsTab();
-  }
 }
 
 function loadPeSportsTab() {
@@ -1640,7 +1609,7 @@ function closeDaofaPastDetail() {
 }
 
 let chineseZkReady = false;
-/** @type {{ title: string, body: string }[]} */
+/** @type {{ title: string, body: string, images: string[] }[]} */
 let chineseZkItemsCache = [];
 /** @type {string} */
 let chineseZkLabel = "";
@@ -1650,6 +1619,13 @@ let mathZkReady = false;
 let mathZkItemsCache = [];
 /** @type {string} */
 let mathZkLabel = "";
+
+function chineseZkDataUrl(assetPath) {
+  const p = String(assetPath || "").replace(/^\/+/, "").trim();
+  if (!p) return "";
+  if (/^(https?:)?\/\//i.test(p) || p.startsWith("data:")) return p;
+  return `data/${p}`;
+}
 
 function getChineseSub() {
   try {
@@ -1704,6 +1680,7 @@ function loadChineseTab() {
       chineseZkItemsCache = items.map((it) => ({
         title: it.title || "",
         body: it.body || "",
+        images: Array.isArray(it.images) ? it.images.filter(Boolean) : [],
       }));
       chineseZkLabel = (data && data.label) || "";
       renderChineseZhongkaoList();
@@ -1754,18 +1731,87 @@ function openChineseZhongkaoDetail(idx) {
   listEl.classList.add("hidden");
   detailEl.classList.remove("hidden");
   const bodyHtml = escapeHtml(sec.body).replace(/\n/g, "<br />");
+  const imgs = Array.isArray(sec.images) ? sec.images : [];
+  const imgsHtml =
+    imgs.length > 0
+      ? `<div class="math-exam-images">` +
+        imgs
+          .map((p) => {
+            const src = chineseZkDataUrl(p);
+            if (!src) return "";
+            return `<figure class="math-exam-figure"><img src="${escapeAttr(src)}" alt="" loading="lazy" decoding="async" /></figure>`;
+          })
+          .join("") +
+        `</div>`
+      : "";
+  const hasBody = sec.body && String(sec.body).trim();
+  const textBlock = hasBody
+    ? `<h3 class="essay-block-label">正文</h3><p class="essay-body-text">${bodyHtml}</p>`
+    : "";
+  const imgBlock =
+    imgs.length > 0
+      ? `<h3 class="essay-block-label">试卷图（点击放大）</h3>${imgsHtml}`
+      : "";
   detailEl.innerHTML =
     `<div class="essay-detail-panel">` +
     `<button type="button" class="btn-secondary essay-detail-back">← 返回</button>` +
     `<h2 class="section-title essay-detail-sample-title">${escapeHtml(sec.title)}</h2>` +
     `<div class="card settings-block mt-8">` +
-    `<h3 class="essay-block-label">正文</h3>` +
-    `<p class="essay-body-text">${bodyHtml}</p>` +
+    textBlock +
+    imgBlock +
     `</div></div>`;
   detailEl.querySelector(".essay-detail-back")?.addEventListener("click", closeChineseZhongkaoDetail);
+  detailEl.querySelectorAll(".math-exam-images img").forEach((img) => {
+    img.addEventListener("click", () => openChineseExamLightbox(img.getAttribute("src") || ""));
+  });
+}
+
+function openChineseExamLightbox(src) {
+  const s = String(src || "").trim();
+  if (!s) return;
+  const box = $("chinese-exam-lightbox");
+  const el = $("chinese-exam-lightbox-img");
+  if (!box || !el) return;
+  el.src = s;
+  el.style.transform = "";
+  box.classList.remove("hidden");
+  try {
+    document.body.style.overflow = "hidden";
+  } catch (_) {}
+}
+
+function closeChineseExamLightbox() {
+  const box = $("chinese-exam-lightbox");
+  const el = $("chinese-exam-lightbox-img");
+  if (box) box.classList.add("hidden");
+  if (el) el.removeAttribute("src");
+  try {
+    document.body.style.overflow = "";
+  } catch (_) {}
+}
+
+function initChineseExamLightbox() {
+  const box = $("chinese-exam-lightbox");
+  const btn = box?.querySelector(".math-exam-lightbox-close");
+  const img = $("chinese-exam-lightbox-img");
+  if (!box || !img) return;
+  btn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    closeChineseExamLightbox();
+  });
+  box.addEventListener("click", (e) => {
+    if (e.target === box) closeChineseExamLightbox();
+  });
+  img.addEventListener("click", (e) => e.stopPropagation());
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && box && !box.classList.contains("hidden")) {
+      closeChineseExamLightbox();
+    }
+  });
 }
 
 function closeChineseZhongkaoDetail() {
+  closeChineseExamLightbox();
   const listEl = $("chinese-zk-stack-list");
   const detailEl = $("chinese-zk-stack-detail");
   if (!listEl || !detailEl) return;
@@ -1817,7 +1863,7 @@ function showTab(name) {
     loadMathTabNav();
   }
   if (name === "physics") {
-    showPhysicsSub(getPhysicsSub());
+    loadPhysicsTab();
   }
   if (name === "daofa") {
     loadDaofaTab();
@@ -2360,12 +2406,6 @@ function wireEvents() {
     });
   });
 
-  document.querySelectorAll("#panel-physics [data-physics-sub]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      showPhysicsSub(/** @type {HTMLElement} */ (btn).dataset.physicsSub || "structure");
-    });
-  });
-
   $("scan-file").addEventListener("change", (e) => {
     const input = e.target;
     const f = input.files?.[0];
@@ -2513,6 +2553,7 @@ function wireEvents() {
   });
 
   initMathExamLightbox();
+  initChineseExamLightbox();
 }
 
 function getEssaySubject() {

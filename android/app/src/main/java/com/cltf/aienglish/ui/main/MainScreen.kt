@@ -153,6 +153,7 @@ import com.cltf.aienglish.data.DaofaPastExamsFile
 import com.cltf.aienglish.data.DaofaPastExamsRepository
 import com.cltf.aienglish.data.ChineseZhongkaoRepository
 import com.cltf.aienglish.data.MathZhongkaoRepository
+import com.cltf.aienglish.data.PhysicsZhongkaoRepository
 import com.cltf.aienglish.domain.ParagraphGist
 import com.cltf.aienglish.domain.ReadingAnalysis
 import com.cltf.aienglish.ui.components.AppGroupedBackground
@@ -2009,7 +2010,7 @@ private fun MathHubTab() {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            listOf("试卷结构" to 0, "历年真题" to 1, "备考要点" to 2).forEach { (label, idx) ->
+            listOf("试卷结构" to 0, "历年真题" to 1).forEach { (label, idx) ->
                 FilterChip(
                     selected = sub == idx,
                     onClick = { sub = idx },
@@ -2021,18 +2022,6 @@ private fun MathHubTab() {
             when (sub) {
                 0 -> MathTab()
                 1 -> MathZhongkaoTab()
-                2 -> Box(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(24.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        "更多数学内容敬请期待。",
-                        color = AppColors.TextSecondary,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
             }
         }
     }
@@ -2049,7 +2038,7 @@ private fun PhysicsHubTab() {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            listOf("试卷结构" to 0, "备考要点" to 1).forEach { (label, idx) ->
+            listOf("试卷结构" to 0, "中考真题" to 1).forEach { (label, idx) ->
                 FilterChip(
                     selected = sub == idx,
                     onClick = { sub = idx },
@@ -2060,20 +2049,108 @@ private fun PhysicsHubTab() {
         Box(Modifier.weight(1f)) {
             when (sub) {
                 0 -> PhysicsTab()
-                1 -> Box(
+                1 -> PhysicsZhongkaoTab()
+            }
+        }
+    }
+}
+
+@Composable
+private fun PhysicsZhongkaoTab() {
+    val context = LocalContext.current
+    var file by remember { mutableStateOf<DaofaPastExamsFile?>(null) }
+    var err by remember { mutableStateOf<String?>(null) }
+    var detail by remember { mutableStateOf<DaofaPastExamItem?>(null) }
+
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            try {
+                file = PhysicsZhongkaoRepository.load(context)
+            } catch (e: Exception) {
+                err = e.message ?: e.toString()
+            }
+        }
+    }
+
+    val items = file?.items ?: emptyList()
+    when (val d = detail) {
+        null -> {
+            when {
+                err != null && file == null -> Box(
                     Modifier
                         .fillMaxSize()
                         .padding(24.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        "更多物理内容敬请期待。",
+                        "中考真题：$err",
                         color = AppColors.TextSecondary,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
+                file == null && err == null -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+                items.isEmpty() -> Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "暂无中考真题数据。",
+                        color = AppColors.TextSecondary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                else -> LazyColumn(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    item {
+                        Text(
+                            file?.label?.takeIf { it.isNotBlank() }
+                                ?: "按条目浏览，点击查看全文。",
+                            color = AppColors.TextSecondary,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                    }
+                    items(items, key = { it.id.ifEmpty { it.title } }) { item ->
+                        AppSectionCard(elevated = true, modifier = Modifier.fillMaxWidth()) {
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .clickable { detail = item }
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    item.title,
+                                    modifier = Modifier.weight(1f),
+                                    fontWeight = FontWeight.Medium,
+                                    color = AppColors.TextPrimary,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                                Text("›", color = AppColors.TextHint, fontSize = 20.sp)
+                            }
+                        }
+                    }
+                }
             }
         }
+        else -> DaofaDetailPane(
+            section = DaofaSection(
+                d.title,
+                d.body,
+                d.images.orEmpty()
+            ),
+            barTitle = "中考真题",
+            onBack = { detail = null }
+        )
     }
 }
 
@@ -2354,7 +2431,7 @@ private fun ChineseZhongkaoTab() {
             }
         }
         else -> DaofaDetailPane(
-            section = DaofaSection(d.title, d.body),
+            section = DaofaSection(d.title, d.body, d.images.orEmpty()),
             barTitle = "中考真题",
             onBack = { detail = null }
         )

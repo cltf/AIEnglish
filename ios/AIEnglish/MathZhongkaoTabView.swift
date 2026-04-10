@@ -178,7 +178,15 @@ private struct MathZkDetailView: View {
         let subdir = parts.dropLast().joined(separator: "/")
         let base = (file as NSString).deletingPathExtension
         let ext = (file as NSString).pathExtension
-        return Bundle.main.url(forResource: base, withExtension: ext, subdirectory: subdir)
+        if let exact = Bundle.main.url(forResource: base, withExtension: ext, subdirectory: subdir) {
+            return exact
+        }
+        if let flat = Bundle.main.url(forResource: base, withExtension: ext) {
+            return flat
+        }
+        let expectedSuffix = "/" + subdir + "/" + file
+        let candidates = Bundle.main.urls(forResourcesWithExtension: ext, subdirectory: nil) ?? []
+        return candidates.first { $0.path.hasSuffix(expectedSuffix) || $0.lastPathComponent == file }
     }
 }
 

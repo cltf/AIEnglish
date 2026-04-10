@@ -5,7 +5,7 @@
 ## 要求
 
 - Xcode 15+（已用 iOS 16.0+ SDK 验证）
-- macOS 上打开：`ios/AIEnglish.xcodeproj`
+- macOS 上打开：`ios/AIZhongkao.xcodeproj`
 
 ## 资源说明
 

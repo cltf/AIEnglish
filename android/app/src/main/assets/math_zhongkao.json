@@ -1,0 +1,54 @@
+{
+  "version": 5,
+  "label": "2025 年北京中考数学：试题 7 页 + 参考答案 22 页（第 13～34 页，右下角水印已遮盖）。第 8～12 页答案可后续自行补充。",
+  "items": [
+    {
+      "id": "bj2025_math_readme",
+      "title": "说明",
+      "body": "试题卷：page01.png～page07.png。\n\n参考答案：已导入第 13～34 页截图（answer13.png～answer34.png），对应原稿页码。若需补第 8～12 页，可另存为 answer08.png～answer12.png 放入 web/data/math2025/ 并在下条「参考答案」的 images 中按顺序加入文件名。"
+    },
+    {
+      "id": "bj2025_math_pages",
+      "title": "2025 北京中考数学 · 全卷试题（第 1～7 页）",
+      "body": "按页向下浏览。",
+      "images": [
+        "math2025/page01.png",
+        "math2025/page02.png",
+        "math2025/page03.png",
+        "math2025/page04.png",
+        "math2025/page05.png",
+        "math2025/page06.png",
+        "math2025/page07.png"
+      ]
+    },
+    {
+      "id": "bj2025_math_answers",
+      "title": "2025 北京中考数学 · 参考答案（第 13～34 页）",
+      "body": "以下为解析册第 13 页至第 34 页（已去右下角水印）。若你的材料从第 8 页起连续，可补传 answer08～answer12 并编辑本 JSON。",
+      "images": [
+        "math2025/answer13.png",
+        "math2025/answer14.png",
+        "math2025/answer15.png",
+        "math2025/answer16.png",
+        "math2025/answer17.png",
+        "math2025/answer18.png",
+        "math2025/answer19.png",
+        "math2025/answer20.png",
+        "math2025/answer21.png",
+        "math2025/answer22.png",
+        "math2025/answer23.png",
+        "math2025/answer24.png",
+        "math2025/answer25.png",
+        "math2025/answer26.png",
+        "math2025/answer27.png",
+        "math2025/answer28.png",
+        "math2025/answer29.png",
+        "math2025/answer30.png",
+        "math2025/answer31.png",
+        "math2025/answer32.png",
+        "math2025/answer33.png",
+        "math2025/answer34.png"
+      ]
+    }
+  ]
+}

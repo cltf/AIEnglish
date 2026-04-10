@@ -34,6 +34,10 @@
         <div id="chinese-pane-zhongkao" class="english-pane" data-chinese-pane="zhongkao">
           <div id="chinese-zk-stack-list" class="essay-stack"></div>
           <div id="chinese-zk-stack-detail" class="essay-stack hidden"></div>
+          <div id="chinese-exam-lightbox" class="math-exam-lightbox hidden" role="dialog" aria-modal="true" aria-label="语文试卷大图">
+            <button type="button" class="math-exam-lightbox-close" aria-label="关闭">×</button>
+            <img id="chinese-exam-lightbox-img" class="math-exam-lightbox-img" alt="" />
+          </div>
         </div>
         <div id="chinese-pane-structure" class="english-pane" data-chinese-pane="structure">
           <div id="chinese-structure-root" class="physics-root">
@@ -46,7 +50,6 @@
         <div class="english-subnav math-subnav" role="tablist" aria-label="数学分区">
           <button type="button" class="english-sub-btn active" data-math-sub="structure" role="tab">试卷结构</button>
           <button type="button" class="english-sub-btn" data-math-sub="past" role="tab">历年真题</button>
-          <button type="button" class="english-sub-btn" data-math-sub="extra" role="tab">备考要点</button>
         </div>
         <div id="math-pane-structure" class="english-pane active" data-math-pane="structure">
           <div id="math-root" class="physics-root">
@@ -60,9 +63,6 @@
             <button type="button" class="math-exam-lightbox-close" aria-label="关闭">×</button>
             <img id="math-exam-lightbox-img" class="math-exam-lightbox-img" alt="" />
           </div>
-        </div>
-        <div id="math-pane-extra" class="english-pane" data-math-pane="extra">
-          <p class="hint muted">更多数学内容敬请期待。</p>
         </div>
       </section>
 
@@ -149,17 +149,10 @@
       </section>
 
       <section id="panel-physics" class="panel">
-        <div class="english-subnav physics-subnav" role="tablist" aria-label="物理分区">
-          <button type="button" class="english-sub-btn active" data-physics-sub="structure" role="tab">试卷结构</button>
-          <button type="button" class="english-sub-btn" data-physics-sub="extra" role="tab">备考要点</button>
-        </div>
         <div id="physics-pane-structure" class="english-pane active" data-physics-pane="structure">
           <div id="physics-root" class="physics-root">
             <p id="physics-structure-status" class="muted small physics-status">加载中…</p>
           </div>
-        </div>
-        <div id="physics-pane-extra" class="english-pane" data-physics-pane="extra">
-          <p class="hint muted">更多物理内容敬请期待。</p>
         </div>
       </section>
 
